@@ -1,0 +1,25 @@
+{
+  "name": "vulnalert",
+  "version": "1.0.0",
+  "description": "Group Members: Eric Kim, Aaron Liu, Jinwoo Kim",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd frontend; npm install && npm run build && cd ../backend; npm install && export DEBUG=vulnalert:*,express:*; npm start",
+    "prod": "cd frontend; npm install && npm run build && cd ../backend; npm install && npm start",
+    "frontend": "cd frontend; npm install && npm start",
+    "backend": "cd backend; npm install && npm start",
+    "backend-prod": "cd backend; npm install && npm start",
+    "backend-dev": "cd backend; npm install && export DEBUG=vulnalert:*,express:*; npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/info441-wi23/final-project-vulnerability-alerter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/info441-wi23/final-project-vulnerability-alerter/issues"
+  },
+  "homepage": "https://github.com/info441-wi23/final-project-vulnerability-alerter#readme"
+}

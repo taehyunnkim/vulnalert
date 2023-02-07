@@ -3,8 +3,10 @@
 /**
  * Module dependencies.
  */
-var debug = require('debug')('express-starter:server');
+var debug = require('debug')('vulnalert:server');
 var http = require('http');
+
+const DEFAULT_PORT = '3000';
 
 (async () => {
   const app = await (await import('../app.js')).default;
@@ -20,7 +22,9 @@ var http = require('http');
    * Create HTTP server.
    */
 
-  var server = http.createServer(app);
+  let host = process.env.DEBUG ? 'localhost' : '0.0.0.0';
+
+  var server = http.createServer(app, host);
 
   /**
    * Listen on provided port, on all network interfaces.
@@ -83,11 +87,14 @@ var http = require('http');
    */
 
   function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    let host = process.env.DEBUG ? 'localhost' : '0.0.0.0';
+    let port = process.env.PORT ? process.env.PORT : DEFAULT_PORT;
+
+    if (!process.env.DEBUG) {
+      console.log('Listening at ' + host + ":" + port);
+    } else {
+      debug('Listening at ' + host + ":" + port);
+    }
   }
 
 })().catch(err => console.error(err));

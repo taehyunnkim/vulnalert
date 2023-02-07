@@ -19,3 +19,16 @@ For our final project, we will be creating a full stack web application that not
 
 
 ### Endpoints
+
+
+## Documentation
+
+To run full-stack web application in production mode, run the following command: `npm run prod`
+
+To run full-stack web application in development mode, run the following command: `npm run dev`
+
+To run the frontend application in development mode, run the following command: `npm run frontend`
+
+To run the backend server in production mode, run the following command: `npm run backend`
+
+To run the backend server in development mode, run the following command: `npm run backend-dev`
