@@ -12,23 +12,40 @@ For our final project, we will be creating a full stack web application that not
   <img src="./assets/placeholder.png" />
 </p>
 
+- Has database components (7 pts)
+- Has flow of data (5 pts)
+- Has communication type (6 pts)
+- Misc (2 pts)
+
 ### User Stories
 <p align="center">
   <img src="./assets/placeholder.png" />
 </p>
 
+- In the priority format (5 pts)
+- Has technical implementation strategies (15 pts)
+- Misc (5 pts)
 
 ### Endpoints
-
+- Sufficient endpoints are provided (enough for functionality) (10 pts)
+- Endpoints has their use cases (10 pts)
+- Misc (5 pts)
 
 ## Documentation
+
+### Full Stack Application
+> When running the full-stack application, the frontend production build is created, so the hot loading feature will be disabled.
 
 To run full-stack web application in production mode, run the following command: `npm run prod`
 
 To run full-stack web application in development mode, run the following command: `npm run dev`
 
+- - - 
+### Frontend
 To run the frontend application in development mode, run the following command: `npm run frontend`
 
+- - - 
+### Backend
 To run the backend server in production mode, run the following command: `npm run backend`
 
 To run the backend server in development mode, run the following command: `npm run backend-dev`
