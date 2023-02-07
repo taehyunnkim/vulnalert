@@ -18,9 +18,11 @@ For our final project, we will be creating a full stack web application that not
 - Misc (2 pts)
 
 ### User Stories
-<p align="center">
-  <img src="./assets/placeholder.png" />
-</p>
+| Priority | User | Description | Technical Implementation |
+|----------|------|-------------|--------------------------|
+|    P0    |      |             |                          |
+|    P0    |      |             |                          |
+|    P0    |      |             |                          |
 
 - In the priority format (5 pts)
 - Has technical implementation strategies (15 pts)
