@@ -9,7 +9,7 @@ For our final project, we will be creating a full stack web application that not
 
 ### Architectural Diagram
 <p align="center">
-  <img src="./assets/placeholder.png" />
+  <img src="./assets/Architecture_Diagram_Frame.jpg" />
 </p>
 
 - Has database components (7 pts)
