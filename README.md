@@ -3,7 +3,7 @@
 Group Members: Eric Kim, Aaron Liu, Jinwoo Kim
 
 ## Project Description
-For our final project, we will be creating a full stack web application that notifies the users of any new vulnerabilities in dependencies and libraries they use. This web application is primarily targeted towards developers and system administrators who may want to keep their applications up to date and reduce organizational security risks. There are vulnerability scanners and patch management systems out there that automatically remediates new application vulnerabilities. However, scanners have latencies, and automated patches could often result in cascading failures and unforeseen conflicts. Moreover, existing vulnerability management systems are typically targeted towards security experts and come bundled with other security tools, which limit their ease of use and coverage. Our application assumes that the users have limited security backgrounds, allowing the developers and administrators to better understand each security problems at hand. Our users could provide us with “dependency definition files,” such as package.json for Node.js, or register individual libraries to set up alerts. Then, they could investigate and respond accordingly based on instant vulnerability alerts, gain information about the new exploits, and keep their applications safe. We, as developers, want to build this application because we often use dependency-laden frameworks and we share the responsibility of keeping the customer data safe. By using our application, we will become more security conscious, and patch up the applications and systems that we build to better protect data from cyber threats.
+For our final project, we will be creating a full stack web application that notifies the users of any new vulnerabilities in dependencies and libraries they use. This web application is primarily targeted towards software developers who may want to keep their applications up to date and reduce organizational security risks. There are vulnerability scanners and patch management systems out there that automatically remediates new application vulnerabilities. However, scanners have latencies, and automated patches could often result in cascading failures and unforeseen conflicts. With our application, the users could provide us with “dependency definition files,” such as package.json for Node.js, or register individual libraries to set up alerts. Then, they could investigate and respond accordingly based on instant vulnerability alerts, gain information about new exploits, and keep their applications safe. We, as developers, want to build this application because we often use dependency-laden frameworks and we share the responsibility of keeping customer data safe. By using our application, we will become more security conscious, and patch up the applications and systems that we build to better protect data from cyber threats.
 
 ## Technical Description
 
@@ -12,26 +12,24 @@ For our final project, we will be creating a full stack web application that not
   <img src="./assets/Architecture_Diagram_Frame.jpg" />
 </p>
 
-- Has database components (7 pts)
-- Has flow of data (5 pts)
-- Has communication type (6 pts)
-- Misc (2 pts)
-
 ### User Stories
-| Priority | User | Description | Technical Implementation |
-|----------|------|-------------|--------------------------|
-|    P0    |      |             |                          |
-|    P0    |      |             |                          |
-|    P0    |      |             |                          |
-
-- In the priority format (5 pts)
-- Has technical implementation strategies (15 pts)
-- Misc (5 pts)
+| Priority | User       | Description                                                                                                                            | Technical Implementation                                                                                                                                                                                                                                              |
+|----------|------------|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| P0       | Developers | I want to find out which libraries in my dependencies file have potential security risks so I can patch up the library.                | When retrieving security breach data, add a filter for each library.                                                                                                                                                                                                  |
+| P0       | Developers | I want to set up alerts for the libraries I registered in the web app.                                                                 | After a valid user registration, the user can choose which library to alert.   Compare API and database data on new vulnerabilities to the libraries that the developers have registered in their account.   If the libraries match, send them an email notification. |
+| P1       | Developers | I want to learn more about vulnerabilities that come with frameworks.                                                                  | Enter in framework information ( that is listed from the user/developer) and return information about vulnerabilities from APIs.                                                                                                                                      |
+| P2       | Developers | I want to see a summary of the libraries I registered and the vulnerabilities that haven’t been patched in different severity ratings. | Fetch registration information from the database to show statistics on user                                                                                                                                                                                           |
 
 ### Endpoints
-- Sufficient endpoints are provided (enough for functionality) (10 pts)
-- Endpoints has their use cases (10 pts)
-- Misc (5 pts)
+| Endpoint         | Purpose                                                                                                                                                                                                                                                               |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GET /            | Show the main page. The user could learn more about the product, and login or register if not authenticated. If authenticated, the user has to click on the dashboard button in the navigation bar to interact with the core features of the app (subject to change). |
+| POST /login      | The login in the user                                                                                                                                                                                                                                                 |
+| POST /register   | To register the user                                                                                                                                                                                                                                                  |
+| GET /auth        | To authenticate user login                                                                                                                                                                                                                                            |
+| GET /dashboard   | Show authenticated users the dashboard to interact with the web application. They could register libraries and set up alerts here.                                                                                                                                    |
+| POST /setUpAlert | The user clicks on a toggle button for individual libraries they registered to set up security alerts for reminders.                                                                                                                                                  |
+| GET /loadLibrary | Display the vulnerability related to libraries that the user has registered.                                                                                                                                                                                          |
 
 ## Documentation
 
