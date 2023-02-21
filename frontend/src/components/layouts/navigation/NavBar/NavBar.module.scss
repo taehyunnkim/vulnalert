@@ -1,0 +1,43 @@
+@import "src/variables.scss";
+
+.header {
+    margin-top: 100px;
+}
+
+.nav {
+    display: flex;
+    padding: $box-padding;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid $primary-color;
+    border-radius: $radius;
+    box-shadow: $shadow;
+}
+
+.brandlogo {
+    height: 32px;
+    margin-right: $content-margin;
+}
+
+.brandname {
+    font-family: $brand-font;
+    background: $primary-gradient;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: $primary-color;
+}
+
+.divider {
+    box-sizing: border-box;
+    border-left: 1px solid black;
+    margin-left: $content-margin;
+    margin-right: $content-margin;
+    height: 24px;
+    width: 1px;
+}
+
+.pagename {
+    font-family: $app-font;
+    font-weight: 700;
+}

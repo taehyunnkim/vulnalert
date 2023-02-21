@@ -1,0 +1,38 @@
+$DEBUG: false;
+
+// Font Familes
+$brand-font : "Fira Sans", Geneva, sans-serif;
+$app-font : "Nunito", Gill Sans, sans-serif;
+
+// Colors
+$primary-color: #4429E9;
+$primary-gradient: linear-gradient(268.43deg, #4429E9 -496.06%, #715AFC 51.33%);
+$gray: #919EAB; 
+$lightgray: #F4F6F9; 
+
+
+// Spacing
+$box-padding: 14px;
+$content-margin: 10px;
+
+// ETC
+$radius: 5px;
+$shadow: rgba(50, 50, 93, 0.20) 0px 2px 3px -1px, rgba(0, 0, 0, 0.25) 0px 1px 3px -1px;
+
+// Default Config
+* {
+    font-size: 62.5%;
+}
+
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.4rem; 
+}

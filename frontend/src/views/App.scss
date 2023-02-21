@@ -1,7 +1,6 @@
+@import "src/variables.scss";
+
 body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
 }
 
 .App {
@@ -9,7 +8,10 @@ body {
 }
 
 .app-container {
-  border: 1px solid black;
+  @if $DEBUG {
+    box-sizing: border-box;
+    border: 1px solid $gray;
+  }
   width: 800px;
   height: 100vh;
   margin: 0 auto;
