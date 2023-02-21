@@ -50,7 +50,7 @@ function LoginForm(props) {
             </form>
 
             <div className={styles.sso}>
-                <h2>Single Sign On</h2>
+                <h2>Single Sign-on</h2>
                 <img className={styles.msbutton} src="/assets/ms-signin.svg" alt="Log in with Microsoft"></img>
             </div>
         </div>
