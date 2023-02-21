@@ -2,7 +2,7 @@ import './App.scss';
 
 import NavBar from "components/layouts/navigation/NavBar/NavBar";
 import Footer from "components/layouts/navigation/Footer/Footer";
-import Landing from "components/layouts/content/Landing/Landing"
+import Landing from "views/Landing/Landing"
 
 function App() {
   return (

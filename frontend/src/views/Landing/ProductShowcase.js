@@ -1,12 +1,11 @@
-import styles from "./Landing.module.scss";
+import Box from "components/layouts/placeholder/Box/Box"
 
-import Box from "components/layouts/content/placeholder/Box/Box"
+import styles from "./ProductShowcase.module.scss";
 
-export default function Landing() {
+export default function ProductShowcase() {
     return (
-        <div className={styles.landing}>
-            <div className={`${styles.panel} ${styles.leftpanel}`}>
-                <Box style={{
+        <div className={styles.showcase}>
+            <Box style={{
                     width: "100%",
                     height: "200px",
                 }}/>
@@ -16,10 +15,6 @@ export default function Landing() {
                     height: "160px",
                 }}/>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-            </div>
-            <div className={`${styles.panel} ${styles.leftpanel}`}>
-
-            </div>
         </div>
     );
 }

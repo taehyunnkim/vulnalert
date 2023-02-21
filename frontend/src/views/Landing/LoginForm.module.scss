@@ -1,0 +1,81 @@
+@import "src/variables.scss";
+
+.logincontainer {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+
+    margin-top: -16px;
+    width: 100%;
+    height: 100%;
+}
+
+.logincontainer h1 {
+    color: $primary-color;
+    font-size: 5rem;
+}
+
+.logincontainer h2 {
+    font-size: 2.4rem;
+}
+
+.form {
+    margin-top: $content-margin * 3;
+    margin-bottom: $content-margin * 3;
+}
+
+.form label {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: black;
+    margin-bottom: $content-margin;
+}
+  
+.form input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: $content-margin;
+    padding: $box-padding;
+    font-size: 1.4rem;
+    border: 1px solid $gray;
+    border-radius: $radius;
+}
+
+.form input:focus {
+    border: 1px solid $primary-color;
+    outline: none;
+}
+
+.form button {
+    background-color: $primary-color;
+    color: white;
+    width: 100%;
+    font-weight: 700;
+    padding: $box-padding;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: $radius;
+    cursor: pointer;
+}
+
+.form button:hover {
+    background-color: $primary-color;
+}
+
+.logincontainer p {
+    font-size: 1.6rem;
+    margin: $content-margin 0;
+}
+
+.logincontainer a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $primary-color;
+}
+
+.sso h2 {
+    margin-bottom: $content-margin;
+}
