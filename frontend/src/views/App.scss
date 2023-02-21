@@ -1,8 +1,5 @@
 @import "src/variables.scss";
 
-body {
-}
-
 .App {
   text-align: center;
 }
@@ -12,7 +9,20 @@ body {
     box-sizing: border-box;
     border: 1px solid $gray;
   }
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 800px;
   height: 100vh;
   margin: 0 auto;
+}
+
+.content {
+  @if $DEBUG {
+    box-sizing: border-box;
+    border: 1px solid $gray;
+  }
+
+  flex: 1;
 }

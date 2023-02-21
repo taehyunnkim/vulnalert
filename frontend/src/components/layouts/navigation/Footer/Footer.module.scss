@@ -1,0 +1,33 @@
+@import "src/variables.scss";
+
+.footer {
+    @if $DEBUG {
+        border: 1px solid $gray;
+    }
+    
+    display: flex;
+    align-items: center;
+    padding: $box-padding;
+    margin-bottom: 30px;
+}
+
+.brandname {
+    background: none;
+    background-clip: unset;
+    -webkit-text-fill-color: unset;
+    color: $gray;
+}
+
+.dot {
+    margin: 2px $content-margin 0 $content-margin ;
+}
+
+.link a {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: $gray;
+}
+
+.copyright {
+    margin: 2px $content-margin 0 ($content-margin+6px) ;
+}

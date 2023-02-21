@@ -20,14 +20,6 @@
     margin-right: $content-margin;
 }
 
-.brandname {
-    font-family: $brand-font;
-    background: $primary-gradient;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: $primary-color;
-}
-
 .divider {
     box-sizing: border-box;
     border-left: 1px solid black;

@@ -1,0 +1,16 @@
+import styles from "./Footer.module.scss";
+
+
+export default function Footer() {
+    return(
+        <footer className={styles.footer}>
+            <h3 className={"brandname " + styles.brandname}>Vulnalert</h3>
+            <span className={"dot " + styles.dot}></span>
+            <p className={styles.link}><a href="/">Contact</a></p>
+            <span className={"dot " + styles.dot}></span>
+            <p className={styles.link}><a href="/">Privacy Policy</a></p>
+
+            <p className={styles.copyright}>© 2023</p>
+        </footer>
+    );
+};

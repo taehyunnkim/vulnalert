@@ -30,9 +30,33 @@ body, h1, h2, h3, p {
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
 }
 
 h2 {
-    font-size: 1.4rem; 
+    font-size: 1.8rem; 
+}
+
+h3 {
+    font-size: 1.6rem; 
+}
+
+a {
+    text-decoration: none;
+}
+
+.brandname {
+    font-family: $brand-font;
+    background: $primary-gradient;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: $primary-color;
+}
+
+.dot {
+    height: 4px;
+    width: 4px;
+    background-color: $gray;
+    border-radius: 50%;
+    display: inline-block;
 }
