@@ -1,0 +1,9 @@
+@import "src/variables.scss";
+
+.box {
+    width: 300px;
+    height: 250px;
+    border: 1px solid $lightgray;
+    box-shadow: $shadow;
+    border-radius: $radius;
+}
