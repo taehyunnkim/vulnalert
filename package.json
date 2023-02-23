@@ -21,5 +21,7 @@
   "bugs": {
     "url": "https://github.com/info441-wi23/final-project-vulnerability-alerter/issues"
   },
-  "homepage": "https://github.com/info441-wi23/final-project-vulnerability-alerter#readme"
+  "homepage": "https://github.com/info441-wi23/final-project-vulnerability-alerter#readme",
+  "dependencies": {
+  }
 }

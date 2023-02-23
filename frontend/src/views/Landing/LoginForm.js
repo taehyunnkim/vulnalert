@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 
 import styles from "./LoginForm.module.scss";
+
 
 function LoginForm(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { instance } = useMsal();
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -14,11 +18,15 @@ function LoginForm(props) {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // submit the form data to the server
-        // using props.onSubmit({email, password})
     };
+
+    const handleMicrosoftSSO = (event) => {
+        instance.loginPopup(loginRequest).catch(e => {
+            console.log(e);
+        });
+    }
 
     return (
         <div className={styles.logincontainer}>
@@ -51,7 +59,12 @@ function LoginForm(props) {
 
             <div className={styles.sso}>
                 <h2>Single Sign-on</h2>
-                <img className={styles.msbutton} src="/assets/ms-signin.svg" alt="Log in with Microsoft"></img>
+                <img 
+                    className={styles.msbutton} 
+                    src="/assets/ms-signin.svg" 
+                    alt="Log in with Microsoft"
+                    onClick={() => handleMicrosoftSSO()}
+                ></img>
             </div>
         </div>
     );

@@ -7,9 +7,9 @@ import msIdExpress from 'microsoft-identity-express'
 
 const appSettings = {
     appCredentials: {
-        clientId:  "33e9d280-ee1d-4925-8247-27e72bca4ecd",
+        clientId:  "c4f5ff38-ce2d-43ba-93d3-80e93db284b2",
         tenantId:  "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret:  "4BT8Q~YwhQ3vrY3bsh4S2zsWJnZURtYWl2Bo0cTN"
+        clientSecret:  "oN68Q~.d~ijV_yG2jTDSHXiyrVsbpH4pVJ1Veca2"
     },	
     authRoutes: {
         redirect: "localhost:3000/redirect",// note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
