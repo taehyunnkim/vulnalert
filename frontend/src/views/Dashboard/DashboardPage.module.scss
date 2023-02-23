@@ -1,1 +1,59 @@
 @import "src/globalstyles.scss";
+
+.dashboardcontainer {
+    margin-top: $content-margin*2;
+
+    h3 {
+        font-weight: 400;
+        font-size: 1.2rem;
+        color: $gray;
+    }
+
+    p {
+        font-size: 3.6rem;
+        font-weight: 300;
+    }
+}
+
+.card {
+    box-sizing: border-box;
+    padding: $box-padding*2;
+    margin-bottom: $content-margin*2;
+}
+
+.stats {
+    display: flex;
+    gap: $content-margin*2;
+}
+
+.userstat {
+    flex: 3;
+}
+
+.reportstat {
+    flex: 5;
+}
+
+.vulnsummary, .libsummary {
+    width: 100%;
+}
+
+.userstatContainer {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+
+    display: flex;
+    margin-top: $content-margin*2;
+}
+
+.userstatRegistered, .userstatVulnerabilities {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid purple;
+    }
+
+    flex: 1;
+
+}

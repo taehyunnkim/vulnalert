@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMsal } from "@azure/msal-react";
-import { loginRequest, graphRequest } from "../../authConfig";
+import { EventType } from "@azure/msal-browser";
+import { loginRequest } from "../../authConfig";
 
 import styles from "./LoginForm.module.scss";
 
@@ -8,7 +9,25 @@ import styles from "./LoginForm.module.scss";
 function LoginForm(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { instance, accounts } = useMsal();
+    const { instance } = useMsal();
+
+    useEffect(() => {
+        const callbackId = instance.addEventCallback((message) => {
+            if (message.eventType === EventType.LOGIN_SUCCESS || 
+                message.eventType === EventType.ACQUIRE_TOKEN_SUCCESS) { 
+                props.handleLogin(true);
+            } else if (message.eventType === EventType.LOGOUT_SUCCESS) {
+                // handle this case in the future
+            }
+        });
+
+        return () => {
+            if (callbackId) {
+                instance.removeEventCallback(callbackId);
+            }
+        }
+        
+    }, []);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -20,20 +39,28 @@ function LoginForm(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (process.env.NODE_ENV === "development") {
+            props.handleLogin(true);
+        }
     };
 
     const handleMicrosoftSSO = async (event) => {
-        try {
-            const loginResponse = await instance.loginPopup(loginRequest);
-            const idToken = loginResponse.idToken;
-            await fetch('/api/v1/users/ms-login', {
-                method: "POST",
-                headers: {
-                  'Authorization': `Bearer ${idToken}`
-                }
-            });
-        } catch (err) {
-            console.log(err);
+        if (process.env.NODE_ENV === "production") {
+            try {
+                const loginResponse = await instance.loginPopup(loginRequest);
+                const idToken = loginResponse.idToken;
+                await fetch('/api/v1/users/ms-login', {
+                    method: "POST",
+                    headers: {
+                      'Authorization': `Bearer ${idToken}`
+                    }
+                });
+            } catch (err) {
+                props.handleLogin(false);
+            }
+        } else {
+            props.handleLogin(true);
         }
     }
 

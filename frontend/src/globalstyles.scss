@@ -50,6 +50,17 @@ a {
     text-decoration: none;
 }
 
+.card-bg {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+
+    box-shadow: $shadow;
+    border: 1px solid $lightgray;
+    border-radius: $radius;
+}
+
 .brandname {
     font-family: $brand-font;
     background: $primary-gradient;
