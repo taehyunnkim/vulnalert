@@ -1,5 +1,7 @@
 import styles from "./NavBar.module.scss";
 
+import Button from "components/forms/Button/Button"
+
 export default function NavBar(props) {
     return (
         <header className={styles.header}>
@@ -9,7 +11,7 @@ export default function NavBar(props) {
                 <span className={styles.divider}></span>
                 <h2 className={styles.pagename}>{props.pagename}</h2>
                 <div className={styles.spacing}></div>
-                { props.isAuthenticated ? <button className={styles.logout} onClick={() => {props.handleLogout()}}>Logout</button> : "" }
+                { props.isAuthenticated ? <Button text="Logout" type="warning" onClick={props.handleLogout} /> : "" }
             </nav>
         </header>
     );

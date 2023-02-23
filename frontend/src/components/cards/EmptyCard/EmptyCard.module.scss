@@ -1,0 +1,16 @@
+@import "src/globalstyles.scss";
+
+.emptyCard {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    background-color: $lightgray;
+    border-radius: $radius;
+    margin: $content-margin 0;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 1.6rem;
+    }
+}

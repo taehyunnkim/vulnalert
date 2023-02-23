@@ -1,0 +1,28 @@
+@import "src/globalstyles";
+
+.button {
+    font-family: $app-font;
+    border: none;
+    border-radius: $radius;
+    padding: calc($box-padding / 2) $box-padding*2;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: $primary-color;
+    color: white;
+}
+
+.secondary {
+    border: 1px solid $primary-color;
+    background-color: white;
+    color: $primary-color;
+}
+
+.warning {
+    border: 1px solid $red;
+    background-color: white;
+    color: $red;
+}

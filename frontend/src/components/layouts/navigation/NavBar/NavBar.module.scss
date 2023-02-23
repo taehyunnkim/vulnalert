@@ -1,7 +1,7 @@
 @import "src/globalstyles.scss";
 
 .header {
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .nav {
@@ -39,8 +39,4 @@
     @if $DEBUG {
         border-bottom: 1px solid red;
     }
-}
-
-.logout {
-
 }

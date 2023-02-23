@@ -6,7 +6,7 @@ import { loginRequest } from "../../authConfig";
 import styles from "./LoginForm.module.scss";
 
 
-function LoginForm(props) {
+function LoginForm({ handleLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { instance } = useMsal();
@@ -15,7 +15,7 @@ function LoginForm(props) {
         const callbackId = instance.addEventCallback((message) => {
             if (message.eventType === EventType.LOGIN_SUCCESS || 
                 message.eventType === EventType.ACQUIRE_TOKEN_SUCCESS) { 
-                props.handleLogin(true);
+                handleLogin(true);
             } else if (message.eventType === EventType.LOGOUT_SUCCESS) {
                 // handle this case in the future
             }
@@ -27,7 +27,7 @@ function LoginForm(props) {
             }
         }
         
-    }, []);
+    }, [email, password, instance, handleLogin]);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -41,7 +41,7 @@ function LoginForm(props) {
         event.preventDefault();
 
         if (process.env.NODE_ENV === "development") {
-            props.handleLogin(true);
+            handleLogin(true);
         }
     };
 
@@ -57,10 +57,10 @@ function LoginForm(props) {
                     }
                 });
             } catch (err) {
-                props.handleLogin(false);
+                handleLogin(false);
             }
         } else {
-            props.handleLogin(true);
+            handleLogin(true);
         }
     }
 
