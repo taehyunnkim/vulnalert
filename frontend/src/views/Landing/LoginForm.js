@@ -15,7 +15,13 @@ function LoginForm({ handleLogin }) {
         const callbackId = instance.addEventCallback((message) => {
             if (message.eventType === EventType.LOGIN_SUCCESS || 
                 message.eventType === EventType.ACQUIRE_TOKEN_SUCCESS) { 
-                handleLogin(true);
+                handleLogin(true, {
+                    given_name: message.payload.idTokenClaims.given_name,
+                    family_name: message.payload.idTokenClaims.family_name,
+                    email: message.payload.idTokenClaims.email,
+                    auth_time: message.payload.idTokenClaims.auth_time,
+                    username: message.payload.idTokenClaims.preferred_username
+                });
             } else if (message.eventType === EventType.LOGOUT_SUCCESS) {
                 // handle this case in the future
             }
@@ -41,7 +47,14 @@ function LoginForm({ handleLogin }) {
         event.preventDefault();
 
         if (process.env.NODE_ENV === "development") {
-            handleLogin(true);
+            // dummy data
+            handleLogin(true, {
+                given_name: "Alex",
+                family_name: "Hunt",
+                email: "ahunt@uw.edu",
+                auth_time: 1677151382,
+                username: "itsalexhunt"
+            });
         }
     };
 

@@ -14,17 +14,9 @@ function App() {
   const [user, setUser] = useState({});
   const { instance }  = useMsal();
 
-  const handleLogin = (loggedIn) => {
+  const handleLogin = (loggedIn, loggedinUser) => {
     setAuthenticated(loggedIn);
-    if (process.env.NODE_ENV === "production") {
-
-    } else {
-      // dummy data
-      setUser({
-        name: "Alex Hunt",
-        email: "alexhunt@uw.edu"
-      });
-    }
+    setUser(loggedinUser);
   }
 
   const handleLogout = () => {

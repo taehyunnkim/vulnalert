@@ -7,18 +7,19 @@ router.post('/ms-login', async function(req, res, next) {
     const authorizationHeader = req.headers.authorization;
     const idToken = authorizationHeader.split(' ')[1];
     const decodedToken = jwt.decode(idToken, { complete: true });
-    
-    const name = decodedToken.payload.name;
-    const username = decodedToken.payload.preferred_username;
-    const newUser = new req.models.Users({
-        name: name,
-        username: username,
-        email: username,
+    const parsedUser = {
+        given_name: decodedToken.payload.given_name,
+        family_name: decodedToken.payload.family_name,
+        email: decodedToken.payload.email,
+        auth_time: decodedToken.payload.auth_time,
+        username: decodedToken.payload.preferred_username,
         joined_date: new Date()
-    })
+    }
+
+    const newUser = new req.models.Users(parsedUser);
 
     try {
-        req.models.Users.findOne({ email: username }, (err, user) => {
+        req.models.Users.findOne({ email: decodedToken.payload.email }, (err, user) => {
             if (err) {
                 console.log(err);
                 res.status(500).json({

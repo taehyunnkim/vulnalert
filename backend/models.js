@@ -10,9 +10,11 @@ async function main(){
 
     //Create schemas and models to connect to the mongodb collections
     const userSchema = new mongoose.Schema({
-        name: String,
-        username: String,
+        given_name: String,
+        family_name: String,
         email: String,
+        auth_time: Number,
+        username: String,
         joined_date: Date
     })
 

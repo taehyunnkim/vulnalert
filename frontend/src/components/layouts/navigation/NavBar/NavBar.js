@@ -4,11 +4,10 @@ import Button from "components/forms/Button/Button";
 
 export default function NavBar(props) {
     const intro = () => {
-        let name = props.user.name.split(" ");
-        if (name.length < 2) {
-            return name[0];
+        if (props.user.given_name) {
+            return "Hi, " + props.user.given_name + "!";
         } else {
-            return "Hi, " + name[0] + "!";
+            return "Hello!";
         }
     };
 
