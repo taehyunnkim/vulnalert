@@ -11,10 +11,20 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-reac
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
   const { instance }  = useMsal();
 
   const handleLogin = (loggedIn) => {
     setAuthenticated(loggedIn);
+    if (process.env.NODE_ENV === "production") {
+
+    } else {
+      // dummy data
+      setUser({
+        name: "Alex Hunt",
+        email: "alexhunt@uw.edu"
+      });
+    }
   }
 
   const handleLogout = () => {
@@ -44,7 +54,8 @@ function App() {
             <NavBar 
               handleLogout={handleLogout}
               pagename={isAuthenticated ? "Dashboard" : "Home"} 
-              isAuthenticated={isAuthenticated} 
+              isAuthenticated={isAuthenticated}
+              user={user}
             />
             { isAuthenticated ? <Dashboard /> : <Landing handleLogin={handleLogin} />}
           </div>
