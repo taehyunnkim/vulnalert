@@ -1,9 +1,14 @@
 import styles from "./DashboardPage.module.scss";
+
 import { ResponsiveLine } from '@nivo/line'
+import { useNavigate } from "react-router-dom";
+
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 import Button from "components/forms/Button/Button";
 
 function DashboardPage(props) {
+    const navigate = useNavigate()
+
     // This is how our prop data is going to look like
     const dummyData = {
         userstat: {
@@ -58,7 +63,7 @@ function DashboardPage(props) {
                     <div className={`${styles.chart}`}>
                         <ResponsiveLine 
                             data={dummyData.trend}
-                            margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
+                            margin={{ top: 14, right: 20, bottom: 20, left: 20 }}
                             xScale={{ type: 'point' }}
                             yScale={{
                                 type: 'linear',
@@ -91,7 +96,13 @@ function DashboardPage(props) {
                         </div>    
                     }
                 </div>
-                <Button text="View More" type="primary" />
+                <Button 
+                    text="View More" 
+                    type="primary"
+                    onClick={() => {
+                        navigate("vulnerabilities")
+                    }}
+                />
             </div>
             <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
                 <h2>Your Libraries</h2>
@@ -103,7 +114,13 @@ function DashboardPage(props) {
                         </div>    
                     }
                 </div>
-                <Button text="View More" type="primary" />
+                <Button 
+                    text="View More" 
+                    type="primary"
+                    onClick={() => {
+                        navigate("libraries")
+                    }}
+                />
             </div>
         </div>
     );

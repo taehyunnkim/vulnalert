@@ -5,6 +5,7 @@ import styles from "./VulnerabilitiesPage.module.scss";
 function VulnerabilitiesPage(props) {
     return (
         <div className={styles.vulnerabilitiescontainer}>
+            <h1>Vulnerabilities</h1>
         </div>
     );
 }
