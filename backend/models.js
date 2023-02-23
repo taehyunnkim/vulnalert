@@ -15,11 +15,22 @@ async function main(){
     })
 
     const librarySchema =  new mongoose.Schema({
-        libraryID: {type: mongoose.Schema.Types.ObjectId, ref: "Post"}
+        users: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
+        library: String,
+        version: String,
+        created_date: Date,
+        alert_enable: Boolean
     })
 
     const vulnerabilitySchema =  new mongoose.Schema({
-       
+       description: String,
+       library: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+       version: String,
+       published: Date,
+       type:String,
+       vulstatus: String,
+       severity: String,
+       source: String
     })
 
     models.Users = mongoose.model('Users', userSchema)
