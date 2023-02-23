@@ -1,0 +1,72 @@
+@import "src/globalstyles.scss";
+
+.app {
+  // background: repeating-linear-gradient(
+  //   130deg,
+  //   $primary-color,
+  //   $primary-color 100px,
+  //   transparent 400px,
+  //   transparent 1200px,
+  // );
+}
+
+.appContainer {
+  @if $DEBUG {
+    box-sizing: border-box;
+    border: 1px solid $gray;
+  }
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.content {
+  @if $DEBUG {
+    box-sizing: border-box;
+    border: 1px solid $gray;
+  }
+
+  flex: 1;
+}
+
+.background {
+  position: fixed;
+  height: 100vh;
+  width: 1700px;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%) $background-rotate;
+  z-index: -1;
+}
+
+.lineLeft {
+  position: absolute;
+  top: -50%;
+  height: 200%;
+  width: $background-bar-width;
+  background-image: $background-side-color;
+}
+
+.lineMiddle {
+  position: absolute;
+  top: -50%;
+  height: 200%;
+  width: 1px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background: repeating-linear-gradient(0deg, white, white 20px, $background-middle-color 20px, $background-middle-color 40px);
+}
+
+.lineRight {
+  position: absolute;
+  right: 0;
+  top: -50%;
+  height: 200%;
+  width: $background-bar-width;
+  background-image: $background-side-color;
+}

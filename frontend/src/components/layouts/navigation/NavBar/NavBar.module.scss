@@ -1,7 +1,7 @@
 @import "src/globalstyles.scss";
 
 .header {
-    margin-top: 50px;
+    margin-top: $app-margin-top;
 }
 
 .nav {
@@ -13,6 +13,7 @@
     border: 1px solid $primary-color;
     border-radius: $radius;
     box-shadow: $shadow;
+    background-color: white;
 }
 
 .brandlogo {

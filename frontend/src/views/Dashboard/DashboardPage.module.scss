@@ -19,6 +19,10 @@
     box-sizing: border-box;
     padding: $box-padding*2;
     margin-bottom: $content-margin*2;
+    background-color: white;
+    box-shadow: $shadow;
+    border-radius: $radius;
+    border: 1px solid $lightgray;
 }
 
 .stats {

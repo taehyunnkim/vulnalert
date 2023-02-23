@@ -1,4 +1,4 @@
-import './App.scss';
+import styles from './App.module.scss';
 
 import { useState, useEffect } from "react";
 import NavBar from "components/layouts/navigation/NavBar/NavBar";
@@ -33,9 +33,14 @@ function App() {
   }
 
   return (
-    <div className="app">
-        <div className="app-container">
-          <div className="content">
+    <div className={styles.app}>
+        <div className={styles.appContainer}>
+          <div className={`${styles.background} ${styles.rotate}`}>
+            <span className={styles.lineLeft}></span>
+            <span className={styles.lineMiddle}></span>
+            <span className={styles.lineRight}></span>
+          </div>
+          <div className={styles.content}>
             <NavBar 
               handleLogout={handleLogout}
               pagename={isAuthenticated ? "Dashboard" : "Home"} 
