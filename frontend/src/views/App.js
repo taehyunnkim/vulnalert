@@ -35,7 +35,7 @@ function App() {
   return (
     <div className={styles.app}>
         <div className={styles.appContainer}>
-          <div className={`${styles.background} ${styles.rotate}`}>
+          <div className={`${styles.background}`}>
             <span className={styles.lineLeft}></span>
             <span className={styles.lineMiddle}></span>
             <span className={styles.lineRight}></span>

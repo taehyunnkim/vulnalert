@@ -1,15 +1,5 @@
 @import "src/globalstyles.scss";
 
-.app {
-  // background: repeating-linear-gradient(
-  //   130deg,
-  //   $primary-color,
-  //   $primary-color 100px,
-  //   transparent 400px,
-  //   transparent 1200px,
-  // );
-}
-
 .appContainer {
   @if $DEBUG {
     box-sizing: border-box;

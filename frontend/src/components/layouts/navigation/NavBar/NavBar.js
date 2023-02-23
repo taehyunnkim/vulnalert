@@ -1,6 +1,6 @@
 import styles from "./NavBar.module.scss";
 
-import Button from "components/forms/Button/Button"
+import Button from "components/forms/Button/Button";
 
 export default function NavBar(props) {
     return (
