@@ -5,13 +5,15 @@ let models = {};
 main().catch(err => console.log(err))
 async function main(){
     console.log('connecting to mongodb')
-    await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/?retryWrites=true&w=majority')
+    await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/Vulnalert?retryWrites=true&w=majority')
     console.log("successfully connected to mongodb")
 
     //Create schemas and models to connect to the mongodb collections
     const userSchema = new mongoose.Schema({
+        name: String,
         username: String,
-        email: String
+        email: String,
+        joined_date: Date
     })
 
     const librarySchema =  new mongoose.Schema({

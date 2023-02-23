@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../../authConfig";
+import { loginRequest, graphRequest } from "../../authConfig";
 
 import styles from "./LoginForm.module.scss";
 
@@ -8,7 +8,7 @@ import styles from "./LoginForm.module.scss";
 function LoginForm(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { instance } = useMsal();
+    const { instance, accounts } = useMsal();
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -22,10 +22,19 @@ function LoginForm(props) {
         event.preventDefault();
     };
 
-    const handleMicrosoftSSO = (event) => {
-        instance.loginPopup(loginRequest).catch(e => {
-            console.log(e);
-        });
+    const handleMicrosoftSSO = async (event) => {
+        try {
+            const loginResponse = await instance.loginPopup(loginRequest);
+            const idToken = loginResponse.idToken;
+            await fetch('/api/v1/users/ms-login', {
+                method: "POST",
+                headers: {
+                  'Authorization': `Bearer ${idToken}`
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import styles from "./DashboardPage.module.scss";
 
 function DashboardPage(props) {

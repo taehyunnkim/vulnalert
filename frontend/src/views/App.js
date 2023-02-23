@@ -10,12 +10,13 @@ function App() {
   return (
     <div className="app">
         <div className="app-container">
-          <NavBar pagename="Home" />
           <div className="content">
             <AuthenticatedTemplate>
+              <NavBar pagename="Dashboard" />
               <Dashboard />
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
+              <NavBar pagename="Home" />
               <Landing />
             </UnauthenticatedTemplate>
           </div>

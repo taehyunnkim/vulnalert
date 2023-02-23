@@ -3,22 +3,23 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
-import msIdExpress from 'microsoft-identity-express'
 
 const appSettings = {
     appCredentials: {
-        clientId:  "c4f5ff38-ce2d-43ba-93d3-80e93db284b2",
-        tenantId:  "f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret:  "oN68Q~.d~ijV_yG2jTDSHXiyrVsbpH4pVJ1Veca2"
+        auth: {
+            clientId:  "c1ee541a-68a4-4abf-9494-270544b5d668",
+            tenantId:  "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
+            clientSecret:  "~Qu8Q~KFDyOw.7XYCZszYAPEXq_euq3jLrrhvcoC"
+        }
     },	
     authRoutes: {
-        redirect: "localhost:3000/redirect",// note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirect: "http://localhost:3000/redirect",// note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
         error: "/error", // the wrapper will redirect to this route in case of any error.
         unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
     }
 };
 
-import usersRouter from './routes/users.js';
+import apiv1Router from './routes/api/v1/apiv1.js';
 import models from './models.js'
 
 
@@ -47,26 +48,6 @@ app.use(sessions({
     resave: false
 }))
 
-const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build()
-app.use(msid.initialize())
-
-app.get('/signin', 
-    msid.signIn({postLoginRedirect: '/'})
-)
-
-app.get('/signout',
-    msid.signOut({postLogoutRedirect: '/'})
-)
-
-app.get('/error', (req, res) => {
-    res.status(500).send("Error: Server error")
-})
-
-app.get('/unauthorized', (req, res) => {
-    res.status(401).send("Error: Unauthorized")
-})
-
-
-app.use('/users', usersRouter);
+app.use('/api/v1', apiv1Router);
 
 export default app;
