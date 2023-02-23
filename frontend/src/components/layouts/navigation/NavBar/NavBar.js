@@ -4,10 +4,10 @@ import Button from "components/forms/Button/Button";
 
 export default function NavBar(props) {
     const intro = () => {
-        if (props.user.given_name) {
-            return "Hi, " + props.user.given_name + "!";
-        } else {
+        if (props.user === undefined || props.user.given_name === undefined) {
             return "Hello!";
+        } else {
+            return "Hi, " + props.user.given_name + "!";
         }
     };
 

@@ -1,5 +1,5 @@
 import styles from "./DashboardPage.module.scss";
-
+import { ResponsiveLine } from '@nivo/line'
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 import Button from "components/forms/Button/Button";
 
@@ -11,7 +11,30 @@ function DashboardPage(props) {
             vulnerabilities: 0
         },
         userVulnerabilities: [],
-        userLibraries: []
+        userLibraries: [],
+        trend: [
+            {
+                id: 1,
+                data: [
+                    {
+                        x: "Jan, 1",
+                        y: 100,
+                    },
+                    {
+                        x: "Jan, 2",
+                        y: 80,
+                    },
+                    {
+                        x: "Jan, 3",
+                        y: 72,
+                    },
+                    {
+                        x: "Jan, 4",
+                        y: 90,
+                    }
+                ]
+            }
+        ]
     };
 
     return (
@@ -32,7 +55,30 @@ function DashboardPage(props) {
                 </div>
                 <div className={`${styles.card} card-bg ${styles.reportstat}`}>
                     <h2>Vulnerability Trends</h2>
-
+                    <div className={`${styles.chart}`}>
+                        <ResponsiveLine 
+                            data={dummyData.trend}
+                            margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
+                            xScale={{ type: 'point' }}
+                            yScale={{
+                                type: 'linear',
+                                min: '0',
+                                max: 'auto',
+                                stacked: true,
+                                reverse: false
+                            }}
+                            axisLeft={null}
+                            colors={{ scheme: 'category10' }}
+                            curve="catmullRom"
+                            useMesh={true}
+                            pointSize={10}
+                            pointColor={{ theme: 'background' }}
+                            pointBorderWidth={2}
+                            pointBorderColor={{ from: 'serieColor' }}
+                            enableArea={true}
+                            areaBaselineValue={0}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={`${styles.card} card-bg ${styles.vulnsummaryContainer}`}>

@@ -73,7 +73,14 @@ function LoginForm({ handleLogin }) {
                 handleLogin(false);
             }
         } else {
-            handleLogin(true);
+            // dummy data
+            handleLogin(true, {
+                given_name: "Alex",
+                family_name: "Hunt",
+                email: "ahunt@uw.edu",
+                auth_time: 1677151382,
+                username: "itsalexhunt"
+            });
         }
     }
 
