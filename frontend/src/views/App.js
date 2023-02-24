@@ -27,6 +27,8 @@ function App() {
   const { instance, accounts }  = useMsal();
   const account = useAccount(accounts[0] || {});
 
+  // Here we use a useEffect hook with "account" as the dependency.
+  // If we retrieve AccountInfo, the user has succesfully signed in using SSO.
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       if (account) {
@@ -41,11 +43,15 @@ function App() {
     }
   }, [account]);
 
+  // Based on the what we retrieve here from this callback function,
+  // we set the authentication state.
   const handleLogin = (loggedIn, loggedinUser) => {
     setAuthenticated(loggedIn);
     setUser(loggedinUser);
   }
 
+  // After the user logs out, we make a fetch request
+  // to destroy the user session in the backend.
   const handleLogout = () => {
     if (process.env.NODE_ENV === "production") {
       instance.logoutPopup({

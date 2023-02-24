@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import styles from "./LibrariesPage.module.scss";
 
 import Button from 'components/forms/Button/Button';
@@ -18,7 +16,7 @@ function LibrariesPage(props) {
                             name="search"
                             placeholder="Enter a library name..."
                         />
-                        <img src="/assets/icons/search.svg" />
+                        <img alt="search icon" src="/assets/icons/search.svg" />
                     </div> 
                 </div>
                 <div className={styles.versionContainer}>
@@ -31,7 +29,7 @@ function LibrariesPage(props) {
                             readOnly="readOnly"
                             placeholder="Select"
                         />
-                        <img src="/assets/icons/down_arrow.svg" />
+                        <img alt="down caret icon" src="/assets/icons/down_arrow.svg" />
                     </div> 
                 </div>
                 <div className={styles.submitContainer}>

@@ -12,6 +12,10 @@ function LoginForm({ handleLogin }) {
     const { instance, accounts }  = useMsal();
     const account = useAccount(accounts[0] || {});
 
+    // After the user has successfully logged in
+    // we create an access token and send it to our backend
+    // so that we could access the Graph API for further
+    // processing.
     useEffect(() => {
         if (process.env.NODE_ENV === "production") {
             if (account) {
