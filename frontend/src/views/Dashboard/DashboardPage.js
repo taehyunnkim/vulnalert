@@ -17,11 +17,11 @@ function DashboardPage({ data }) {
                     <div className={`${styles.userstatContainer}`}>
                         <div className={`${styles.userstatRegistered}`}>
                             <h3 className="subheader">REGISTERED</h3>
-                            <p className={`${styles.statNumber}`}>{data.userstat.registered}</p>
+                            <p className={`${styles.statNumber}`}>{data.userLibraries.length}</p>
                         </div>
                         <div className={`${styles.userstatVulnerabilities}`}>
                             <h3 className="subheader">VULNERABILITIES</h3>
-                            <p className={`${styles.statNumber}`}>{data.userstat.vulnerabilities}</p>
+                            <p className={`${styles.statNumber}`}>{data.userVulnerabilities.length}</p>
                         </div>
                     </div>
                 </div>
@@ -56,12 +56,14 @@ function DashboardPage({ data }) {
             <div className={`${styles.card} card-bg ${styles.vulnsummaryContainer}`}>
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
-                    {data.userLibraries.length === 0 ?
-                        <EmptyCard message="You have no vulnerabilities 🥹" /> :
-                        <div className={`${styles.vulnsummaryResult}`}>
+                    <EmptyCard message="You have no vulnerabilities 🥹" />
+                    {/* {
+                        data.userVulnerabilities.length === 0
+                        ? <EmptyCard message="You have no vulnerabilities 🥹" />
+                        : <div className={`${styles.vulnsummaryResult}`}>
 
                         </div>    
-                    }
+                    } */}
                 </div>
                 <Button 
                     text="View Vulnerabilities" 
@@ -74,12 +76,14 @@ function DashboardPage({ data }) {
             <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
                 <h2>Your Libraries</h2>
                 <div className={`${styles.libsummary}`}>
-                    {data.userLibraries.length === 0 ?
-                        <EmptyCard message="It seems like you haven't registered any libraries." /> :
-                        <div className={`${styles.libsummaryResult}`}>
+                    <EmptyCard message="It seems like you haven't registered any libraries." />
+                    {/* {
+                        data.userLibraries.length === 0 
+                        ? <EmptyCard message="It seems like you haven't registered any libraries." />
+                        : <div className={`${styles.libsummaryResult}`}>
 
                         </div>    
-                    }
+                    } */}
                 </div>
                 <Button 
                     text="View Libraries" 

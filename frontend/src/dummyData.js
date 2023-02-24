@@ -1,8 +1,4 @@
 const dummyData = {
-    userstat: {
-        registered: 0,
-        vulnerabilities: 0
-    },
     userVulnerabilities: [
         {
             library: "node.js",
@@ -47,7 +43,38 @@ const dummyData = {
             resources: ""
         }
     ],
-    userLibraries: [],
+    userLibraries: [
+        {
+            library: "node.js",
+            version: "14.19.0",
+            alert_enable: true,
+            register_date: "Jan 01, 2023"
+        },
+        {
+            library: "rangy",
+            version: "1.3.0",
+            alert_enable: true,
+            register_date: "Jan 02, 2023"
+        },
+        {
+            library: "Sequelize",
+            version: "6.29.0",
+            alert_enable: true,
+            register_date: "Jan 03, 2023"
+        },
+        {
+            library: "react",
+            version: "18.2.0",
+            alert_enable: false,
+            register_date: "Jan 14, 2023"
+        },
+        {
+            library: "web-vitals",
+            version: "2.1.4",
+            alert_enable: false,
+            register_date: "Jan 19, 2023"
+        },
+    ],
     trend: [
         {
             id: 1,
