@@ -27,6 +27,7 @@ function VulnerabilitiesPage({ vulnerabilities }) {
                         <VulnerabilityCard 
                             handleClick={handleClick} 
                             key={vuln.id}
+                            showDescription={false}
                             active={showInfo && vuln.id === info.id}
                                 {...vuln}
                         />
