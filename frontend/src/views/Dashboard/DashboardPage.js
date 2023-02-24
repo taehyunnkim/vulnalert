@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 import Button from "components/forms/Button/Button";
+import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
 
 function DashboardPage({ data }) {
     const navigate = useNavigate()
@@ -56,14 +57,17 @@ function DashboardPage({ data }) {
             <div className={`${styles.card} card-bg ${styles.vulnsummaryContainer}`}>
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
-                    <EmptyCard message="You have no vulnerabilities 🥹" />
-                    {/* {
-                        data.userVulnerabilities.length === 0
-                        ? <EmptyCard message="You have no vulnerabilities 🥹" />
-                        : <div className={`${styles.vulnsummaryResult}`}>
-
-                        </div>    
-                    } */}
+                    {
+                        data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0 
+                        ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
+                        : data.userVulnerabilities.slice(0, 2).map((vuln =>
+                            <VulnerabilityCard  
+                                key={vuln.id}
+                                showDescription={true}
+                                    {...vuln}
+                            />
+                        ))
+                    }
                 </div>
                 <Button 
                     text="View Vulnerabilities" 
