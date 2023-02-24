@@ -10,6 +10,7 @@ import Dashboard from "views/Dashboard/DashboardPage";
 import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
 import { useMsal, useAccount } from "@azure/msal-react";
+import VulnerabilityEx from 'components/cards/VulnerabilityCard/vulnerabilityCard';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -82,6 +83,11 @@ function App() {
               isAuthenticated={isAuthenticated}
               user={user}
             />
+            <VulnerabilityEx 
+              library='TreeJS' 
+              version='2.13' 
+              severity='HIGH' 
+              description='asdf'/>
             { isAuthenticated ? 
               <Routes>
                 <Route path="/" element={ <Dashboard /> } />
