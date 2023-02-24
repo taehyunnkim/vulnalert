@@ -1,5 +1,6 @@
 import styles from './App.module.scss';
 
+import { EventType } from "@azure/msal-browser";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 
@@ -9,22 +10,22 @@ import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
-import { useIsAuthenticated } from "@azure/msal-react";
 import { useMsal } from "@azure/msal-react";
 import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
-  const { instance }  = useMsal();
   const location = useLocation();
   const navigate = useNavigate();
-
   const title = {
     "/": isAuthenticated ? "Dashboard" : "Home",
     "/vulnerabilities": "My Vulnerabilities",
     "/libraries": "My Libraries"
   }
+
+  // MSAL
+  const { instance }  = useMsal();
 
   const handleLogin = (loggedIn, loggedinUser) => {
     setAuthenticated(loggedIn);
@@ -69,7 +70,7 @@ function App() {
                 <Route path="/vulnerabilities" element={ <Vulnerabilities /> } />
               </Routes>
             :
-              <Landing handleLogin={handleLogin} />}
+              <Landing handleLogin={handleLogin} msal={instance} />}
           </div>
           <Footer />
         </div>

@@ -13,7 +13,6 @@ async function main(){
         given_name: String,
         family_name: String,
         email: String,
-        auth_time: Number,
         username: String,
         joined_date: Date
     })

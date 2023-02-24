@@ -10,7 +10,7 @@ export default function Landing(props) {
                 <ProductShowcase />
             </div>
             <div className={`${styles.panel} ${styles.rightpanel}`}>
-                <LoginForm handleLogin={props.handleLogin} />
+                <LoginForm handleLogin={props.handleLogin} msal={props.msal} />
             </div>
         </div>
     );
