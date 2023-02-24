@@ -97,7 +97,7 @@ function DashboardPage(props) {
                     }
                 </div>
                 <Button 
-                    text="View More" 
+                    text="View Vulnerabilities" 
                     type="primary"
                     onClick={() => {
                         navigate("vulnerabilities")
@@ -115,7 +115,7 @@ function DashboardPage(props) {
                     }
                 </div>
                 <Button 
-                    text="View More" 
+                    text="View Libraries" 
                     type="primary"
                     onClick={() => {
                         navigate("libraries")

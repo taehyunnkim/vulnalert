@@ -1,1 +1,117 @@
 @import "src/globalstyles.scss";
+
+label {
+    display: block;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: $gray;
+    margin-bottom: $content-margin;
+}
+
+.librariesContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.userlibraries, .register {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: $content-margin*2;
+}
+
+.register {
+    display: flex;
+    padding: $box-padding;
+}
+
+.searchBox {
+    position: relative;
+    margin-right: $content-margin;
+
+    img {
+        width: 20px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 14px;
+    }
+
+
+    input[type="text"] {
+        width: 340px;
+        padding-top: calc($box-padding/1.4);
+        padding-bottom: calc($box-padding/1.4);
+        padding-right: calc($box-padding/1.4);
+        padding-left: calc($box-padding/1.4 + 36px);
+        background-color: $lightgray;
+        box-sizing: border-box;
+        outline: none;
+        border: 1px solid $lightgray;
+        border-radius: $radius;
+        font-size: 1.4rem;
+
+        &:focus {
+            border: 1px solid $primary-color;
+        }
+    }
+}
+
+.versionBox {
+    position: relative;
+    margin-right: $content-margin;
+
+    img {
+        width: 20px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 14px;
+    }
+
+
+    input[type="text"] {
+        width: 240px;
+        padding-top: calc($box-padding/1.4);
+        padding-bottom: calc($box-padding/1.4);
+        padding-left: calc($box-padding/1.4);
+        padding-right: calc($box-padding/1.4 + 36px);
+        background-color: $lightgray;
+        box-sizing: border-box;
+        outline: none;
+        border: 1px solid $lightgray;
+        border-radius: $radius;
+        font-size: 1.4rem;
+        cursor: pointer;
+
+        &:focus {
+            border: 1px solid $primary-color;
+        }
+    }
+}
+
+.submitContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    label {
+        color: white;
+    }
+
+    button {
+        flex: 1;
+    }
+}
+
+.userlibraries {
+    flex: 1;
+    display: flex;
+    padding: $box-padding;
+    box-sizing: border-box;
+    margin-bottom: $content-margin*2;
+}
+
+.img {
+    flex: 1;
+}

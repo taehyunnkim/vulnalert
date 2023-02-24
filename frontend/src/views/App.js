@@ -56,7 +56,6 @@ function App() {
         fetch('/api/v1/users/logout').catch(e => {
           console.log(e);
         });
-;
       }).catch(e => {
           console.log(e);
       });
