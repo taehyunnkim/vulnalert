@@ -1,6 +1,5 @@
 import styles from './App.module.scss';
 
-import { EventType } from "@azure/msal-browser";
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 
@@ -10,8 +9,7 @@ import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
-import { useMsal } from "@azure/msal-react";
-import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
+import { useMsal, useAccount } from "@azure/msal-react";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -25,7 +23,22 @@ function App() {
   }
 
   // MSAL
-  const { instance }  = useMsal();
+  const { instance, accounts }  = useMsal();
+  const account = useAccount(accounts[0] || {});
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      if (account) {
+        handleLogin(true, {
+          given_name: account.idTokenClaims.given_name,
+          family_name: account.idTokenClaims.family_name,
+          email: account.idTokenClaims.email,
+          auth_time: account.idTokenClaims.auth_time,
+          username: account.idTokenClaims.preferred_username
+        });
+      }
+    }
+  }, [account]);
 
   const handleLogin = (loggedIn, loggedinUser) => {
     setAuthenticated(loggedIn);
@@ -35,8 +48,14 @@ function App() {
   const handleLogout = () => {
     if (process.env.NODE_ENV === "production") {
       instance.logoutPopup({
+        account: account,
         postLogoutRedirectUri: "/",
         mainWindowRedirectUri: "/"
+      }).then(res => {
+        fetch('/api/v1/users/logout').catch(e => {
+          console.log(e);
+        });
+;
       }).catch(e => {
           console.log(e);
       });

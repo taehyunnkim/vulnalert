@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useMsal, useAccount } from "@azure/msal-react";
-import { EventType } from "@azure/msal-browser";
 import { loginRequest } from "../../authConfig";
 
 import styles from "./LoginForm.module.scss";
@@ -15,21 +14,6 @@ function LoginForm({ handleLogin }) {
 
     useEffect(() => {
         if (process.env.NODE_ENV === "production") {
-            const callbackId = instance.addEventCallback(async (message) => {
-                if (message.eventType === EventType.LOGIN_SUCCESS ||
-                    message.eventType === EventType.ACQUIRE_TOKEN_SUCCESS) {
-                    handleLogin(true, {
-                        given_name: message.payload.idTokenClaims.given_name,
-                        family_name: message.payload.idTokenClaims.family_name,
-                        email: message.payload.idTokenClaims.email,
-                        auth_time: message.payload.idTokenClaims.auth_time,
-                        username: message.payload.idTokenClaims.preferred_username
-                    });
-                } else if (message.eventType === EventType.LOGOUT_SUCCESS) {
-                    // handle this case in the future
-                }
-            });
-
             if (account) {
                 instance.acquireTokenSilent({
                     scopes: ["User.Read"],
@@ -42,7 +26,17 @@ function LoginForm({ handleLogin }) {
                             'Authorization': `Bearer ${accessToken}`
                         }
                     }).then((response) => {
-                        console.log(response.json());
+                        if (response.ok) {
+                            handleLogin(true, {
+                                given_name: account.idTokenClaims.given_name,
+                                family_name: account.idTokenClaims.family_name,
+                                email: account.idTokenClaims.email,
+                                auth_time: account.idTokenClaims.auth_time,
+                                username: account.idTokenClaims.preferred_username
+                            });
+                        } else {
+                            // Handle Login failed...
+                        }
                     }).catch((error) => {
                         console.log(error);
                     });
@@ -50,15 +44,9 @@ function LoginForm({ handleLogin }) {
                     console.log("No refresh token. Please log in...");
                 });
             }
-
-            return () => {
-                if (callbackId) {
-                    instance.removeEventCallback(callbackId);
-                }
-            }
         }
 
-    }, [instance, ]);
+    }, [instance, account, handleLogin]);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
