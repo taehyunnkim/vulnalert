@@ -83,11 +83,6 @@ function App() {
               isAuthenticated={isAuthenticated}
               user={user}
             />
-            <VulnerabilityEx 
-              library='TreeJS' 
-              version='2.13' 
-              severity='HIGH' 
-              description='asdf'/>
             { isAuthenticated ? 
               <Routes>
                 <Route path="/" element={ <Dashboard /> } />
