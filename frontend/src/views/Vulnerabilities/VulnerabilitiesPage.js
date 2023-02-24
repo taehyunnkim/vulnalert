@@ -55,7 +55,7 @@ function VulnerabilitiesPage({ vulnerabilities }) {
                         <h2 className="subheader">SOURCE</h2>
                         { info && info.source.map(source => {
                             return(
-                                <div>
+                                <div key={source.name}>
                                     <h3>{source.name}</h3>
                                     <a 
                                         className={styles.source} 
