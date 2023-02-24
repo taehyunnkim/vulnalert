@@ -8,7 +8,7 @@ function LibrariesPage(props) {
         <div className={styles.librariesContainer}>
             <div className={`${styles.register} card-bg`}>
                 <div className={styles.searchContainer}>
-                    <label htmlFor="search">SEARCH LIBRARY</label>
+                    <label htmlFor="search" className="subheader">SEARCH LIBRARY</label>
                     <div className={styles.searchBox}>
                         <input
                             type="text"
@@ -20,7 +20,7 @@ function LibrariesPage(props) {
                     </div> 
                 </div>
                 <div className={styles.versionContainer}>
-                    <label htmlFor="version">VERSION</label>
+                    <label htmlFor="version" className="subheader">VERSION</label>
                     <div className={styles.versionBox}>
                         <input
                             type="text"
@@ -33,7 +33,7 @@ function LibrariesPage(props) {
                     </div> 
                 </div>
                 <div className={styles.submitContainer}>
-                    <label htmlFor="register">REGISTER</label>
+                    <label htmlFor="register" className="subheader">REGISTER</label>
                     <Button
                         text="Register Library" 
                         type="primary"

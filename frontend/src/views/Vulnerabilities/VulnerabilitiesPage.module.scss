@@ -1,1 +1,50 @@
 @import "src/globalstyles.scss";
+
+.vulnerabilitiesContainer {
+    margin-top: $content-margin*2;
+    flex: 1;
+    display: flex;
+    gap: $content-margin*2;
+}
+
+.uservulnerabilities {
+    padding: $box-padding*2;
+    flex: 1;
+}
+
+.infoContainer {
+    padding: $box-padding*2;
+    flex: 1;
+
+    h1 {
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: $primary-color;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+}
+
+.infoBox {
+    display: flex;
+    margin-top: $content-margin;
+    gap: $content-margin*3;
+    margin-bottom: $content-margin*2;
+}
+
+.descriptionBox {
+    margin-bottom: $content-margin*2;
+}
+
+.sourceBox {
+    margin-bottom: $content-margin;
+
+    a {
+        font-size: 1.4rem;
+        color: $secondary-color;
+        text-decoration: underline;
+    }
+}

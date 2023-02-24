@@ -6,15 +6,23 @@ $app-font : "Nunito", Gill Sans, sans-serif;
 
 // Colors
 $primary-color: #4429E9;
+$secondary-color: #715AFC;
 $primary-gradient: linear-gradient(268.43deg, #4429E9 -496.06%, #715AFC 51.33%);
 $red: #F25022;
-$gray: #919EAB; 
+$gray: #919EAB;
+$mdgray: #D9D9D9; 
 $lightgray: #F4F6F9; 
 
+// Color levels
+$critical: #793414;
+$high: #F25022;
+$moderate: #f2ba22;
+$low: #f2ef22;
 
 // Spacing
 $box-padding: 14px;
 $content-margin: 10px;
+$header-margin: 4px;
 
 // ETC
 $radius: 5px;
@@ -67,7 +75,7 @@ a {
     }
 
     box-shadow: $shadow;
-    border: 1px solid $lightgray;
+    border: 1px solid $mdgray;
     border-radius: $radius;
     background-color: white;
 }
@@ -86,4 +94,31 @@ a {
     background-color: $gray;
     border-radius: 50%;
     display: inline-block;
+}
+
+.subheader {
+    margin-bottom: $header-margin;
+    font-weight: 400;
+    font-size: 1.0rem;
+    color: $gray;
+}
+
+.critical {
+    color: $critical;
+}
+
+.high {
+    color: $high;
+}
+
+.moderate {
+    color: $moderate;
+}
+
+.low {
+    color: $low;
+}
+
+.active {
+    border: 1px solid $primary-color!important;
 }

@@ -6,41 +6,8 @@ import { useNavigate } from "react-router-dom";
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 import Button from "components/forms/Button/Button";
 
-function DashboardPage(props) {
+function DashboardPage({ data }) {
     const navigate = useNavigate()
-
-    // This is how our prop data is going to look like
-    const dummyData = {
-        userstat: {
-            registered: 0,
-            vulnerabilities: 0
-        },
-        userVulnerabilities: [],
-        userLibraries: [],
-        trend: [
-            {
-                id: 1,
-                data: [
-                    {
-                        x: "Jan, 1",
-                        y: 100,
-                    },
-                    {
-                        x: "Jan, 2",
-                        y: 80,
-                    },
-                    {
-                        x: "Jan, 3",
-                        y: 72,
-                    },
-                    {
-                        x: "Jan, 4",
-                        y: 90,
-                    }
-                ]
-            }
-        ]
-    };
 
     return (
         <div className={styles.dashboardcontainer}>
@@ -49,12 +16,12 @@ function DashboardPage(props) {
                     <h2>Your Summary</h2>
                     <div className={`${styles.userstatContainer}`}>
                         <div className={`${styles.userstatRegistered}`}>
-                            <h3>REGISTERED</h3>
-                            <p>{dummyData.userstat.registered}</p>
+                            <h3 className="subheader">REGISTERED</h3>
+                            <p className={`${styles.statNumber}`}>{data.userstat.registered}</p>
                         </div>
                         <div className={`${styles.userstatVulnerabilities}`}>
-                            <h3>VULNERABILITIES</h3>
-                            <p>{dummyData.userstat.vulnerabilities}</p>
+                            <h3 className="subheader">VULNERABILITIES</h3>
+                            <p className={`${styles.statNumber}`}>{data.userstat.vulnerabilities}</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +29,7 @@ function DashboardPage(props) {
                     <h2>Vulnerability Trends</h2>
                     <div className={`${styles.chart}`}>
                         <ResponsiveLine 
-                            data={dummyData.trend}
+                            data={data.trend}
                             margin={{ top: 14, right: 20, bottom: 20, left: 20 }}
                             xScale={{ type: 'point' }}
                             yScale={{
@@ -89,7 +56,7 @@ function DashboardPage(props) {
             <div className={`${styles.card} card-bg ${styles.vulnsummaryContainer}`}>
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
-                    {dummyData.userLibraries.length === 0 ?
+                    {data.userLibraries.length === 0 ?
                         <EmptyCard message="You have no vulnerabilities 🥹" /> :
                         <div className={`${styles.vulnsummaryResult}`}>
 
@@ -107,7 +74,7 @@ function DashboardPage(props) {
             <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
                 <h2>Your Libraries</h2>
                 <div className={`${styles.libsummary}`}>
-                    {dummyData.userLibraries.length === 0 ?
+                    {data.userLibraries.length === 0 ?
                         <EmptyCard message="It seems like you haven't registered any libraries." /> :
                         <div className={`${styles.libsummaryResult}`}>
 

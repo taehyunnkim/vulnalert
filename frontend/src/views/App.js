@@ -1,7 +1,8 @@
 import styles from './App.module.scss';
 
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useMsal, useAccount } from "@azure/msal-react";
 
 import NavBar from "components/layouts/navigation/NavBar/NavBar";
 import Footer from "components/layouts/navigation/Footer/Footer";
@@ -9,12 +10,15 @@ import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
-import { useMsal, useAccount } from "@azure/msal-react";
-import VulnerabilityEx from 'components/cards/VulnerabilityCard/vulnerabilityCard';
+// import VulnerabilityCard from 'components/cards/VulnerabilityCard/VulnerabilityCard';
+
+import dummyData from "dummyData";
+
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
+  const [data, setData] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
   const title = {
@@ -42,6 +46,14 @@ function App() {
       }
     }
   }, [account]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      // Get user data from our backend API
+    } else {
+      setData(dummyData);
+    }
+  }, [data]);
 
   // Based on the what we retrieve here from this callback function,
   // we set the authentication state.
@@ -90,9 +102,9 @@ function App() {
             />
             { isAuthenticated ? 
               <Routes>
-                <Route path="/" element={ <Dashboard /> } />
+                <Route path="/" element={ <Dashboard data={data} /> } />
                 <Route path="/libraries" element={ <Libraries/> } />
-                <Route path="/vulnerabilities" element={ <Vulnerabilities /> } />
+                <Route path="/vulnerabilities" element={ <Vulnerabilities vulnerabilities={data.userVulnerabilities}/> } />
               </Routes>
             :
               <Landing handleLogin={handleLogin} msal={instance} />}
