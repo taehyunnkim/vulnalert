@@ -2,14 +2,6 @@ import express from 'express';
 import fetch from 'node-fetch';
 var router = express.Router();
 
-// name: req.session.account.name,
-// username: req.session.account.username
-
-
-router.get('/batch-insert', function(req, res, next) {
-    // batch insert all libraries to the database
-});
-
 router.post('/register', async function(req, res) {
     const packageName = req.body.packageName
     if(req.session.isAuthenticated){
