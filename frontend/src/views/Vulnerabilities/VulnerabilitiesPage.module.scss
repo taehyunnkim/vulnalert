@@ -5,6 +5,7 @@
     flex: 1;
     display: flex;
     gap: $content-margin*2;
+    animation: fade-in 150ms $curve forwards;
 }
 
 .uservulnerabilities {
@@ -46,5 +47,30 @@
         font-size: 1.4rem;
         color: $secondary-color;
         text-decoration: underline;
+    }
+}
+
+.vulnHeaders {
+    display: flex;
+    align-items: center;
+    padding: 0 $box-padding;
+
+    h3 {
+        display: block;
+
+        &:nth-child(1) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(2) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(3) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
     }
 }

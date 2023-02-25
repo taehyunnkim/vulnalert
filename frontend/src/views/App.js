@@ -12,13 +12,14 @@ import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
 // import VulnerabilityCard from 'components/cards/VulnerabilityCard/VulnerabilityCard';
 
-import dummyData from "dummyData";
+import dummyData from "assets/dummyData";
 
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
-  const [data, setData] = useState({});
+  const [data , setData] = useState({});
+  const [userLibraries, setLibraries] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const title = {
@@ -52,6 +53,7 @@ function App() {
       // Get user data from our backend API
     } else {
       setData(dummyData);
+      setLibraries(dummyData.userLibraries);
     }
   }, [data]);
 
@@ -77,7 +79,6 @@ function App() {
       }).catch(e => {
           console.log(e);
       });
-
       setAuthenticated(false);
     } else {
       navigate("/");
@@ -102,8 +103,8 @@ function App() {
             />
             { isAuthenticated ? 
               <Routes>
-                <Route path="/" element={ <Dashboard data={data} /> } />
-                <Route path="/libraries" element={ <Libraries libraries={data ? data.userLibraries : {}} /> } />
+                <Route path="/" element={ <Dashboard data={data} userLibraries={userLibraries} /> } />
+                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} /> } />
                 <Route path="/vulnerabilities" element={ <Vulnerabilities data={data} /> } />
               </Routes>
             :

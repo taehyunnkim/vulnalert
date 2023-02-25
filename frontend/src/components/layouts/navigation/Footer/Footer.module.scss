@@ -7,8 +7,7 @@
     
     display: flex;
     align-items: center;
-    padding: $box-padding;
-    margin-bottom: 30px;
+    padding: $box-padding*2 $box-padding;
 }
 
 .brandname {

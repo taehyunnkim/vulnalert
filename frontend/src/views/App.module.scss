@@ -28,7 +28,7 @@
 .background {
   position: fixed;
   height: 100vh;
-  width: 1700px;
+  width: 2000px;
   left: 50%;
   transform-origin: center;
   transform: translate(-50%) $background-rotate;
@@ -61,4 +61,20 @@
   height: 200%;
   width: $background-bar-width;
   background-image: $background-side-color;
+}
+
+@include media(">tablet", "<desktop") {
+  .appContainer {
+    width: calc($tablet - 200px);
+  }
+
+  .background {
+    width: 1400px;
+  }
+}
+
+@include media(">phone", "<tablet") {
+  .appContainer {
+    width: $phone;
+  }
 }

@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/info441-wi23/final-project-vulnerability-alerter#readme",
   "dependencies": {
-    "react-switch": "^7.0.0"
+    "react-switch": "^7.0.0",
+    "react-transition-group": "^4.4.5"
   }
 }
