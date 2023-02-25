@@ -2,8 +2,9 @@ import styles from "./LibrariesPage.module.scss";
 
 import Button from 'components/forms/Button/Button';
 import EmptyCard from 'components/cards/EmptyCard/EmptyCard';
+import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
-function LibrariesPage(props) {
+function LibrariesPage({ libraries }) {
     return (
         <div className={styles.librariesContainer}>
             <div className={`${styles.register} card-bg`}>
@@ -41,7 +42,15 @@ function LibrariesPage(props) {
                 </div>
             </div>
             <div className={`${styles.userlibraries} card-bg`}>
-                <EmptyCard message="Register libraries to set up alerts!" />
+                {
+                    libraries === undefined || libraries.length === 0 
+                    ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
+                    : libraries.map((library =>
+                        <LibraryCard 
+                            {...library}
+                        />
+                    ))
+                }
             </div>
         </div>
     );

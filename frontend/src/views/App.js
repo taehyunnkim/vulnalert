@@ -103,8 +103,8 @@ function App() {
             { isAuthenticated ? 
               <Routes>
                 <Route path="/" element={ <Dashboard data={data} /> } />
-                <Route path="/libraries" element={ <Libraries/> } />
-                <Route path="/vulnerabilities" element={ <Vulnerabilities vulnerabilities={data.userVulnerabilities}/> } />
+                <Route path="/libraries" element={ <Libraries libraries={data ? data.userLibraries : {}} /> } />
+                <Route path="/vulnerabilities" element={ <Vulnerabilities data={data} /> } />
               </Routes>
             :
               <Landing handleLogin={handleLogin} msal={instance} />}

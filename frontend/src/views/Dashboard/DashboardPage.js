@@ -18,39 +18,50 @@ function DashboardPage({ data }) {
                     <div className={`${styles.userstatContainer}`}>
                         <div className={`${styles.userstatRegistered}`}>
                             <h3 className="subheader">REGISTERED</h3>
-                            <p className={`${styles.statNumber}`}>{data.userLibraries.length}</p>
+                            <p className={`${styles.statNumber}`}>
+                                {
+                                    data.userLibraries ? data.userLibraries.length : 0
+                                }
+                            </p>
                         </div>
                         <div className={`${styles.userstatVulnerabilities}`}>
                             <h3 className="subheader">VULNERABILITIES</h3>
-                            <p className={`${styles.statNumber}`}>{data.userVulnerabilities.length}</p>
+                            <p className={`${styles.statNumber}`}>
+                                {
+                                    data.userVulnerabilities ? data.userVulnerabilities.length : 0
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div className={`${styles.card} card-bg ${styles.reportstat}`}>
                     <h2>Vulnerability Trends</h2>
                     <div className={`${styles.chart}`}>
-                        <ResponsiveLine 
-                            data={data.trend}
-                            margin={{ top: 14, right: 20, bottom: 20, left: 20 }}
-                            xScale={{ type: 'point' }}
-                            yScale={{
-                                type: 'linear',
-                                min: '0',
-                                max: 'auto',
-                                stacked: true,
-                                reverse: false
-                            }}
-                            axisLeft={null}
-                            colors={{ scheme: 'category10' }}
-                            curve="catmullRom"
-                            useMesh={true}
-                            pointSize={10}
-                            pointColor={{ theme: 'background' }}
-                            pointBorderWidth={2}
-                            pointBorderColor={{ from: 'serieColor' }}
-                            enableArea={true}
-                            areaBaselineValue={0}
-                        />
+                        {
+                            data.trend
+                            ? <ResponsiveLine 
+                                data={data.trend}
+                                margin={{ top: 14, right: 20, bottom: 20, left: 20 }}
+                                xScale={{ type: 'point' }}
+                                yScale={{
+                                    type: 'linear',
+                                    min: '0',
+                                    max: 'auto',
+                                    stacked: true,
+                                    reverse: false
+                                }}
+                                axisLeft={null}
+                                colors={{ scheme: 'category10' }}
+                                curve="catmullRom"
+                                useMesh={true}
+                                pointSize={10}
+                                pointColor={{ theme: 'background' }}
+                                pointBorderWidth={2}
+                                pointBorderColor={{ from: 'serieColor' }}
+                                enableArea={true}
+                                areaBaselineValue={0}
+                            /> : ""
+                        }
                     </div>
                 </div>
             </div>
@@ -58,7 +69,7 @@ function DashboardPage({ data }) {
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
                     {
-                        data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0 
+                        data.userVulnerabilities == undefined || data.userVulnerabilities.length === 0
                         ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
                         : data.userVulnerabilities.slice(0, 2).map((vuln =>
                             <VulnerabilityCard  

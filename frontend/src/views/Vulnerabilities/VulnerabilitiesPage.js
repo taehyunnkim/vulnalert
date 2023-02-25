@@ -5,7 +5,7 @@ import styles from "./VulnerabilitiesPage.module.scss";
 
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 
-function VulnerabilitiesPage({ vulnerabilities }) {
+function VulnerabilitiesPage({ data }) {
     const [showInfo, setShowInfo] = useState(false);
     const [info, setInfo] = useState({});
 
@@ -21,9 +21,9 @@ function VulnerabilitiesPage({ vulnerabilities }) {
         <div className={styles.vulnerabilitiesContainer}>
             <div className={`${styles.uservulnerabilities} card-bg`}>
                 {
-                    vulnerabilities === undefined || vulnerabilities.length === 0 
+                    data.vulnerabilities === undefined || data.vulnerabilities.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
-                    : vulnerabilities.map((vuln =>
+                    : data.vulnerabilities.map((vuln =>
                         <VulnerabilityCard 
                             handleClick={handleClick} 
                             key={vuln.id}

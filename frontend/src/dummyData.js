@@ -45,31 +45,31 @@ const dummyData = {
     ],
     userLibraries: [
         {
-            library: "node.js",
+            name: "node.js",
             version: "14.19.0",
             alert_enable: true,
             register_date: "Jan 01, 2023"
         },
         {
-            library: "rangy",
+            name: "rangy",
             version: "1.3.0",
             alert_enable: true,
             register_date: "Jan 02, 2023"
         },
         {
-            library: "Sequelize",
+            name: "Sequelize",
             version: "6.29.0",
             alert_enable: true,
             register_date: "Jan 03, 2023"
         },
         {
-            library: "react",
+            name: "react",
             version: "18.2.0",
             alert_enable: false,
             register_date: "Jan 14, 2023"
         },
         {
-            library: "web-vitals",
+            name: "web-vitals",
             version: "2.1.4",
             alert_enable: false,
             register_date: "Jan 19, 2023"
