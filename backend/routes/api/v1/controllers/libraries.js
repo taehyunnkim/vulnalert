@@ -2,12 +2,8 @@ import express from 'express';
 
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    if (req.session.isAuthenticated) {
-        
-    } else {
-        
-    }
+router.get('/batch-insert', function(req, res, next) {
+    // batch insert all libraries to the database
 });
 
 export default router;
