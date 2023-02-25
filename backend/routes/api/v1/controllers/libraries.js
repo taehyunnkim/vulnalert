@@ -1,11 +1,7 @@
 import express from 'express';
 import fetch from 'node-fetch';
+
 var router = express.Router();
-
-router.get('/batch-insert', function(req, res, next) {
-    // batch insert all libraries to the database
-});
-
 
 router.get('/versions/:packageName', async function(req, res, next) {
     const packageName = req.params.packageName
