@@ -48,3 +48,28 @@
         text-decoration: underline;
     }
 }
+
+.vulnHeaders {
+    display: flex;
+    align-items: center;
+    padding: 0 $box-padding;
+
+    h3 {
+        display: block;
+
+        &:nth-child(1) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(2) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(3) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+    }
+}

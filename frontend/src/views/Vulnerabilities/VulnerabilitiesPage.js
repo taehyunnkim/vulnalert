@@ -23,15 +23,22 @@ function VulnerabilitiesPage({ data }) {
                 {
                     data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
-                    : data.userVulnerabilities.map((vuln =>
-                        <VulnerabilityCard 
-                            handleClick={handleClick} 
-                            key={vuln.id}
-                            showDescription={false}
-                            active={showInfo && vuln.id === info.id}
-                                {...vuln}
-                        />
-                    ))
+                    : <div className={styles.userVulnerabilitiesContainer}>
+                        <div className={styles.vulnHeaders}>
+                            <h3 className="subheader">NAME</h3>
+                            <h3 className="subheader">VERSION</h3>
+                            <h3 className="subheader">SEVERITY</h3>
+                        </div>
+                        {data.userVulnerabilities.slice(0, 2).map((vuln =>
+                            <VulnerabilityCard 
+                                handleClick={handleClick} 
+                                key={vuln.id}
+                                showDescription={false}
+                                active={showInfo && vuln.id === info.id}
+                                    {...vuln}
+                            />
+                        ))}
+                    </div>
                 }
             </div>
             { showInfo && 

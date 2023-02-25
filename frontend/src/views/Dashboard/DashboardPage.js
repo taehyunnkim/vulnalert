@@ -71,13 +71,21 @@ function DashboardPage({ data }) {
                     {
                         data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0
                         ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
-                        : data.userVulnerabilities.slice(0, 2).map((vuln =>
-                            <VulnerabilityCard  
-                                key={vuln.id}
-                                showDescription={true}
+                        : <div className={styles.userVulnerabilitiesContainer}>
+                            <div className={styles.vulnHeaders}>
+                                <h3 className="subheader">NAME</h3>
+                                <h3 className="subheader">VERSION</h3>
+                                <h3 className="subheader">SEVERITY</h3>
+                                <h3 className="subheader">DESCRIPTION</h3>
+                            </div>
+                            {data.userVulnerabilities.slice(0, 2).map((vuln =>
+                                <VulnerabilityCard  
+                                    key={vuln.id}
+                                    showDescription={true}
                                     {...vuln}
-                            />
-                        ))
+                                />
+                            ))}
+                        </div>
                     }
                 </div>
                 <Button 
