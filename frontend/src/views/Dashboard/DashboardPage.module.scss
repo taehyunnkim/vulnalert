@@ -95,3 +95,9 @@
         }
     }
 }
+
+.libsummaryResult {
+    display: flex;
+    margin: $content-margin 0;
+    justify-content: space-between;
+}

@@ -1,0 +1,58 @@
+@import "src/globalstyles.scss";
+
+.cardContainer {
+    border-radius: $radius;
+    width: 230px;
+    height: 140px;
+    border: 1px solid $lightgray;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.cardTop {
+    border-radius: $radius $radius 0 0;
+    flex: 1;
+    padding: $box-padding $box-padding*2;
+}
+
+.cardTopEnabled {
+    background-color: $secondary-color;
+    color: white;
+}
+
+.cardTopDisabled {
+    background-color: $gray;
+    color: white;
+}
+
+
+.cardBottom {
+    flex: 1;
+    padding: $box-padding $box-padding*2;
+    display: flex;
+}
+
+.switchContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.alertContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.alertHeader {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+
+    img {
+        margin-right: 4px;
+    }
+}

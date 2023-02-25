@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 import Button from "components/forms/Button/Button";
 import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
+import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
 function DashboardPage({ data }) {
     const navigate = useNavigate()
@@ -98,16 +99,18 @@ function DashboardPage({ data }) {
             </div>
             <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
                 <h2>Your Libraries</h2>
-                <div className={`${styles.libsummary}`}>
-                    <EmptyCard message="It seems like you haven't registered any libraries." />
-                    {/* {
-                        data.userLibraries.length === 0 
-                        ? <EmptyCard message="It seems like you haven't registered any libraries." />
-                        : <div className={`${styles.libsummaryResult}`}>
-
-                        </div>    
-                    } */}
-                </div>
+                {
+                    data.userLibraries === undefined || data.userLibraries.length === 0
+                    ? <EmptyCard message="It seems like you haven't registered any libraries." />
+                    : <div className={styles.libsummaryResult}>
+                        {data.userLibraries.slice(0, 3).map((lib =>
+                            <LibraryCard  
+                                key={lib.name}
+                                {...lib}
+                            />
+                        ))}
+                    </div>    
+                }
                 <Button 
                     text="View Libraries" 
                     type="primary"

@@ -41,12 +41,18 @@ function LibrariesPage({ libraries }) {
                     />
                 </div>
             </div>
-            <div className={`${styles.userlibraries} card-bg`}>
+            <div 
+                className={`
+                    ${styles.userlibraries} 
+                    card-bg 
+                    ${libraries === undefined || libraries.length === 0 ? styles.empty : styles.grid} 
+                `}>
                 {
                     libraries === undefined || libraries.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
                     : libraries.map((library =>
                         <LibraryCard 
+                            key={library.name}
                             {...library}
                         />
                     ))

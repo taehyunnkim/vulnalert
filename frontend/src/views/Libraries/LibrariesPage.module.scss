@@ -101,11 +101,15 @@ label {
 }
 
 .userlibraries {
-    flex: 1;
-    display: flex;
     padding: $box-padding;
     box-sizing: border-box;
     margin-bottom: $content-margin*2;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $box-padding;
 }
 
 .img {
