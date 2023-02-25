@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
 import styles from "./VulnerabilitiesPage.module.scss";
@@ -8,6 +8,12 @@ import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 function VulnerabilitiesPage({ data }) {
     const [showInfo, setShowInfo] = useState(false);
     const [info, setInfo] = useState({});
+
+    useEffect(() => {
+        if (data.userVulnerabilities !== undefined && data.userVulnerabilities.length > 0) {
+            handleClick(data.userVulnerabilities[0]);
+        }
+    }, []);
 
     const handleClick = (infoData) => {
         if (infoData.id === info.id || !showInfo) {
