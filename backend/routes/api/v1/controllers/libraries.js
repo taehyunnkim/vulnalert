@@ -4,40 +4,47 @@ import fetch from 'node-fetch';
 var router = express.Router();
 
 router.get('/versions/:packageName', async function(req, res, next) {
-    const packageName = req.params.packageName
-    if (packageName)  {
-        const response = await fetch(`https://registry.npmjs.org/:${packageName}`)
-        const data = await response.json();
-        if (data && data.versions) {
-            let versionKeys = Object.keys(data.versions);
-        }
+    if (req.session.isAuthenticated) {
+        const packageName = req.params.packageName
+        try {
+            
+            req.models.Library.findOne({ name: packageName }, async (err, library) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        "error": err.message,
+                        "status": "error"
+                    }) 
+                }else {
+                    if(library.versions.length === 0) {
+                        let response = await fetch(`https://registry.npmjs.org/${packageName}`)
+                        let data = await response.json()
+                        let versionKeys = Object.keys(data.versions)
+                        library.versions = versionKeys 
+                        library.save()
+                    }
 
-        console.log("version key :" + versionKeys)
-
-
-        let currPackage = await req.models.Library.find({ library: packageName }, (err, library) => {
-            if (err) {
-                console.log(err);
-                res.status(500).json({
-                    "error": err.message,
-                    "status": "error"
-                }) 
-            } else if (!library) {
-                res.status(200).json({versionKeys} );
-            } else {
-                res.status(200).json({
-                    versions: library.versions
-                });
-            }
-        })
-
+                    res.status(200).json({
+                        versions: library.versions
+                    });
+                }
+            })
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(
+                {
+                    status: "error",
+                    error: err
+                }
+            )
+        }    
     } else {
-        res.status(400).json(
-            {
-                status: "error",
-                error: "User is not logged in"
-             }
-        )
+            res.status(400).json(
+                {
+                    status: "error",
+                    error: "User is not logged in"
+                    }
+                )
     }
 });
 
