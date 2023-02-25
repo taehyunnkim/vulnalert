@@ -28,6 +28,7 @@ router.post('/ms-login', async function(req, res, next) {
         req.session.isAuthenticated = true;
         req.session.email = data.mail;
         req.session.accessToken = accessToken;
+   
     
         try {
             req.models.Users.findOne({ email: data.mail }, (err, user) => {
@@ -39,10 +40,12 @@ router.post('/ms-login', async function(req, res, next) {
                     }) 
                 } else if (!user) {
                     newUser.save();
+                    req.session.userID = newUser._id
                     res.status(200).json({
                         "status": "success"
                     });
                 } else {
+                    req.session.userID = user._id
                     res.status(200).json({
                         "status": "success"
                     });
