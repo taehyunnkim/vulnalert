@@ -1,7 +1,7 @@
 import styles from "./LibrariesPage.module.scss";
 
 import { useEffect, useState } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 
 import Button from 'components/forms/Button/Button';
 import EmptyCard from 'components/cards/EmptyCard/EmptyCard';
@@ -9,6 +9,8 @@ import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
 function LibrariesPage({ userLibraries, setUserLibraries }) {
     const [libraries, setLibraries] = useState([]);
+    const [libraryIsLoading, setLibraryIsLoading] = useState(false);
+    const [versionIsLoading, setVersionIsLoading] = useState(false);
     const [versions, setVersions] = useState([]);
     const [selectedLibrary, setSelectedLibrary] = useState("");
     const [selectedVersion, setSelectedVersion] = useState("");
@@ -23,7 +25,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                 borderColor: "#4429E9",
             },
             cursor: "pointer",
-            backgroundColor: state.isFocused ? "white" : "#F4F6F9",
+            backgroundColor: state.isDisabled ? "#F4F6F9" : "white",
             fontSize: "3.2rem"
         }),
         option: (provided, state) => ({
@@ -38,7 +40,9 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
 
     useEffect(() => {
         if (process.env.NODE_ENV === "production") {
-            // get all versions from backend API
+            setLibraryIsLoading(true);
+            // get all libraries from backend API
+            setLibraryIsLoading(false);
         } else {
             import("assets/names").then(names => {
                 let data = names.default.map(name => {
@@ -55,7 +59,9 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
 
     useEffect(() => {
         if (process.env.NODE_ENV === "production") {
-            // get all libraries from backend API
+            setVersionIsLoading(true);
+            // get all versions from backend API
+            setVersionIsLoading(false);
         } else {
             import("assets/versions").then(versions => {
                 let data = versions.default.map(name => {
@@ -103,6 +109,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                         <Select 
                             options={libraries} 
                             styles={customStyles}
+                            isLoading={libraryIsLoading}
                             placeholder="Search for a library..."
                             onChange={handleLibrarySelect}
                         />
@@ -111,10 +118,12 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                 <div className={styles.versionContainer}>
                     <label htmlFor="version" className="subheader">VERSION</label>
                     <Select 
+                        isLoading={versionIsLoading}
                         options={versions} 
                         styles={customStyles}
                         placeholder="Search version..."
                         onChange={handleVersionSelect}
+                        isDisabled={selectedLibrary.length === 0}
                     />
                 </div>
                 <div className={styles.submitContainer}>
