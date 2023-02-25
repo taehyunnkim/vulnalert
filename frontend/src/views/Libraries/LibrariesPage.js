@@ -1,11 +1,13 @@
 import styles from "./LibrariesPage.module.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, version } from "react";
 import Select from "react-select";
+import { debounce } from "lodash";
 
 import Button from 'components/forms/Button/Button';
 import EmptyCard from 'components/cards/EmptyCard/EmptyCard';
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
+import customStyles from "./LibrariesInputStyles";
 
 function LibrariesPage({ userLibraries, setUserLibraries }) {
     const [libraries, setLibraries] = useState([]);
@@ -14,67 +16,82 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     const [versions, setVersions] = useState([]);
     const [selectedLibrary, setSelectedLibrary] = useState("");
     const [selectedVersion, setSelectedVersion] = useState("");
+    const [inputValue, setInputValue] = useState("");
 
-    const customStyles = {
-        control: (provided, state) => ({
-            ...provided,
-            outline: "none",
-            boxShadow: state.isFocused ? "rgba(50, 50, 93, 0.20) 0px 2px 3px -1px, rgba(0, 0, 0, 0.25) 0px 1px 3px -1px" : "none",
-            border: state.isFocused ? "1px solid #4429E9" : "1px solid #919EAB",
-            '&:hover': {
-                borderColor: "#4429E9",
-            },
-            cursor: "pointer",
-            backgroundColor: state.isDisabled ? "#F4F6F9" : "white",
-            fontSize: "3.2rem"
-        }),
-        option: (provided, state) => ({
-            ...provided,
-            fontSize: "1.4rem",
-            backgroundColor: state.isSelected ? "#4429E9" : "white",
-        }),
-        singleValue: (provided, state) => ({
-            ...provided,
-        }),
-    };
-
-    useEffect(() => {
+    const fetchLibraryData = (inputValue) => {
+        if (inputValue.length === 0) {
+            setLibraries([]);
+            return;
+        }
+        
         if (process.env.NODE_ENV === "production") {
             setLibraryIsLoading(true);
-            // get all libraries from backend API
+            fetch("api/v1/libraries/searchPrefix/" + inputValue)
+                .then(response => response.json())
+                .then(data => {
+                    data = data.map(name => {
+                        return { 
+                                value: name,
+                                label: name
+                            }
+                    });
+                
+                    setLibraries(data);
+                    setLibraryIsLoading(false);
+                })
+                .catch(error => console.error(error));
             setLibraryIsLoading(false);
         } else {
-            import("assets/names").then(names => {
-                let data = names.default.map(name => {
-                   return { 
-                        value: name,
-                        label: name
-                    }
-                })
-
+            import("assets/names")
+            .then(names => {
+                let data = names.default;
+                data = data.filter(name => {
+                    return name.substring(0, inputValue.length) === inputValue;
+                }).map(name => {
+                        return { 
+                                value: name,
+                                label: name
+                            }
+                    });
+                
                 setLibraries(data);
+                setLibraryIsLoading(false);
             });
         }
-    }, []);
+    };
 
-    useEffect(() => {
-        if (process.env.NODE_ENV === "production") {
-            setVersionIsLoading(true);
-            // get all versions from backend API
-            setVersionIsLoading(false);
+    const debouncedFetchOptions = debounce(fetchLibraryData, 500);
+
+    // useEffect(() => {
+    //     if (process.env.NODE_ENV === "production") {
+    //         setVersionIsLoading(true);
+    //         // get all versions from backend API
+    //         setVersionIsLoading(false);
+    //     } else {
+    //         console.log("importing...")
+    //         import("assets/versions").then(versions => {
+    //             let data = versions.default.map(name => {
+    //                return { 
+    //                     value: name,
+    //                     label: name
+    //                 }
+    //             })
+
+    //             setVersions(data);
+    //         });
+    //     }
+    // }, [libraries]);
+
+    const handleInputChange = async (value) => {
+        setInputValue(value);
+        if (value.length === 0) {
+            setLibraryIsLoading(false);
+            setLibraries([]);
         } else {
-            import("assets/versions").then(versions => {
-                let data = versions.default.map(name => {
-                   return { 
-                        value: name,
-                        label: name
-                    }
-                })
-
-                setVersions(data);
-            });
+            setLibraryIsLoading(true);
+            debouncedFetchOptions(value);
         }
-    }, [libraries]);
+    };
 
     const handleRegister = () => {
         if (process.env.NODE_ENV === "production") {
@@ -100,6 +117,11 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
         setSelectedVersion(newVersion.value);
     };
 
+    const handleLibraryBlur = () => {
+        console.log("onblur")
+        setLibraryIsLoading(false);
+      };
+
     return (
         <div className={styles.librariesContainer}>
             <div className={`${styles.register} card-bg`}>
@@ -112,6 +134,9 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                             isLoading={libraryIsLoading}
                             placeholder="Search for a library..."
                             onChange={handleLibrarySelect}
+                            onInputChange={handleInputChange}
+                            inputValue={inputValue}
+                            onBlur={handleLibraryBlur}
                         />
                     </div>
                 </div>
