@@ -62,3 +62,17 @@ label {
 .img {
     flex: 1;
 }
+
+@include media(">tablet", "<desktop") {
+    .searchInputContainer {
+        width: 250px;
+    }
+
+    .versionContainer {
+        width: 160px;
+    }
+    
+}
+
+@include media(">phone", "<tablet") {
+}
