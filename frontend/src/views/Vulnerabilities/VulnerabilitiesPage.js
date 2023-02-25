@@ -21,9 +21,9 @@ function VulnerabilitiesPage({ data }) {
         <div className={styles.vulnerabilitiesContainer}>
             <div className={`${styles.uservulnerabilities} card-bg`}>
                 {
-                    data.vulnerabilities === undefined || data.vulnerabilities.length === 0 
+                    data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
-                    : data.vulnerabilities.map((vuln =>
+                    : data.userVulnerabilities.map((vuln =>
                         <VulnerabilityCard 
                             handleClick={handleClick} 
                             key={vuln.id}

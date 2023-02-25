@@ -69,7 +69,7 @@ function DashboardPage({ data }) {
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
                     {
-                        data.userVulnerabilities == undefined || data.userVulnerabilities.length === 0
+                        data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0
                         ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
                         : data.userVulnerabilities.slice(0, 2).map((vuln =>
                             <VulnerabilityCard  
