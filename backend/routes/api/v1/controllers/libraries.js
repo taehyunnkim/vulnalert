@@ -1,5 +1,52 @@
 import express from 'express';
 import fetch from 'node-fetch';
+var router = express.Router();
+
+// name: req.session.account.name,
+// username: req.session.account.username
+
+
+router.get('/batch-insert', function(req, res, next) {
+    // batch insert all libraries to the database
+});
+
+router.post('/register', async function(req, res) {
+    const packageName = req.body.packageName
+    if(req.session.isAuthenticated){
+        try{
+            let userID = req.session.userID
+
+            req.models.Library.findOne({ name: packageName }, async (err, library) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        "error": err.message,
+                        "status": "error"
+                    }) 
+                }else {
+                    const registerLibrary = new req.models.UserLibrary({
+                        users: userID,
+                        library: library._id,
+                        version: req.body.version,
+                        created_date: new Date(),
+                        alert_enabled: true
+                    })
+
+                    await registerLibrary.save()
+                    res.status(200).json({"status": "sucess"})
+                }
+            })
+        } catch(error) {
+            console.log("Error connecting to db", error)
+            res.status(500).json({"status": "error", "error": error})
+        }
+    } else {
+        res.status(401).json({
+            status: "error",
+            error: "not logged in"
+        });
+    }
+})
 
 var router = express.Router();
 
