@@ -2,11 +2,11 @@
 
 .cardContainer {
     border-radius: $radius;
-    width: 230px;
+    box-sizing: border-box;
+    width: 100%;
     height: 140px;
-    border: 1px solid $lightgray;
+    border: 1px solid $mdgray;
     display: flex;
-    margin: 0 auto;
     flex-direction: column;
 }
 
@@ -34,7 +34,6 @@
 }
 
 .switchContainer {
-    flex: 1;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -55,4 +54,10 @@
     img {
         margin-right: 4px;
     }
+}
+
+@include media(">tablet", "<desktop") {
+}
+
+@include media(">phone", "<tablet") {
 }

@@ -2,16 +2,18 @@
 
 .dashboardcontainer {
     margin-top: $content-margin*2;
+    animation: fade-in 150ms $curve forwards;
 }
 
 .statNumber {
     font-size: 4.6rem;
     font-weight: 300;
+    margin-top: -6px;
 }
 
 .card {
     box-sizing: border-box;
-    padding: $box-padding*2;
+    padding: $box-padding $box-padding*2;
     margin-bottom: $content-margin*2;
     background-color: white;
     box-shadow: $shadow;
@@ -33,6 +35,7 @@
 
 .reportstat {
     flex: 5;
+    width: 100%;
 }
 
 .vulnsummaryContainer, .libsummaryContainer {
@@ -63,7 +66,8 @@
 }
 
 .chart {
-    height: 100px;
+    height: 80px;
+    width: 100%;
 }
 
 
@@ -97,7 +101,28 @@
 }
 
 .libsummaryResult {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    overflow: hidden;
+    grid-auto-rows: 0;
+    row-gap: $box-padding;
+    column-gap: $box-padding;
     margin: $content-margin 0;
     justify-content: space-between;
+}
+
+@include media(">tablet", "<desktop") {
+    .statNumber {
+        font-size: 5rem;
+        margin-top: -10px;
+    }
+
+    .libsummaryResult {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+    }
+}
+
+@include media(">phone", "<tablet") {
 }

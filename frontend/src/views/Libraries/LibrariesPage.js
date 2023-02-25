@@ -44,7 +44,6 @@ function LibrariesPage({ libraries }) {
             <div 
                 className={`
                     ${styles.userlibraries} 
-                    card-bg 
                     ${libraries === undefined || libraries.length === 0 ? styles.empty : styles.grid} 
                 `}>
                 {

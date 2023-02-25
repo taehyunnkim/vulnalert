@@ -1,7 +1,7 @@
 import styles from "./LibraryCard.module.scss";
 
 import { useState } from 'react';
-import Toggle from 'react-styled-toggle';
+import Switch from 'react-switch';
 
 function LibraryCard(props) {
   const [alertEnabled, setAlertEnabled] = useState(props.alert_enabled);
@@ -29,14 +29,15 @@ function LibraryCard(props) {
             <h2 className={"subheader"}>ALERT</h2>
           </div>
           <div className={styles.switchContainer}>
-            <Toggle
-              defaultChecked={alertEnabled}
-              sliderWidth={8}
-              sliderHeight={8}
-              backgroundColorChecked="#715AFC"
+            <Switch
+              checked={alertEnabled}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              onColor="#715AFC"
               width={42}
               height={20}
-              onChange={onSwitchToggle}
+              handleDiameter={12}
+              onChange={() => onSwitchToggle()}
             />
           </div>
         </div>

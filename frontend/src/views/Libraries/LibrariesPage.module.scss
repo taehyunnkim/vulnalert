@@ -8,6 +8,7 @@ label {
     display: flex;
     flex-direction: column;
     flex: 1;
+    animation: fade-in 150ms $curve forwards;
 }
 
 .userlibraries, .register {
@@ -101,7 +102,6 @@ label {
 }
 
 .userlibraries {
-    padding: $box-padding;
     box-sizing: border-box;
     margin-bottom: $content-margin*2;
 }
@@ -109,7 +109,9 @@ label {
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    align-items: center;
     row-gap: $box-padding;
+    column-gap: $box-padding;
 }
 
 .img {

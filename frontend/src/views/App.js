@@ -77,7 +77,6 @@ function App() {
       }).catch(e => {
           console.log(e);
       });
-
       setAuthenticated(false);
     } else {
       navigate("/");

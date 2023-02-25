@@ -5,6 +5,7 @@
     flex: 1;
     display: flex;
     gap: $content-margin*2;
+    animation: fade-in 150ms $curve forwards;
 }
 
 .uservulnerabilities {

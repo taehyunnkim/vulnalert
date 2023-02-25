@@ -1,3 +1,5 @@
+@import "./media.scss";
+
 $DEBUG: false;
 
 // Font Familes
@@ -21,7 +23,7 @@ $low: #f2ef22;
 
 // Spacing
 $box-padding: 14px;
-$content-margin: 10px;
+$content-margin: 12px;
 $header-margin: 4px;
 
 // ETC
@@ -29,14 +31,50 @@ $radius: 5px;
 $shadow: rgba(50, 50, 93, 0.20) 0px 2px 3px -1px, rgba(0, 0, 0, 0.25) 0px 1px 3px -1px;
 $app-margin-top: 50px;
 $background-rotate: rotate(40deg);
-$background-bar-width: 250px;
+$background-bar-width: 400px;
 $background-side-color: linear-gradient(90deg, #4429E9, #7c6aef);
 $background-middle-color: #d8dde2;
+
+$desktop: 1024px;
+$tablet: 768px;
+$phone: 640px;
+$sm-phone: 320px;
+
+// Screen Size
+$breakpoints: (sm-phone: $sm-phone,
+               phone: $phone, 
+               tablet: $tablet, 
+               desktop: $desktop) !default;
+
+//Keyframes
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+// Curves
+$curve: cubic-bezier(0.42, 0, 1, 1);
 
 // Default Config
 * {
     font-family: $app-font;
     font-size: 62.5%;
+}
+
+@include media(">tablet", "<desktop") {
+    * {
+        font-size: 54%;
+    }
+}
+
+@include media(">phone", "<tablet") {
+    * {
+        font-size: 40%;
+    }
 }
 
 body, h1, h2, h3, p {
@@ -49,11 +87,11 @@ h1 {
 }
 
 h2 {
-    font-size: 1.8rem; 
+    font-size: 1.6rem; 
 }
 
 h3 {
-    font-size: 1.6rem; 
+    font-size: 1.4rem; 
 }
 
 p {

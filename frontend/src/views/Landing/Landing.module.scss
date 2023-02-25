@@ -24,3 +24,11 @@
     padding-bottom: $box-padding * 4;
     padding-left: $box-padding * 2;
 }
+
+@include media(">tablet", "<desktop") {
+
+}
+
+@include media(">phone", "<tablet") {
+    
+}
