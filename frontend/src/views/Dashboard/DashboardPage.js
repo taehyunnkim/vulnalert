@@ -8,7 +8,7 @@ import Button from "components/forms/Button/Button";
 import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
-function DashboardPage({ data }) {
+function DashboardPage({ data, userLibraries }) {
     const navigate = useNavigate()
 
     return (
@@ -21,7 +21,7 @@ function DashboardPage({ data }) {
                             <h3 className="subheader">REGISTERED</h3>
                             <p className={`${styles.statNumber}`}>
                                 {
-                                    data.userLibraries ? data.userLibraries.length : 0
+                                    userLibraries.length
                                 }
                             </p>
                         </div>

@@ -22,69 +22,14 @@ label {
     padding: $box-padding;
 }
 
-.searchBox {
-    position: relative;
+.searchInputContainer {
+    width: 340px;
     margin-right: $content-margin;
-
-    img {
-        width: 20px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 14px;
-    }
-
-
-    input[type="text"] {
-        width: 340px;
-        padding-top: calc($box-padding/1.4);
-        padding-bottom: calc($box-padding/1.4);
-        padding-right: calc($box-padding/1.4);
-        padding-left: calc($box-padding/1.4 + 36px);
-        background-color: $lightgray;
-        box-sizing: border-box;
-        outline: none;
-        border: 1px solid $lightgray;
-        border-radius: $radius;
-        font-size: 1.4rem;
-
-        &:focus {
-            border: 1px solid $primary-color;
-        }
-    }
 }
 
-.versionBox {
-    position: relative;
+.versionContainer {
+    width: 240px;
     margin-right: $content-margin;
-
-    img {
-        width: 20px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 14px;
-    }
-
-
-    input[type="text"] {
-        width: 240px;
-        padding-top: calc($box-padding/1.4);
-        padding-bottom: calc($box-padding/1.4);
-        padding-left: calc($box-padding/1.4);
-        padding-right: calc($box-padding/1.4 + 36px);
-        background-color: $lightgray;
-        box-sizing: border-box;
-        outline: none;
-        border: 1px solid $lightgray;
-        border-radius: $radius;
-        font-size: 1.4rem;
-        cursor: pointer;
-
-        &:focus {
-            border: 1px solid $primary-color;
-        }
-    }
 }
 
 .submitContainer {
