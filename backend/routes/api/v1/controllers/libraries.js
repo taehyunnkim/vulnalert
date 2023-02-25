@@ -11,23 +11,23 @@ router.get('/versions/:packageName', async function(req, res, next) {
     if (req.session.isAuthenticated) {
         const packageName = req.params.packageName
         try {
-            const response = await fetch(`https://registry.npmjs.org/${packageName}`)
-            const data = await response.json()
-            const versionKeys = Object.keys(data.versions)
             
-
-            req.models.Library.findOne({ library: packageName }, (err, library) => {
+            req.models.Library.findOne({ name: packageName }, async (err, library) => {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
                         "error": err.message,
                         "status": "error"
                     }) 
-                } else if (!library) {
-                    console.log("!library"+versionKeys)
-                    res.status(200).json(versionKeys);
-                } else {
-                    console.log("library+"+library)
+                }else {
+                    if(library.versions.length === 0) {
+                        let response = await fetch(`https://registry.npmjs.org/${packageName}`)
+                        let data = await response.json()
+                        let versionKeys = Object.keys(data.versions)
+                        library.versions = versionKeys 
+                        library.save()
+                    }
+
                     res.status(200).json({
                         versions: library.versions
                     });
