@@ -48,6 +48,7 @@ router.post('/register', async function(req, res) {
     }
 })
 
+var router = express.Router();
 
 router.get('/versions/:packageName', async function(req, res, next) {
     if (req.session.isAuthenticated) {
