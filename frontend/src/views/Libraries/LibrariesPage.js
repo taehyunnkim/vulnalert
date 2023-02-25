@@ -48,7 +48,7 @@ function LibrariesPage({ libraries }) {
                 `}>
                 {
                     libraries === undefined || libraries.length === 0 
-                    ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
+                    ? <EmptyCard message="Regiser new libraries to set up alerts!" />
                     : libraries.map((library =>
                         <LibraryCard 
                             key={library.name}
