@@ -1,6 +1,6 @@
 import styles from "./LibrariesPage.module.scss";
 
-import { useEffect, useState, version } from "react";
+import { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import { debounce } from "lodash";
 
@@ -18,6 +18,16 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     const [selectedVersion, setSelectedVersion] = useState("");
     const [inputValue, setInputValue] = useState("");
 
+    const debouncedFetchOptionsRef = useRef(null);
+
+    useEffect(() => {
+        debouncedFetchOptionsRef.current = debounce(fetchLibraryData, 1000);
+
+        return () => {
+            debouncedFetchOptionsRef.current.cancel();
+        };
+    }, []);
+
     const fetchLibraryData = (inputValue) => {
         if (inputValue.length === 0) {
             setLibraries([]);
@@ -26,21 +36,12 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
         
         if (process.env.NODE_ENV === "production") {
             setLibraryIsLoading(true);
-            fetch("api/v1/libraries/searchPrefix/" + inputValue)
+            fetch("api/v1/libraries/" + inputValue)
                 .then(response => response.json())
                 .then(data => {
-                    data = data.map(name => {
-                        return { 
-                                value: name,
-                                label: name
-                            }
-                    });
-                
                     setLibraries(data);
                     setLibraryIsLoading(false);
-                })
-                .catch(error => console.error(error));
-            setLibraryIsLoading(false);
+                }).catch(error => console.error(error));
         } else {
             import("assets/names")
             .then(names => {
@@ -48,39 +49,17 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                 data = data.filter(name => {
                     return name.substring(0, inputValue.length) === inputValue;
                 }).map(name => {
-                        return { 
-                                value: name,
-                                label: name
-                            }
-                    });
+                    return { 
+                            value: name,
+                            label: name
+                    }
+                });
                 
                 setLibraries(data);
                 setLibraryIsLoading(false);
             });
         }
     };
-
-    const debouncedFetchOptions = debounce(fetchLibraryData, 500);
-
-    // useEffect(() => {
-    //     if (process.env.NODE_ENV === "production") {
-    //         setVersionIsLoading(true);
-    //         // get all versions from backend API
-    //         setVersionIsLoading(false);
-    //     } else {
-    //         console.log("importing...")
-    //         import("assets/versions").then(versions => {
-    //             let data = versions.default.map(name => {
-    //                return { 
-    //                     value: name,
-    //                     label: name
-    //                 }
-    //             })
-
-    //             setVersions(data);
-    //         });
-    //     }
-    // }, [libraries]);
 
     const handleInputChange = async (value) => {
         setInputValue(value);
@@ -89,7 +68,8 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
             setLibraries([]);
         } else {
             setLibraryIsLoading(true);
-            debouncedFetchOptions(value);
+            debouncedFetchOptionsRef.current.cancel();
+            debouncedFetchOptionsRef.current(value);
         }
     };
 
@@ -110,15 +90,14 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     }
 
     const handleLibrarySelect = (newLibrary) => {
-        setSelectedLibrary(newLibrary.value);
+        setSelectedLibrary(newLibrary.name);
     };
 
     const handleVersionSelect = (newVersion) => {
-        setSelectedVersion(newVersion.value);
+        setSelectedVersion(newVersion.name);
     };
 
     const handleLibraryBlur = () => {
-        console.log("onblur")
         setLibraryIsLoading(false);
       };
 
@@ -137,6 +116,8 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                             onInputChange={handleInputChange}
                             inputValue={inputValue}
                             onBlur={handleLibraryBlur}
+                            menuIsOpen={libraries.length > 0}
+                            key={JSON.stringify(libraries)}
                         />
                     </div>
                 </div>

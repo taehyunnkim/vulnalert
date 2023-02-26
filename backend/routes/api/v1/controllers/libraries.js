@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 var router = express.Router();
 
 router.post('/register', async function(req, res) {
-    const packageName = req.body.packageName
+    const packageName = req.body.packageName;
     if(req.session.isAuthenticated){
         try{
             let userID = req.session.userID
@@ -24,13 +24,13 @@ router.post('/register', async function(req, res) {
                         alert_enabled: true
                     })
 
-                    await registerLibrary.save()
-                    res.status(200).json({"status": "sucess"})
+                    await registerLibrary.save();
+                    res.status(200).json({status: "sucess"})
                 }
             })
         } catch(error) {
-            console.log("Error connecting to db", error)
-            res.status(500).json({"status": "error", "error": error})
+            console.log("Error connecting to db", error);
+            res.status(500).json({"status": "error", "error": error});
         }
     } else {
         res.status(401).json({
@@ -40,14 +40,15 @@ router.post('/register', async function(req, res) {
     }
 })
 
-var router = express.Router();
-
 router.get('/:prefix', async function(req, res, next) {
     if (req.session.isAuthenticated) {
         const prefix = req.params.prefix;
         if (prefix) {
             try {
-                req.models.Library.findOne({ name: { "$regex": "^" + prefix } }, async (err, libraries) => {
+                req.models.Library
+                .find({ name: { "$regex": "^" + prefix } })
+                .limit(100)
+                .exec(async (err, libraries) => {
                     if (err) {
                         console.log(err);
                         res.status(500).json({
@@ -55,7 +56,12 @@ router.get('/:prefix', async function(req, res, next) {
                             status: "error"
                         }) 
                     } else {
-                        res.status(200).json(libraries);
+                        res.status(200).json(libraries.map(library => {
+                            return {
+                                name: library.name,
+                                label: library.name
+                            }
+                        }));
                     }
                 })
             } catch (err) {
