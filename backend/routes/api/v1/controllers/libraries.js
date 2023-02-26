@@ -22,7 +22,7 @@ router.get("/", function(req, res) {
                             name: library.libraryId.name,
                             version: library.version,
                             alert_enabled: library.alert_enabled,
-                            register_date: moment(library.created_date).format('MMM DD, YYYY')
+                            register_date: moment(library.created_date).format('MMM DD YYYY')
                         }
                     })
     

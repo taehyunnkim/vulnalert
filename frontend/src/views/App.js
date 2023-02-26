@@ -59,7 +59,6 @@ function App() {
 
   const getUserData = () => {
     if (process.env.NODE_ENV === "production") {
-      console.log("Fetching libraries...")
       fetch("api/v1/libraries")
         .then(res => res.json())
         .then(libs => {
