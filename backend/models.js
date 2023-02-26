@@ -34,12 +34,13 @@ async function main(){
     const vulnerabilitySchema =  new mongoose.Schema({
        description: String,
        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
-       version: String,
+       affected_versions: [String],
        published: Date,
        type:String,
        vulstatus: String,
        severity: String,
-       source: String
+       sourceName: String,
+       sourceHref: String
     })
 
     models.Users = mongoose.model('Users', userSchema)

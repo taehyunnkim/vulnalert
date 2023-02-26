@@ -45,6 +45,8 @@ app.get('/vulnerabilities', function (req, res) {
     res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
+app.disable('etag');
+
 app.use((req, res, next) => {
     req.models = models
     next();
