@@ -59,6 +59,8 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     const handleInputChange = (value) => {
         if (value.length === 0) {
             setLibraryIsLoading(false);
+            setVersions([]);
+            setSelectedVersion("");
         } else {
             setLibraryIsLoading(true);
             debouncedFetchOptionsRef.current.cancel();
@@ -84,6 +86,26 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
 
     const handleLibrarySelect = (newLibrary) => {
         setSelectedLibrary(newLibrary.value);
+
+        setVersions([]);
+        setSelectedVersion("");
+        setVersionIsLoading(true);
+
+        fetch("api/v1/libraries/versions/" + newLibrary.value)
+            .then(response => response.json())
+            .then(data => {
+                setVersions(data.map(version => {
+                    return {
+                        value: version,
+                        label: version,
+                        id: version
+                    }
+                }));
+                setVersionIsLoading(false);
+            }).catch(error => {
+                setVersionIsLoading(false);
+                console.error(error)    
+            });
     };
 
     const handleVersionSelect = (newVersion) => {
@@ -113,13 +135,14 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                 </div>
                 <div className={styles.versionContainer}>
                     <label htmlFor="version" className="subheader">VERSION</label>
-                    <Select 
+                    <Select
                         isLoading={versionIsLoading}
                         options={versions} 
                         styles={customStyles}
                         placeholder="Search version..."
                         onChange={handleVersionSelect}
-                        isDisabled={selectedLibrary.length === 0}
+                        isDisabled={selectedLibrary.length === 0 || versionIsLoading}
+                        key={selectedLibrary}
                     />
                 </div>
                 <div className={styles.submitContainer}>

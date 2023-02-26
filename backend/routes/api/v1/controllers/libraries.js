@@ -103,7 +103,12 @@ router.get('/versions/:packageName', async function(req, res, next) {
                         "error": err.message,
                         "status": "error"
                     }) 
-                }else {
+                } else if (!library) {
+                    res.status(500).json({
+                        "error": err.message,
+                        "status": "error"
+                    }) 
+                } else {
                     if(library.versions.length === 0) {
                         let response = await fetch(`https://registry.npmjs.org/${packageName}`)
                         let data = await response.json()
@@ -112,9 +117,7 @@ router.get('/versions/:packageName', async function(req, res, next) {
                         library.save()
                     }
 
-                    res.status(200).json({
-                        versions: library.versions
-                    });
+                    res.status(200).json(library.versions);
                 }
             })
         } catch (err) {
