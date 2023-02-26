@@ -1,5 +1,7 @@
 import styles from "./DashboardPage.module.scss";
 
+import { useEffect } from "react";
+
 import { ResponsiveLine } from '@nivo/line'
 import { useNavigate } from "react-router-dom";
 
@@ -63,6 +65,28 @@ function DashboardPage({ data, userLibraries }) {
                     </div>
                 </div>
             </div>
+            <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
+                <h2>Your Libraries</h2>
+                {
+                    userLibraries === undefined || userLibraries.length === 0
+                    ? <EmptyCard message="It seems like you haven't registered any libraries." />
+                    : <div className={styles.libsummaryResult}>
+                        {userLibraries.slice(0, 3).map((lib =>
+                            <LibraryCard  
+                                key={lib.name}
+                                {...lib}
+                            />
+                        ))}
+                    </div>    
+                }
+                <Button 
+                    text="View Libraries" 
+                    type="primary"
+                    onClick={() => {
+                        navigate("libraries")
+                    }}
+                />
+            </div>
             <div className={`${styles.card} card-bg ${styles.vulnsummaryContainer}`}>
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
@@ -91,28 +115,6 @@ function DashboardPage({ data, userLibraries }) {
                     type="primary"
                     onClick={() => {
                         navigate("vulnerabilities")
-                    }}
-                />
-            </div>
-            <div className={`${styles.card} card-bg ${styles.libsummaryContainer}`}>
-                <h2>Your Libraries</h2>
-                {
-                    data.userLibraries === undefined || data.userLibraries.length === 0
-                    ? <EmptyCard message="It seems like you haven't registered any libraries." />
-                    : <div className={styles.libsummaryResult}>
-                        {data.userLibraries.slice(0, 3).map((lib =>
-                            <LibraryCard  
-                                key={lib.name}
-                                {...lib}
-                            />
-                        ))}
-                    </div>    
-                }
-                <Button 
-                    text="View Libraries" 
-                    type="primary"
-                    onClick={() => {
-                        navigate("libraries")
                     }}
                 />
             </div>

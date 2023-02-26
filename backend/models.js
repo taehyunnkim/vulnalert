@@ -18,8 +18,8 @@ async function main(){
     })
 
     const userLibrarySchema =  new mongoose.Schema({
-        users: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
-        library: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
+        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
         version: String,
         created_date: Date,
         alert_enabled: Boolean
@@ -33,7 +33,7 @@ async function main(){
 
     const vulnerabilitySchema =  new mongoose.Schema({
        description: String,
-       library: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+       libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
        version: String,
        published: Date,
        type:String,

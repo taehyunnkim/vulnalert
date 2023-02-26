@@ -37,31 +37,39 @@ function App() {
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       if (account) {
-        handleLogin(true, {
+        setAuthenticated(true);
+        setUser({
           given_name: account.idTokenClaims.given_name,
           family_name: account.idTokenClaims.family_name,
           email: account.idTokenClaims.email,
           auth_time: account.idTokenClaims.auth_time,
           username: account.idTokenClaims.preferred_username
-        });
+        })
       }
     }
   }, [account]);
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      // Get user data from our backend API
-    } else {
-      setData(dummyData);
-      setLibraries(dummyData.userLibraries);
-    }
-  }, [data]);
 
   // Based on the what we retrieve here from this callback function,
   // we set the authentication state.
   const handleLogin = (loggedIn, loggedinUser) => {
     setAuthenticated(loggedIn);
     setUser(loggedinUser);
+    getUserData();
+  }
+
+  const getUserData = () => {
+    if (process.env.NODE_ENV === "production") {
+      console.log("Fetching libraries...")
+      fetch("api/v1/libraries")
+        .then(res => res.json())
+        .then(libs => {
+          console.log(libs)
+          setLibraries(libs);
+        });
+    } else {
+      setData(dummyData);
+      setLibraries(dummyData.userLibraries);
+    }
   }
 
   // After the user logs out, we make a fetch request

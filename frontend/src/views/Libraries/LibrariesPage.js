@@ -70,7 +70,30 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
 
     const handleRegister = () => {
         if (process.env.NODE_ENV === "production") {
-    
+            if (selectedLibrary && selectedVersion) {
+                fetch("api/v1/libraries/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        packageName: selectedLibrary,
+                        version: selectedVersion
+                    })
+                }).then(res => {
+                    if (res.ok) {
+                        setUserLibraries([
+                            {
+                                name: selectedLibrary,
+                                version: selectedVersion,
+                                alert_enabled: true,
+                                register_date: new Date().toDateString().substring(3)
+                            },
+                            ...userLibraries
+                        ]);
+                    }
+                }).catch(err => console.log(err));
+            }
         } else {
             setUserLibraries([
                 {

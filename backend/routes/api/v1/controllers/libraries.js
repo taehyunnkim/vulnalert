@@ -1,6 +1,41 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import moment from "moment";
+
 var router = express.Router();
+
+router.get("/", function(req, res) {
+    if (req.session.isAuthenticated) {
+        req.models.UserLibrary
+            .find({ userId: req.session.userID })
+            .populate("libraryId", "name")
+            .exec((err, userLibraries) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({
+                        "error": err.message,
+                        "status": "error"
+                    }) 
+                } else {
+                    let libraryData = userLibraries.map(library => {
+                        return {
+                            name: library.libraryId.name,
+                            version: library.version,
+                            alert_enabled: library.alert_enabled,
+                            register_date: moment(library.created_date).format('MMM DD, YYYY')
+                        }
+                    })
+    
+                    res.status(200).json(libraryData);
+                }
+            })
+    } else {
+        res.status(401).json({
+            status: "error",
+            error: "not logged in"
+        });
+    }
+});
 
 router.post('/register', async function(req, res) {
     const packageName = req.body.packageName;
@@ -15,10 +50,10 @@ router.post('/register', async function(req, res) {
                         "error": err.message,
                         "status": "error"
                     }) 
-                }else {
+                } else {
                     const registerLibrary = new req.models.UserLibrary({
-                        users: userID,
-                        library: library._id,
+                        userId: userID,
+                        libraryId: library.id,
                         version: req.body.version,
                         created_date: new Date(),
                         alert_enabled: true
