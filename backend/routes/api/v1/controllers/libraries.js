@@ -43,7 +43,7 @@ router.post('/register', async function(req, res) {
         try{
             let userID = req.session.userID
 
-            req.models.Library.findOne({ name: packageName }, async (err, library) => {
+            req.models.Library.findOne({ name: packageName }, (err, library) => {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
@@ -51,16 +51,30 @@ router.post('/register', async function(req, res) {
                         "status": "error"
                     }) 
                 } else {
-                    const registerLibrary = new req.models.UserLibrary({
-                        userId: userID,
-                        libraryId: library.id,
-                        version: req.body.version,
-                        created_date: new Date(),
-                        alert_enabled: true
+                    req.models.UserLibrary.findOne({ userId: userID, libraryId: library.id }, async (err, library) => {
+                        if (err) {
+                            res.status(500).json({
+                                "error": err.message,
+                                "status": "error"
+                            }) 
+                        } else if (!library) {
+                            const registerLibrary = new req.models.UserLibrary({
+                                userId: userID,
+                                libraryId: library.id,
+                                version: req.body.version,
+                                created_date: new Date(),
+                                alert_enabled: true
+                            })
+        
+                            await registerLibrary.save();
+                            res.status(200).json({status: "sucess"})
+                        } else {
+                            res.status(400).json({
+                                "error": "Library already registered...",
+                                "status": "error"
+                            }) 
+                        }
                     })
-
-                    await registerLibrary.save();
-                    res.status(200).json({status: "sucess"})
                 }
             })
         } catch(error) {

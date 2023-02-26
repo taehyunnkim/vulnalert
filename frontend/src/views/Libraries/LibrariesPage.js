@@ -91,6 +91,8 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                             },
                             ...userLibraries
                         ]);
+                    } else {
+                        // TODO: Library already registered...
                     }
                 }).catch(err => console.log(err));
             }
