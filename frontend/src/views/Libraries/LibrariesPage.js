@@ -1,5 +1,6 @@
 import styles from "./LibrariesPage.module.scss";
 
+import { toast } from 'react-toastify';
 import { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import { debounce } from "lodash";
@@ -9,13 +10,14 @@ import EmptyCard from 'components/cards/EmptyCard/EmptyCard';
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 import customStyles from "./LibrariesInputStyles";
 
-function LibrariesPage({ userLibraries, setUserLibraries }) {
+function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdate }) {
     const [libraries, setLibraries] = useState([]);
     const [libraryIsLoading, setLibraryIsLoading] = useState(false);
     const [versionIsLoading, setVersionIsLoading] = useState(false);
     const [versions, setVersions] = useState([]);
     const [selectedLibrary, setSelectedLibrary] = useState("");
     const [selectedVersion, setSelectedVersion] = useState("");
+    const [isBeingAdded, setIsBeingAdded] = useState(false);
 
     const debouncedFetchOptionsRef = useRef(null);
 
@@ -69,43 +71,63 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     };
 
     const handleRegister = () => {
-        if (process.env.NODE_ENV === "production") {
-            if (selectedLibrary && selectedVersion) {
-                fetch("api/v1/libraries/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
+        if (!isBeingAdded) {
+            setIsBeingAdded(true);
+            if (process.env.NODE_ENV === "production") {
+                if (selectedLibrary && selectedVersion) {
+                    const promise = fetch("api/v1/libraries/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            packageName: selectedLibrary,
+                            version: selectedVersion
+                        })
+                    }).then(res => {
+                        if (res.ok) {
+                            setUserLibraries([
+                                {
+                                    name: selectedLibrary,
+                                    version: selectedVersion,
+                                    alert_enabled: true,
+                                    register_date: new Date().toDateString().substring(3)
+                                },
+                                ...userLibraries
+                            ]);
+
+                            setIsBeingAdded(false);
+                        } else {
+                            throw new Error("The library is already registered");
+                        }
+                    }).catch(err => {
+                        setIsBeingAdded(false);
+                        console.log(err)
+
+                        // Throw a rejected promise for toast
+                        throw {};
+                    });
+
+                    toast.promise(promise, {
+                        pending: "Adding library...",
+                        success: "The library was successfully added!",
+                        error: "The library is already registered!",
+                    }, 2000);
+                }
+            } else {
+                setUserLibraries([
+                    {
+                        name: selectedLibrary,
+                        version: selectedVersion,
+                        alert_enabled: true,
+                        register_date: new Date().toDateString().substring(3)
                     },
-                    body: JSON.stringify({
-                        packageName: selectedLibrary,
-                        version: selectedVersion
-                    })
-                }).then(res => {
-                    if (res.ok) {
-                        setUserLibraries([
-                            {
-                                name: selectedLibrary,
-                                version: selectedVersion,
-                                alert_enabled: true,
-                                register_date: new Date().toDateString().substring(3)
-                            },
-                            ...userLibraries
-                        ]);
-                    } else {
-                        // TODO: Library already registered...
-                    }
-                }).catch(err => console.log(err));
-            }
-        } else {
-            setUserLibraries([
-                {
-                    name: selectedLibrary,
-                    version: selectedVersion,
-                    alert_enabled: true,
-                    register_date: new Date().toDateString().substring(3)
-                },
-                ...userLibraries
-            ]);
+                    ...userLibraries
+                ]);
+
+                toast.success("The library was successfully added!", 2000);
+                setIsBeingAdded(false);
+            }   
         }
     }
 
@@ -191,6 +213,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                         <LibraryCard 
                             key={library.name + library.version}
                             {...library}
+                            handleUserLibraryUpdate={handleUserLibraryUpdate}
                         />
                     ))
                 }

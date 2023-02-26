@@ -1,7 +1,5 @@
 import styles from "./DashboardPage.module.scss";
 
-import { useEffect } from "react";
-
 import { ResponsiveLine } from '@nivo/line'
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +8,7 @@ import Button from "components/forms/Button/Button";
 import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
-function DashboardPage({ data, userLibraries }) {
+function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
     const navigate = useNavigate()
 
     return (
@@ -75,6 +73,7 @@ function DashboardPage({ data, userLibraries }) {
                             <LibraryCard  
                                 key={lib.name}
                                 {...lib}
+                                handleUserLibraryUpdate={handleUserLibraryUpdate}
                             />
                         ))}
                     </div>    

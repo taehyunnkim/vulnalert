@@ -1,5 +1,6 @@
 import styles from "./LibraryCard.module.scss";
 
+import { toast } from 'react-toastify';
 import { useEffect, useState, useRef } from 'react';
 import Switch from 'react-switch';
 import { debounce } from "lodash";
@@ -11,7 +12,7 @@ function LibraryCard(props) {
   const cardTopClass = alertEnabled ? styles.cardTopEnabled : styles.cardTopDisabled;
 
   useEffect(() => {
-    debouncedFetchOptionsRef.current = debounce(setAlertFetch, 1000);
+    debouncedFetchOptionsRef.current = debounce(setAlertFetch, 500);
 
     return () => {
         debouncedFetchOptionsRef.current.cancel();
@@ -22,13 +23,23 @@ function LibraryCard(props) {
     setAlertEnabled(!alertEnabled);
     if(process.env.NODE_ENV === "production"){
       debouncedFetchOptionsRef.current.cancel();
-      debouncedFetchOptionsRef.current(!alertEnabled);
+      debouncedFetchOptionsRef.current(alertEnabled, !alertEnabled);
+    } else {
+      let message = "Alert " + (alertEnabled ? "enabled!" : "disabled!");
+      toast.success(
+        message, 
+        { autoClose: 2000 }
+      );
+      props.handleUserLibraryUpdate({ 
+        name: props.name, 
+        version: props.version,
+        enabled: alertEnabled
+      })
     }
   }
 
-  const setAlertFetch = (enabled) => {
-    const prevEnabled = alertEnabled;
-    fetch("api/v1/alerts" , {
+  const setAlertFetch = (prevEnabled, enabled) => {
+    let promise = fetch("api/v1/alerts" , {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -46,7 +57,18 @@ function LibraryCard(props) {
       }
     }).then(result => {
       setAlertEnabled(result.enabled);
+      props.handleUserLibraryUpdate({ 
+        name: props.name, 
+        version: props.version,
+        enabled: enabled
+      })
     }).catch(error => console.error(error))
+
+    toast.promise(promise, {
+      pending: "Updating alert...",
+      success: "Alert " + (enabled ? "enabled!" : "disabled!"),
+      error: "An error occurred..",
+    }, 2000);
   }
 
   return (

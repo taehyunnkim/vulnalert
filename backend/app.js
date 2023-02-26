@@ -37,6 +37,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("../frontend/build"));
 
+app.get('/libraries', function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
+app.get('/vulnerabilities', function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
 app.use((req, res, next) => {
     req.models = models
     next();

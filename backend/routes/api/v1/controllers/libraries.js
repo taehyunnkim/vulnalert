@@ -9,6 +9,7 @@ router.get("/", function(req, res) {
         req.models.UserLibrary
             .find({ userId: req.session.userID })
             .populate("libraryId", "name")
+            .sort({ created_date: "desc" })
             .exec((err, userLibraries) => {
                 if (err) {
                     console.log(err);
@@ -55,13 +56,13 @@ router.post('/register', async function(req, res) {
                         userId: userID, 
                         libraryId: library.id,
                         version: req.body.version
-                    }, async (err, library) => {
+                    }, async (err, userLibrary) => {
                         if (err) {
                             res.status(500).json({
                                 "error": err.message,
                                 "status": "error"
                             }) 
-                        } else if (!library) {
+                        } else if (!userLibrary) {
                             const registerLibrary = new req.models.UserLibrary({
                                 userId: userID,
                                 libraryId: library.id,

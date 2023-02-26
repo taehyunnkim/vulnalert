@@ -1,5 +1,7 @@
 import styles from './App.module.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
+import { ToastContainer } from 'react-toastify';
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useMsal, useAccount } from "@azure/msal-react";
@@ -63,7 +65,7 @@ function App() {
         .then(res => res.json())
         .then(libs => {
           setLibraries(libs);
-        });
+        }).catch(err => console.log(err));
     } else {
       setData(dummyData);
       setLibraries(dummyData.userLibraries);
@@ -92,6 +94,18 @@ function App() {
     }
   }
 
+  const handleUserLibraryUpdate = (newData) => {
+    const updated = userLibraries.map(lib => {
+      if (lib.name == newData.name && lib.version == newData.version) {
+        return { ...lib, alert_enabled: newData.enabled };
+      }
+
+      return lib;
+    });
+
+    setLibraries(updated);
+  }
+
   return (
     <div className={styles.app}>
         <div className={styles.appContainer}>
@@ -109,14 +123,15 @@ function App() {
             />
             { isAuthenticated ? 
               <Routes>
-                <Route path="/" element={ <Dashboard data={data} userLibraries={userLibraries} /> } />
-                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} /> } />
+                <Route path="/" element={ <Dashboard data={data} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
+                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
                 <Route path="/vulnerabilities" element={ <Vulnerabilities data={data} /> } />
               </Routes>
             :
               <Landing handleLogin={handleLogin} msal={instance} />}
           </div>
           <Footer />
+          <ToastContainer position="bottom-right" />
         </div>
     </div>
   );
