@@ -36,8 +36,6 @@ async function main(){
        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
        affected_versions: [String],
        published: Date,
-       type:String,
-       vulstatus: String,
        severity: String,
        sourceName: String,
        sourceHref: String
