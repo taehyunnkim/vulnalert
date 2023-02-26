@@ -1,27 +1,52 @@
 import styles from "./LibraryCard.module.scss";
 
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Switch from 'react-switch';
+import { debounce } from "lodash";
 
 function LibraryCard(props) {
   const [alertEnabled, setAlertEnabled] = useState(props.alert_enabled);
 
+  const debouncedFetchOptionsRef = useRef(null);
   const cardTopClass = alertEnabled ? styles.cardTopEnabled : styles.cardTopDisabled;
 
+  useEffect(() => {
+    debouncedFetchOptionsRef.current = debounce(setAlertFetch, 1000);
+
+    return () => {
+        debouncedFetchOptionsRef.current.cancel();
+    };
+}, []);
+
   const onSwitchToggle = () => {
+    setAlertEnabled(!alertEnabled);
     if(process.env.NODE_ENV === "production"){
-        fetch("api/v1/alerts" , {
-          method: "POST",
-          body: {name:props.name, version: props.version}
-        }).then(res => {
-          if (res.ok) {
-            setAlertEnabled(!alertEnabled);
-          }
-        }).catch(error => console.error(error))
-        
-    } else {
-      setAlertEnabled(!alertEnabled);
+      debouncedFetchOptionsRef.current.cancel();
+      debouncedFetchOptionsRef.current(!alertEnabled);
     }
+  }
+
+  const setAlertFetch = (enabled) => {
+    const prevEnabled = alertEnabled;
+    fetch("api/v1/alerts" , {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+        name: props.name, 
+        version: props.version,
+        enabled: enabled
+      })
+    }).then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        setAlertEnabled(prevEnabled);
+      }
+    }).then(result => {
+      setAlertEnabled(result.enabled);
+    }).catch(error => console.error(error))
   }
 
   return (

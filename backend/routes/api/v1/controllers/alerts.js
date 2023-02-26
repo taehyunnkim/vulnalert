@@ -4,17 +4,20 @@ var router = express.Router();
 
 //change the alert status for registered library
 
-router.post('/', async(req,res) => {
+router.post('/', (req,res) => {
     try {
-        let givenLibrary = await req.models.Library.findOne({
+        req.models.Library.findOne({
             name: req.body.name
         }, async (err, library) => {
             if (err) {
-                res.status(500).json({"status": "error", "error": err})
+                res.status(500).json({
+                    "status": "error", 
+                    "error": err
+                })
             } else {
-                await req.models.UserLibrary.findOne({
+                req.models.UserLibrary.findOne({
                     users: req.session.userID,
-                    library: library._id,  
+                    library: library.id,  
                     version: req.body.version  
                 }, (err, userLibrary) => {
                     if (err) {
@@ -23,13 +26,19 @@ router.post('/', async(req,res) => {
                             "error": err.message,
                             "status": "error"
                         })
+                    } else if (userLibrary) {
+                        userLibrary.alert_enabled = req.body.enabled;
+                        userLibrary.save()
+                        res.status(200).json({
+                            enabled: userLibrary.alert_enabled,
+                            status: "success"
+                        });
                     } else {
-                        userLibrary.alert_enabled = !userLibrary.alert_enabled
+                        res.status(400).json({
+                            "error": "User library not found...",
+                            "status": "error"
+                        })
                     }
-                    userLibrary.save()
-                    res.status(200).json({
-                        status: "success"
-                    });
                 })
             }
         })
@@ -44,8 +53,6 @@ router.post('/', async(req,res) => {
     //send the post
 
     //save the post (update?)
-
-
 })
 
 export default router;

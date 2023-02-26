@@ -51,7 +51,11 @@ router.post('/register', async function(req, res) {
                         "status": "error"
                     }) 
                 } else {
-                    req.models.UserLibrary.findOne({ userId: userID, libraryId: library.id }, async (err, library) => {
+                    req.models.UserLibrary.findOne({ 
+                        userId: userID, 
+                        libraryId: library.id,
+                        version: req.body.version
+                    }, async (err, library) => {
                         if (err) {
                             res.status(500).json({
                                 "error": err.message,

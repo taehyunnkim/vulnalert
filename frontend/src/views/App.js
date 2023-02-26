@@ -62,7 +62,6 @@ function App() {
       fetch("api/v1/libraries")
         .then(res => res.json())
         .then(libs => {
-          console.log(libs)
           setLibraries(libs);
         });
     } else {
