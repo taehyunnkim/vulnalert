@@ -61,7 +61,6 @@ function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdat
     const handleInputChange = (value) => {
         if (value.length === 0) {
             setLibraryIsLoading(false);
-            setVersions([]);
             setSelectedVersion("");
         } else {
             setLibraryIsLoading(true);

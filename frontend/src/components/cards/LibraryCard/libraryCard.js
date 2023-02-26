@@ -39,7 +39,7 @@ function LibraryCard(props) {
       props.handleUserLibraryUpdate({ 
         name: props.name, 
         version: props.version,
-        enabled: alertEnabled,
+        alert_enabled: alertEnabled,
         register_date: props.register_date
       })
     }
@@ -54,7 +54,7 @@ function LibraryCard(props) {
       body: JSON.stringify({ 
         name: props.name, 
         version: props.version,
-        enabled: enabled
+        alert_enabled: enabled
       })
     }).then(resp => {
       if (resp.ok) {
@@ -66,11 +66,12 @@ function LibraryCard(props) {
       props.handleUserLibraryUpdate({ 
         name: props.name, 
         version: props.version,
-        enabled: result.enabled,
+        alert_enabled: result.alert_enabled,
         register_date: props.register_date
       })
 
-      setAlertEnabled(result.enabled);
+      console.log(result)
+      setAlertEnabled(result.alert_enabled);
     }).catch(error => console.error(error))
 
     toast.promise(promise, {

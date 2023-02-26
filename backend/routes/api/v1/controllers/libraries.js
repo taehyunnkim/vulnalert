@@ -26,7 +26,7 @@ router.get("/", function(req, res) {
                             register_date: moment(library.created_date).format('MMM DD YYYY')
                         }
                     })
-    
+                    
                     res.status(200).json(libraryData);
                 }
             })

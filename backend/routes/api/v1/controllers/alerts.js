@@ -27,11 +27,11 @@ router.post('/', (req,res) => {
                             "status": "error"
                         })
                     } else if (userLibrary) {
-                        userLibrary.alert_enabled = req.body.enabled;
+                        userLibrary.alert_enabled = req.body.alert_enabled;
                         userLibrary.save()
                         res.status(200).json({
-                            enabled: userLibrary.alert_enabled,
-                            status: "success"
+                            status: "success",
+                            alert_enabled: userLibrary.alert_enabled
                         });
                     } else {
                         res.status(400).json({
