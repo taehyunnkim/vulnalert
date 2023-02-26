@@ -9,7 +9,19 @@ function LibraryCard(props) {
   const cardTopClass = alertEnabled ? styles.cardTopEnabled : styles.cardTopDisabled;
 
   const onSwitchToggle = () => {
-    setAlertEnabled(!alertEnabled);
+    if(process.env.NODE_ENV === "production"){
+        fetch("api/v1/alerts" , {
+          method: "POST",
+          body: {name:props.name, version: props.version}
+        }).then(res => {
+          if (res.ok) {
+            setAlertEnabled(!alertEnabled);
+          }
+        }).catch(error => console.error(error))
+        
+    } else {
+      setAlertEnabled(!alertEnabled);
+    }
   }
 
   return (
