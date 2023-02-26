@@ -1,25 +1,48 @@
-import sgMail from '@sendgrid/mail';
+import semver from 'semver';
 
-// Temp API key
-sgMail.setApiKey("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");
+const LOG_PREFIX = "vulnerability-worker: ";
 
-export async function checkUserLibraryVulnerabilities(db) {
-    const vulnerabilities = await db.Vulnerability.find();
+export function checkUserLibraryVulnerabilities(db) {
+    return new Promise(async (resolve, reject) => {
+        console.log(LOG_PREFIX, "Checking user library vulnerabilities...");
+        try {
+            const vulnerabilities = await db.Vulnerability.find();
+            for (const vulnerability of vulnerabilities) {
+                const { library, affected_versions } = vulnerability;
+                const userLibraries = await db.UserLibrary.find({ library: library }).populate("vulnerabilities")
 
-    for (const vulnerability of vulnerabilities) {
-        const { libraryId, affected_versions } = vulnerability;
-        const affectedUserLibraries = await db.UserLibrary.find({ library: libraryId, version: { $in: affected_versions } });
+                for (const userLibrary of userLibraries) {
+                    const { version, vulnerabilities } = userLibrary;
 
-        if (affectedUserLibraries.length > 0) {
-            const userLibVulnerability = await db.UserLibVulnerability.create({
-                vulnerability: vulnerability.id,
-                alerted: false
-            });
+                    const hasExistingVulnerability = vulnerabilities.some(ulv => {
+                        return ulv.vulnerability.toString() === vulnerability.id;
+                    });
+                    
+                    if (hasExistingVulnerability) {
+                        // The vulnerability was already processed for this user library.
+                        continue;
+                    }
 
-            await UserLibrary.updateMany(
-                { _id: { $in: affectedUserLibraries.map(ul => ul.id) } },
-                { $push: { vulnerabilities: userLibVulnerability.id } }
-            );
+                    for (const affectedVersion of affected_versions) { 
+                        if (semver.satisfies(version, affectedVersion) || semver.eq(version, affectedVersion)) {
+                            const userLibVulnerability = await db.UserLibVulnerability.create({
+                              vulnerability: vulnerability.id,
+                              alerted: false
+                            });
+                  
+                            userLibrary.vulnerabilities.push(userLibVulnerability);
+                            await userLibrary.save();
+                  
+                            break;
+                        }
+                    }
+                }
+            }
+
+            console.log(LOG_PREFIX, "Updated user library vulnerabilities.");
+            resolve();
+        } catch (error) {
+            reject(error);
         }
-    }
+    });
 }

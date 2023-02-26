@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 let models = {};
 
-main().catch(err => console.log(err))
-async function main(){
+async function connectToDatabase(){
     console.log('connecting to mongodb')
     await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/Vulnalert?retryWrites=true&w=majority')
     console.log("successfully connected to mongodb")
@@ -40,7 +39,7 @@ async function main(){
     const vulnerabilitySchema =  new mongoose.Schema({
         name: String,
         description: String,
-        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+        library: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
         affected_versions: [String],
         published: Date,
         severity: String,
@@ -52,10 +51,10 @@ async function main(){
     models.UserLibrary = mongoose.model('UserLibrary', userLibrarySchema)
     models.Library = mongoose.model('Library', librarySchema)
     models.Vulnerability = mongoose.model('Vulnerability', vulnerabilitySchema)
-    models.userLibVulnerability = mongoose.model('UserLibVulnerability', userLibVulnerabilitySchema)
+    models.UserLibVulnerability = mongoose.model('UserLibVulnerability', userLibVulnerabilitySchema)
 
 
     console.log('mongoose models created')
 }
 
-export default models;
+export { models, connectToDatabase };

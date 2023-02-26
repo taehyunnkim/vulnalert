@@ -20,7 +20,6 @@ router.get("/", function(req, res) {
                         }) 
                     } else {
                         let libraryData = userLibraries.map(data => {
-                            console.log(data)
                             return {
                                 name: data.library.name,
                                 version: data.version,

@@ -3,31 +3,31 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session';
+import cron from 'node-cron';
 
-const appSettings = {
-    appCredentials: {
-        auth: {
-            clientId:  "c1ee541a-68a4-4abf-9494-270544b5d668",
-            tenantId:  "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-            clientSecret:  "~Qu8Q~KFDyOw.7XYCZszYAPEXq_euq3jLrrhvcoC"
-        }
-    },	
-    authRoutes: {
-        redirect: "http://localhost:3000/redirect",// note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
-        error: "/error", // the wrapper will redirect to this route in case of any error.
-        unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
-    }
-};
+import { checkUserLibraryVulnerabilities } from "./util/vulnalertWorker.js";
+import { notifyUsers } from "./util/alerter.js";
+import { models, connectToDatabase } from './models.js'
 
 import apiv1Router from './routes/api/v1/apiv1.js';
-import models from './models.js'
-
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const CHECK_VULNERABILITY_FREQUENCY_SECONDS = 30;
+const NOTIFY_USERS_FREQUENCY_SECONDS = 10;
+
+await connectToDatabase();
+cron.schedule(`*/${CHECK_VULNERABILITY_FREQUENCY_SECONDS} * * * * *`, async () => {
+    await checkUserLibraryVulnerabilities(models);
+});
+
+cron.schedule(`*/${NOTIFY_USERS_FREQUENCY_SECONDS} * * * * *`, async () => {
+    await notifyUsers(models);
+});
 
 var app = express();
 
@@ -59,7 +59,5 @@ app.use(sessions({
 }))
 
 app.use('/api/v1', apiv1Router);
-
-// sendAlerts();
 
 export default app;
