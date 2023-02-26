@@ -58,8 +58,9 @@ router.get('/:prefix', async function(req, res, next) {
                     } else {
                         res.status(200).json(libraries.map(library => {
                             return {
-                                name: library.name,
-                                label: library.name
+                                value: library.name,
+                                label: library.name,
+                                id: library.name
                             }
                         }));
                     }

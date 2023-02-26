@@ -16,7 +16,6 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     const [versions, setVersions] = useState([]);
     const [selectedLibrary, setSelectedLibrary] = useState("");
     const [selectedVersion, setSelectedVersion] = useState("");
-    const [inputValue, setInputValue] = useState("");
 
     const debouncedFetchOptionsRef = useRef(null);
 
@@ -28,12 +27,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
         };
     }, []);
 
-    const fetchLibraryData = (inputValue) => {
-        if (inputValue.length === 0) {
-            setLibraries([]);
-            return;
-        }
-        
+    const fetchLibraryData = (inputValue) => {        
         if (process.env.NODE_ENV === "production") {
             setLibraryIsLoading(true);
             fetch("api/v1/libraries/" + inputValue)
@@ -50,8 +44,9 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                     return name.substring(0, inputValue.length) === inputValue;
                 }).map(name => {
                     return { 
-                            value: name,
-                            label: name
+                        value: name,
+                        label: name,
+                        id: name
                     }
                 });
                 
@@ -61,11 +56,9 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
         }
     };
 
-    const handleInputChange = async (value) => {
-        setInputValue(value);
+    const handleInputChange = (value) => {
         if (value.length === 0) {
             setLibraryIsLoading(false);
-            setLibraries([]);
         } else {
             setLibraryIsLoading(true);
             debouncedFetchOptionsRef.current.cancel();
@@ -75,7 +68,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
 
     const handleRegister = () => {
         if (process.env.NODE_ENV === "production") {
-            // call the backend API for registration
+    
         } else {
             setUserLibraries([
                 {
@@ -90,16 +83,16 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
     }
 
     const handleLibrarySelect = (newLibrary) => {
-        setSelectedLibrary(newLibrary.name);
+        setSelectedLibrary(newLibrary.value);
     };
 
     const handleVersionSelect = (newVersion) => {
-        setSelectedVersion(newVersion.name);
+        setSelectedVersion(newVersion.value);
     };
 
     const handleLibraryBlur = () => {
         setLibraryIsLoading(false);
-      };
+    };
 
     return (
         <div className={styles.librariesContainer}>
@@ -114,10 +107,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                             placeholder="Search for a library..."
                             onChange={handleLibrarySelect}
                             onInputChange={handleInputChange}
-                            inputValue={inputValue}
                             onBlur={handleLibraryBlur}
-                            menuIsOpen={libraries.length > 0}
-                            key={JSON.stringify(libraries)}
                         />
                     </div>
                 </div>
@@ -151,7 +141,7 @@ function LibrariesPage({ userLibraries, setUserLibraries }) {
                     ? <EmptyCard message="Regiser new libraries to set up alerts!" />
                     : userLibraries.map((library =>
                         <LibraryCard 
-                            key={library.name}
+                            key={library.name + library.version}
                             {...library}
                         />
                     ))
