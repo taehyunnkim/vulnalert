@@ -60,4 +60,6 @@ app.use(sessions({
 
 app.use('/api/v1', apiv1Router);
 
+// sendAlerts();
+
 export default app;

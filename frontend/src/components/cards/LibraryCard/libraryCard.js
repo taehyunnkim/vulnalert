@@ -61,6 +61,7 @@ function LibraryCard(props) {
         return resp.json();
       } else {
         setAlertEnabled(prevEnabled);
+        throw new Error("An error occurred...");
       }
     }).then(result => {
       props.handleUserLibraryUpdate({ 
@@ -72,7 +73,10 @@ function LibraryCard(props) {
 
       console.log(result)
       setAlertEnabled(result.alert_enabled);
-    }).catch(error => console.error(error))
+    }).catch(error => {
+      console.error(error);
+      throw {};
+    });
 
     toast.promise(promise, {
       pending: "Updating alert...",

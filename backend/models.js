@@ -18,11 +18,12 @@ async function main(){
     })
 
     const userLibrarySchema =  new mongoose.Schema({
-        userId: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
-        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+        user: {type: mongoose.Schema.Types.ObjectId, ref: "Users"},
+        library: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
         version: String,
         created_date: Date,
-        alert_enabled: Boolean
+        alert_enabled: Boolean,
+        vulnerabilities: [{type: mongoose.Schema.Types.ObjectId, ref: "UserLibVulnerability"}]
     })
 
     const librarySchema =  new mongoose.Schema({
@@ -30,21 +31,28 @@ async function main(){
         versions: [String],
     })
 
+    const userLibVulnerabilitySchema =  new mongoose.Schema({
+        vulnerability: {type: mongoose.Schema.Types.ObjectId, ref: "Vulnerability"},
+        alerted: Boolean
+     })
+
 
     const vulnerabilitySchema =  new mongoose.Schema({
-       description: String,
-       libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
-       affected_versions: [String],
-       published: Date,
-       severity: String,
-       sourceName: String,
-       sourceHref: String
+        name: String,
+        description: String,
+        libraryId: {type: mongoose.Schema.Types.ObjectId, ref: "Library"},
+        affected_versions: [String],
+        published: Date,
+        severity: String,
+        sourceName: String,
+        sourceHref: String
     })
 
     models.Users = mongoose.model('Users', userSchema)
     models.UserLibrary = mongoose.model('UserLibrary', userLibrarySchema)
     models.Library = mongoose.model('Library', librarySchema)
     models.Vulnerability = mongoose.model('Vulnerability', vulnerabilitySchema)
+    models.userLibVulnerability = mongoose.model('UserLibVulnerability', userLibVulnerabilitySchema)
 
 
     console.log('mongoose models created')

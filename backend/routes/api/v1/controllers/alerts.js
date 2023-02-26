@@ -46,13 +46,6 @@ router.post('/', (req,res) => {
         console.log("Error changing the alert:", err)
         res.status(500).json({"status": "error", "error": err})
     }
-    
-    //get necessary fields to find the userLibrary
-    //change the alert_enabled field if the toggle is clicked
-
-    //send the post
-
-    //save the post (update?)
 })
 
 export default router;

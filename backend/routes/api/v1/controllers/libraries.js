@@ -5,35 +5,44 @@ import moment from "moment";
 var router = express.Router();
 
 router.get("/", function(req, res) {
-    if (req.session.isAuthenticated) {
-        req.models.UserLibrary
-            .find({ userId: req.session.userID })
-            .populate("libraryId", "name")
-            .sort({ created_date: "desc" })
-            .exec((err, userLibraries) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({
-                        "error": err.message,
-                        "status": "error"
-                    }) 
-                } else {
-                    let libraryData = userLibraries.map(library => {
-                        return {
-                            name: library.libraryId.name,
-                            version: library.version,
-                            alert_enabled: library.alert_enabled,
-                            register_date: moment(library.created_date).format('MMM DD YYYY')
-                        }
-                    })
-                    
-                    res.status(200).json(libraryData);
-                }
-            })
-    } else {
-        res.status(401).json({
+    try {
+        if (req.session.isAuthenticated) {
+            req.models.UserLibrary
+                .find({ user: req.session.userID })
+                .populate("library", "name")
+                .sort({ created_date: "desc" })
+                .exec((err, userLibraries) => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json({
+                            "error": err.message,
+                            "status": "error"
+                        }) 
+                    } else {
+                        let libraryData = userLibraries.map(data => {
+                            console.log(data)
+                            return {
+                                name: data.library.name,
+                                version: data.version,
+                                alert_enabled: data.alert_enabled,
+                                register_date: moment(data.created_date).format('MMM DD YYYY')
+                            }
+                        })
+                        
+                        res.status(200).json(libraryData);
+                    }
+                })
+        } else {
+            res.status(401).json({
+                status: "error",
+                error: "not logged in"
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
             status: "error",
-            error: "not logged in"
+            error: "Serverside error..."
         });
     }
 });
@@ -53,8 +62,8 @@ router.post('/register', async function(req, res) {
                     }) 
                 } else {
                     req.models.UserLibrary.findOne({ 
-                        userId: userID, 
-                        libraryId: library.id,
+                        user: userID, 
+                        library: library.id,
                         version: req.body.version
                     }, async (err, userLibrary) => {
                         if (err) {
@@ -64,8 +73,8 @@ router.post('/register', async function(req, res) {
                             }) 
                         } else if (!userLibrary) {
                             const registerLibrary = new req.models.UserLibrary({
-                                userId: userID,
-                                libraryId: library.id,
+                                user: userID,
+                                library: library.id,
                                 version: req.body.version,
                                 created_date: new Date(),
                                 alert_enabled: true
