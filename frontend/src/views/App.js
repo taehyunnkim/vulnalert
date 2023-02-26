@@ -94,16 +94,17 @@ function App() {
     }
   }
 
-  const handleUserLibraryUpdate = (newData) => {
-    const updated = userLibraries.map(lib => {
-      if (lib.name == newData.name && lib.version == newData.version) {
-        return { ...lib, alert_enabled: newData.enabled };
-      }
-
-      return lib;
+  const handleUserLibraryUpdate = (updatedLibrary) => {
+    setLibraries((prevLibraries) => {
+      // update the library with the same name and version
+      return prevLibraries.map((library) => {
+        if (library.name === updatedLibrary.name && library.version === updatedLibrary.version) {
+          return updatedLibrary;
+        } else {
+          return library;
+        }
+      });
     });
-
-    setLibraries(updated);
   }
 
   return (

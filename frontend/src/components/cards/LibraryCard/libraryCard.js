@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from 'react';
 import Switch from 'react-switch';
 import { debounce } from "lodash";
 
+const MAX_LENGTH = 15;
+
 function LibraryCard(props) {
   const [alertEnabled, setAlertEnabled] = useState(props.alert_enabled);
 
@@ -17,7 +19,11 @@ function LibraryCard(props) {
     return () => {
         debouncedFetchOptionsRef.current.cancel();
     };
-}, []);
+  }, []);
+
+  useEffect(() => {
+    setAlertEnabled(props.alert_enabled)
+  }, [props.alert_enabled]);
 
   const onSwitchToggle = () => {
     setAlertEnabled(!alertEnabled);
@@ -33,7 +39,8 @@ function LibraryCard(props) {
       props.handleUserLibraryUpdate({ 
         name: props.name, 
         version: props.version,
-        enabled: alertEnabled
+        enabled: alertEnabled,
+        register_date: props.register_date
       })
     }
   }
@@ -56,12 +63,14 @@ function LibraryCard(props) {
         setAlertEnabled(prevEnabled);
       }
     }).then(result => {
-      setAlertEnabled(result.enabled);
       props.handleUserLibraryUpdate({ 
         name: props.name, 
         version: props.version,
-        enabled: enabled
+        enabled: result.enabled,
+        register_date: props.register_date
       })
+
+      setAlertEnabled(result.enabled);
     }).catch(error => console.error(error))
 
     toast.promise(promise, {
@@ -74,7 +83,7 @@ function LibraryCard(props) {
   return (
     <div className={styles.cardContainer}>
       <div className={`${cardTopClass} ${styles.cardTop}`}>
-        <h1>{props.name}</h1>
+        <h1>{props.name.length > MAX_LENGTH ? props.name.substring(0, MAX_LENGTH) + "..." : props.name }</h1>
         <p>{props.version}</p>
       </div>
       <div className={styles.cardBottom}>
