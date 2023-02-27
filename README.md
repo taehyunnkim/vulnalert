@@ -7,7 +7,7 @@ For our final project, we will be creating a full-stack web application that not
 
 There are vulnerability scanners and patch management systems out there that automatically remediate new application vulnerabilities. However, scanners have latencies, and automated patches could often result in cascading failures and unforeseen conflicts. Moreover, existing vulnerability management systems are typically targeted toward security experts and come bundled with other security tools, which limits their ease of use and coverage. 
 
-Our application assumes that the users have limited security backgrounds, allowing the developers to better understand each security problem at hand. Our users could provide us with “dependency definition files,” such as package.json for Node.js, or register individual libraries to set up alerts. Then, they could investigate and respond accordingly based on instant vulnerability alerts, gain information about new exploits, and keep their applications safe. 
+Our application assumes that the users have limited security backgrounds, allowing the developers to better understand each security problem at hand. To keep our project scope small, the users could only register node.js packages. Then, they could investigate and respond accordingly based on instant vulnerability alerts, gain information about new exploits, and keep their applications safe. 
 
 We, as developers, want to build this application because we often use dependency-laden frameworks and we share the responsibility of keeping the customer data safe. By using our application, we will become more security conscious, and patch up the applications and systems that we build to better protect data from cyber threats.
 
