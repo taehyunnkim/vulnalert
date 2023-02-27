@@ -27,15 +27,16 @@ We, as developers, want to build this application because we often use dependenc
 | P2       | Developers | I want to see a summary of the libraries I registered and the vulnerabilities that haven’t been patched in different severity ratings. | Fetch registration information from the database to show statistics on user                                                                                                                                                                                           |
 
 ### Endpoints
-| Endpoint         | Purpose                                                                                                                                                                                                                                                               |
-|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GET /            | Show the main page. The user could learn more about the product, and login or register if not authenticated. If authenticated, the user has to click on the dashboard button in the navigation bar to interact with the core features of the app (subject to change). |
-| POST /login      | The login in the user                                                                                                                                                                                                                                                 |
-| POST /register   | To register the user                                                                                                                                                                                                                                                  |
-| GET /auth        | To authenticate user login                                                                                                                                                                                                                                            |
-| GET /dashboard   | Show authenticated users the dashboard to interact with the web application. They could register libraries and set up alerts here.                                                                                                                                    |
-| POST /setUpAlert | The user clicks on a toggle button for individual libraries they registered to set up security alerts for reminders.                                                                                                                                                  |
-| GET /loadLibrary | Display the vulnerability related to libraries that the user has registered.                                                                                                                                                                                          |
+| Endpoint                                    | Purpose                                                                                               |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| GET /api/v1/libraries                       | Returns all registered libraries for the authenticated user                                           |
+| POST /api/v1/libraries/register             | Add a new library for alerts for the authenticated user                                               |
+| GET /api/v1/libraries/:prefix               | Returns all available libraries based on the given prefix.                                            |
+| GET /api/v1/libraries/versions/:packageName | Returns all version numbers for the given library.                                                    |
+| POST /api/v1/alerts                         | Toggle alerts for a library registered by the authenticated user.                                     |
+| GET /api/v1/vulnerabilities                 | Returns all vulnerabilities for libraries registered by the authenticated user.                       |
+| POST /api/v1/users/ms-login                 | Given Microsoft Account's access token, create user session and save user information in the database |
+| POST /api/v1/users/logout                   | Destroy user session                                                                                  |
 
 ## Documentation
 
