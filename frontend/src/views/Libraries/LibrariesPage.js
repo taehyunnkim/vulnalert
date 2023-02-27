@@ -10,7 +10,7 @@ import EmptyCard from 'components/cards/EmptyCard/EmptyCard';
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 import customStyles from "./LibrariesInputStyles";
 
-function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdate }) {
+function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdate, getUserLibVulnerabilities}) {
     const [libraries, setLibraries] = useState([]);
     const [libraryIsLoading, setLibraryIsLoading] = useState(false);
     const [versionIsLoading, setVersionIsLoading] = useState(false);
@@ -94,6 +94,8 @@ function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdat
                                 },
                                 ...userLibraries
                             ]);
+
+                            getUserLibVulnerabilities();
 
                             setIsBeingAdded(false);
                         } else {

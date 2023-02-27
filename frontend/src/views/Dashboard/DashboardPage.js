@@ -8,7 +8,7 @@ import Button from "components/forms/Button/Button";
 import VulnerabilityCard from "components/cards/VulnerabilityCard/VulnerabilityCard";
 import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
-function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
+function DashboardPage({ trend, userLibraries, userLibVulnerabilities, handleUserLibraryUpdate }) {
     const navigate = useNavigate()
 
     return (
@@ -20,17 +20,13 @@ function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
                         <div className={`${styles.userstatRegistered}`}>
                             <h3 className="subheader">REGISTERED</h3>
                             <p className={`${styles.statNumber}`}>
-                                {
-                                    userLibraries.length
-                                }
+                                { userLibraries.length }
                             </p>
                         </div>
                         <div className={`${styles.userstatVulnerabilities}`}>
                             <h3 className="subheader">VULNERABILITIES</h3>
                             <p className={`${styles.statNumber}`}>
-                                {
-                                    data.userVulnerabilities ? data.userVulnerabilities.length : 0
-                                }
+                                { userLibVulnerabilities.length}
                             </p>
                         </div>
                     </div>
@@ -39,7 +35,7 @@ function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
                     <h2>Vulnerability Trends</h2>
                     <div className={`${styles.chart}`}>
                         <ResponsiveLine 
-                            data={data.trend ? data.trend : [{id:0, data:[{x:0, y:0}, {x:1, y:0}, {x:2, y:0}, {x:3, y:0}]}]}
+                            data={trend ? trend : [{id:0, data:[{x:0, y:0}, {x:1, y:0}, {x:2, y:0}, {x:3, y:0}]}]}
                             margin={{ top: 14, right: 20, bottom: 20, left: 20 }}
                             xScale={{ type: 'point' }}
                             yScale={{
@@ -90,7 +86,7 @@ function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
                 <h2>Your Vulnerabilities</h2>
                 <div className={`${styles.vulnsummary}`}>
                     {
-                        data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0
+                        userLibVulnerabilities === undefined || userLibVulnerabilities.length === 0
                         ? <EmptyCard message="No vulnerabilities have been detected for your libraries 😊" />
                         : <div className={styles.userVulnerabilitiesContainer}>
                             <div className={styles.vulnHeaders}>
@@ -99,9 +95,9 @@ function DashboardPage({ data, userLibraries, handleUserLibraryUpdate }) {
                                 <h3 className="subheader">SEVERITY</h3>
                                 <h3 className="subheader">DESCRIPTION</h3>
                             </div>
-                            {data.userVulnerabilities.slice(0, 2).map((vuln =>
+                            {userLibVulnerabilities.slice(0, 2).map((vuln =>
                                 <VulnerabilityCard  
-                                    key={vuln.id}
+                                    key={vuln.name}
                                     showDescription={true}
                                     {...vuln}
                                 />

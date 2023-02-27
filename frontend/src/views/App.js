@@ -20,8 +20,8 @@ import dummyData from "assets/dummyData";
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
-  const [data , setData] = useState({});
   const [userLibraries, setLibraries] = useState([]);
+  const [userLibVulnerabilities, setUserLibVulnerabilities] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const title = {
@@ -51,6 +51,17 @@ function App() {
     }
   }, [account]);
 
+
+  // Periodically check if the user has new vulnerabilities.
+  // TODO: websocket
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getUserLibVulnerabilities();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   // Based on the what we retrieve here from this callback function,
   // we set the authentication state.
   const handleLogin = (loggedIn, loggedinUser) => {
@@ -66,10 +77,20 @@ function App() {
         .then(libs => {
           setLibraries(libs);
         }).catch(err => console.log(err));
+
+      getUserLibVulnerabilities();
     } else {
-      setData(dummyData);
+      setUserLibVulnerabilities(dummyData.userVulnerabilities);
       setLibraries(dummyData.userLibraries);
     }
+  }
+
+  const getUserLibVulnerabilities = () => {
+    fetch("api/v1/vulnerabilities")
+      .then(res => res.json())
+      .then(vulnerabilities => {
+        setUserLibVulnerabilities(vulnerabilities);
+      }).catch(err => console.log(err));
   }
 
   // After the user logs out, we make a fetch request
@@ -124,9 +145,9 @@ function App() {
             />
             { isAuthenticated ? 
               <Routes>
-                <Route path="/" element={ <Dashboard data={data} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
-                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
-                <Route path="/vulnerabilities" element={ <Vulnerabilities data={data} /> } />
+                <Route path="/" element={ <Dashboard userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
+                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} getUserLibVulnerabilities={getUserLibVulnerabilities} /> } />
+                <Route path="/vulnerabilities" element={ <Vulnerabilities userLibVulnerabilities={userLibVulnerabilities} /> } />
               </Routes>
             :
               <Landing handleLogin={handleLogin} msal={instance} />}

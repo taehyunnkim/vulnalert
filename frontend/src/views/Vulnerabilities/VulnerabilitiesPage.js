@@ -5,18 +5,18 @@ import styles from "./VulnerabilitiesPage.module.scss";
 
 import EmptyCard from "components/cards/EmptyCard/EmptyCard";
 
-function VulnerabilitiesPage({ data }) {
+function VulnerabilitiesPage({ userLibVulnerabilities }) {
     const [showInfo, setShowInfo] = useState(false);
     const [info, setInfo] = useState({});
 
     useEffect(() => {
-        if (data.userVulnerabilities !== undefined && data.userVulnerabilities.length > 0) {
-            handleClick(data.userVulnerabilities[0]);
+        if (userLibVulnerabilities !== undefined && userLibVulnerabilities.length > 0) {
+            handleClick(userLibVulnerabilities[0]);
         }
     }, []);
 
     const handleClick = (infoData) => {
-        if (infoData.id === info.id || !showInfo) {
+        if (infoData.name === info.name || !showInfo) {
             setShowInfo(!showInfo);
         }
 
@@ -27,7 +27,7 @@ function VulnerabilitiesPage({ data }) {
         <div className={styles.vulnerabilitiesContainer}>
             <div className={`${styles.uservulnerabilities} card-bg`}>
                 {
-                    data.userVulnerabilities === undefined || data.userVulnerabilities.length === 0 
+                    userLibVulnerabilities === undefined || userLibVulnerabilities.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
                     : <div className={styles.userVulnerabilitiesContainer}>
                         <div className={styles.vulnHeaders}>
@@ -35,13 +35,13 @@ function VulnerabilitiesPage({ data }) {
                             <h3 className="subheader">VERSION</h3>
                             <h3 className="subheader">SEVERITY</h3>
                         </div>
-                        {data.userVulnerabilities.slice(0, 2).map((vuln =>
+                        {userLibVulnerabilities.slice(0, 2).map((vuln =>
                             <VulnerabilityCard 
                                 handleClick={handleClick} 
-                                key={vuln.id}
+                                key={vuln.name}
                                 showDescription={false}
-                                active={showInfo && vuln.id === info.id}
-                                    {...vuln}
+                                active={showInfo && vuln.name === info.name}
+                                {...vuln}
                             />
                         ))}
                     </div>
@@ -50,7 +50,7 @@ function VulnerabilitiesPage({ data }) {
             { showInfo && 
                 <div className={`${styles.infoContainer} card-bg`}>
                     <p className="subheader">NAME</p>
-                    <h1>{ info && info.library }</h1>
+                    <h1>{ info && info.libraryName }</h1>
                     <div className={styles.infoBox}>
                         <div>
                             <h2 className="subheader">VERSION</h2>
@@ -67,21 +67,19 @@ function VulnerabilitiesPage({ data }) {
                     </div>
                     <div className={styles.sourceBox}>
                         <h2 className="subheader">SOURCE</h2>
-                        { info && info.source.map(source => {
-                            return(
-                                <div key={source.name}>
-                                    <h3>{source.name}</h3>
-                                    <a 
-                                        className={styles.source} 
-                                        href={source.href} 
-                                        target="_blank" 
-                                        rel="noreferrer"
-                                    >
-                                        View Source
-                                    </a>
-                                </div>
-                            )
-                        })}
+                        { info && 
+                            <div>
+                                <h3>{info.sourceName}</h3>
+                                <a 
+                                    className={styles.source} 
+                                    href={info.sourceHref} 
+                                    target="_blank" 
+                                    rel="noreferrer"
+                                >
+                                    View Source
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
             }
