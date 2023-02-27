@@ -58,6 +58,15 @@ app.use(sessions({
     resave: false
 }))
 
+app.get("redirect", async (req, res) => {
+    try {
+        res.redirect("/");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("There was an error...");
+    }
+});
+
 app.use('/api/v1', apiv1Router);
 
 export default app;

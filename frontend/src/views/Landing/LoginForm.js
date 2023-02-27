@@ -78,7 +78,7 @@ function LoginForm({ handleLogin }) {
     const handleMicrosoftSSO = async (event) => {
         if (process.env.NODE_ENV === "production") {
             try {
-                await instance.loginPopup(loginRequest);
+                await instance.loginRedirect(loginRequest);
             } catch (err) {
                 handleLogin(false);
             }
