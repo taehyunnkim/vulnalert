@@ -16,7 +16,7 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
     }, []);
 
     const handleClick = (infoData) => {
-        if (infoData.name === info.name || !showInfo) {
+        if ((infoData.name === info.name && infoData.version === info.version) || !showInfo) {
             setShowInfo(!showInfo);
         }
 
@@ -35,12 +35,12 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
                             <h3 className="subheader">VERSION</h3>
                             <h3 className="subheader">SEVERITY</h3>
                         </div>
-                        {userLibVulnerabilities.slice(0, 2).map((vuln =>
+                        {userLibVulnerabilities.map((vuln =>
                             <VulnerabilityCard 
                                 handleClick={handleClick} 
-                                key={vuln.name}
+                                key={vuln.name+vuln.version}
                                 showDescription={false}
-                                active={showInfo && vuln.name === info.name}
+                                active={showInfo && vuln.name === info.name && vuln.version === info.version}
                                 {...vuln}
                             />
                         ))}

@@ -91,6 +91,7 @@ function App() {
     fetch("api/v1/vulnerabilities")
       .then(res => res.json())
       .then(vulnerabilities => {
+        console.log(vulnerabilities);
         setUserLibVulnerabilities(vulnerabilities);
       }).catch(err => console.log(err));
   }

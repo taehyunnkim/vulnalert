@@ -109,7 +109,7 @@ router.get('/:prefix', async function(req, res, next) {
             try {
                 req.models.Library
                 .find({ name: { "$regex": "^" + prefix } })
-                .limit(100)
+                .limit(50)
                 .exec(async (err, libraries) => {
                     if (err) {
                         console.log(err);
