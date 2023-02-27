@@ -62,7 +62,7 @@ function App() {
     }, 10000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [isAuthenticated]);
 
   // Based on the what we retrieve here from this callback function,
   // we set the authentication state.
