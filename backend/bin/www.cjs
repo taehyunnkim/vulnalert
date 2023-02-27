@@ -6,7 +6,7 @@
 var debug = require('debug')('vulnalert:server');
 var http = require('http');
 
-const DEFAULT_PORT = '3000';
+const DEFAULT_PORT = '7777';
 
 (async () => {
   const app = await (await import('../app.js')).default;
@@ -15,7 +15,7 @@ const DEFAULT_PORT = '3000';
    * Get port from environment and store in Express.
    */
 
-  var port = normalizePort(process.env.PORT || '3000');
+  var port = normalizePort(process.env.PORT || DEFAULT_PORT);
   app.set('port', port);
 
   /**

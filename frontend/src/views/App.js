@@ -56,7 +56,9 @@ function App() {
   // TODO: websocket
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getUserLibVulnerabilities();
+      if (isAuthenticated) {
+        getUserLibVulnerabilities();
+      }
     }, 10000);
 
     return () => clearInterval(intervalId);
