@@ -1,10 +1,12 @@
 import styles from './App.module.scss';
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useMsal, useAccount } from "@azure/msal-react";
+import { InteractionRequiredAuthError, BrowserAuthError } from "@azure/msal-browser";
 
 import NavBar from "components/layouts/navigation/NavBar/NavBar";
 import Footer from "components/layouts/navigation/Footer/Footer";
@@ -12,10 +14,8 @@ import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
-// import VulnerabilityCard from 'components/cards/VulnerabilityCard/VulnerabilityCard';
 
 import dummyData from "assets/dummyData";
-
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -47,20 +47,19 @@ function App() {
           auth_time: account.idTokenClaims.auth_time,
           username: account.idTokenClaims.preferred_username
         })
+      } else {
+        setAuthenticated(false);
       }
     }
   }, [account]);
 
-
   // Periodically check if the user has new vulnerabilities.
-  // TODO: websocket
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (isAuthenticated) {
         getUserLibVulnerabilities();
       }
     }, 10000);
-
     return () => clearInterval(intervalId);
   }, [isAuthenticated]);
 
@@ -107,8 +106,11 @@ function App() {
         });
       }).catch(e => {
           console.log(e);
+          if (e instanceof InteractionRequiredAuthError || (e instanceof BrowserAuthError && e.errorMessage.includes("interaction_in_progress"))) {
+            toast.error("Microsoft sign out was incomplete.", 3000);
+            toast.info("Please reload the page!", 5000);
+          }
       });
-      setAuthenticated(false);
     } else {
       navigate("/");
       setAuthenticated(false);

@@ -70,8 +70,7 @@ function LibraryCard(props) {
         alert_enabled: result.alert_enabled,
         register_date: props.register_date
       })
-
-      console.log(result)
+      
       setAlertEnabled(result.alert_enabled);
     }).catch(error => {
       console.error(error);

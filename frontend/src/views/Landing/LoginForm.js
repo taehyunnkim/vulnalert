@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useMsal, useAccount } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 import styles from "./LoginForm.module.scss";
 
@@ -77,10 +79,18 @@ function LoginForm({ handleLogin }) {
 
     const handleMicrosoftSSO = async (event) => {
         if (process.env.NODE_ENV === "production") {
-            try {
-                await instance.loginRedirect(loginRequest);
-            } catch (err) {
-                handleLogin(false);
+            const interactionIncomplete = Cookies.get('msal.interaction.status');
+
+            if (interactionIncomplete) {
+                toast.error("Microsoft sign out was incomplete.", 10000);
+                toast.info("Please reload the page!", 10000);
+            } else {
+                await instance
+                    .loginRedirect(loginRequest)
+                    .then(res => console.log(res))
+                    .catch(e => {
+                        handleLogin(false);
+                    });
             }
         } else {
             // dummy data
