@@ -45,6 +45,7 @@ app.get('/vulnerabilities', function (req, res) {
     res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
+// Make sure that the client gets the latest version of resource
 app.disable('etag');
 
 app.use((req, res, next) => {
@@ -58,7 +59,7 @@ app.use(sessions({
     resave: false
 }))
 
-app.get("redirect", async (req, res) => {
+app.get("/redirect", (req, res) => {
     try {
         res.redirect("/");
     } catch (err) {

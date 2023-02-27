@@ -99,10 +99,8 @@ function App() {
   // to destroy the user session in the backend.
   const handleLogout = () => {
     if (process.env.NODE_ENV === "production") {
-      instance.logoutPopup({
-        account: account,
-        postLogoutRedirectUri: "/",
-        mainWindowRedirectUri: "/"
+      instance.logoutRedirect({
+        account: account
       }).then(res => {
         fetch('/api/v1/users/logout').catch(e => {
           console.log(e);

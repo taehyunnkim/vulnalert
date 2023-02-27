@@ -5,7 +5,7 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
 COPY frontend/ ./
-RUN sed -i 's#http://localhost:7777/redirect#https://vulnalert.taehyunkim.me/redirect#' src/authConfig.js
+RUN sed -i 's#http://localhost:7777/#https://vulnalert.taehyunkim.me/#' src/authConfig.js
 RUN npm run build
 
 
