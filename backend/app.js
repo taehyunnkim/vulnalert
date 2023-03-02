@@ -21,12 +21,15 @@ const CHECK_VULNERABILITY_FREQUENCY_SECONDS = 30;
 const NOTIFY_USERS_FREQUENCY_SECONDS = 10;
 
 await connectToDatabase();
+
+console.log(`Checking user library vulnerabilities every ${CHECK_VULNERABILITY_FREQUENCY_SECONDS} seconds.`);
 cron.schedule(`*/${CHECK_VULNERABILITY_FREQUENCY_SECONDS} * * * * *`, async () => {
     await checkUserLibraryVulnerabilities(models);
 });
 
+console.log(`Notifying users every ${NOTIFY_USERS_FREQUENCY_SECONDS} seconds.`);
 cron.schedule(`*/${NOTIFY_USERS_FREQUENCY_SECONDS} * * * * *`, async () => {
-    await notifyUsers(models);
+    await notifyUsers(models, __dirname);
 });
 
 var app = express();

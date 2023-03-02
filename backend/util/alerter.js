@@ -1,12 +1,52 @@
-import sgMail from '@sendgrid/mail';
+import sgMail from "@sendgrid/mail";
+import handlebars from "handlebars";
+import fs from "fs";
+import path from "path";
 
 // Temp API key
 sgMail.setApiKey("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");
 
 const LOG_PREFIX = "email-worker: ";
 
-export async function notifyUsers(db) {
-    console.log(LOG_PREFIX, "Checking for new emails to send...");
+export async function notifyUsersTest(__dirname) {
+    const templatePath = path.join(__dirname, "util", "email_template.hbs");
+    const htmlWritePath = path.join(__dirname, "util", "generated_html.html");
+
+    const data = {
+        vulnerabilities: [
+          {
+            libraryName: 'Express',
+            libraryVersion: '4.17.1',
+            name: 'Remote Code Execution',
+            description: 'Allows attackers to execute arbitrary code on the server',
+            severity: 'Critical',
+            published: '2021-02-09'
+          },
+          {
+            libraryName: 'React',
+            libraryVersion: '17.0.2',
+            name: 'Cross-Site Scripting (XSS)',
+            description: 'Allows attackers to inject malicious scripts into web pages',
+            severity: 'Medium',
+            published: '2021-02-10'
+          }
+        ]
+    };
+
+    console.log(LOG_PREFIX, "Testing email template...");
+    const source = fs.readFileSync(templatePath, "utf8");
+    console.log(LOG_PREFIX, "Compiling email template...");
+    const template = handlebars.compile(source);
+    console.log(LOG_PREFIX, "Generating email html...");
+    const html = generateHtmlReport(template, data);
+    console.log(LOG_PREFIX, "Writing email html...");
+    fs.writeFileSync(htmlWritePath, html);
+
+    const email = createEmail("kim2000@uw.edu", "Test Report", html);
+    // sendEmails([email])
+}
+
+export async function notifyUsers(db, dirPath) {
     const userLibraries = await db.UserLibrary
         .find({ vulnerabilities: { $exists: true, $not: { $size: 0 } } })
         .populate({
@@ -59,51 +99,28 @@ export async function notifyUsers(db) {
 
     if (Object.keys(data).length > 0) {
         console.log(LOG_PREFIX, "Generating emails for " + Object.keys(data).length + " recipients...");
+        const templatePath = path.join(dirPath, "util", "email_template.hbs");
+        const source = fs.readFileSync(templatePath, "utf8");
+        const template = handlebars.compile(source);
+        
         let emails = [];
         for (const [userEmail, vulnerabilityData] of Object.entries(data)) {
             let recipient = userEmail;
             let subject = vulnerabilityData.length > 1 
                 ? "Multiple vulnerabilities have been detected! - Vulnalert"
                 : "A vulnerability was detected - Vulnalert";
-            let body = "";
             
-            for (const data of vulnerabilityData) {
-                body += generateReport(
-                    data.libraryName,
-                    data.libraryVersion,
-                    data.name,
-                    data.published,
-                    data.severity,
-                    data.description
-                );
-            }
+            const html = generateHtmlReport(template, { vulnerabilities: vulnerabilityData });
     
-            emails.push(
-                createEmail(recipient, subject, body)
-            );
+            emails.push(createEmail(recipient, subject, html));
         }
     
         sendEmails(emails);
     }
 }
 
-function generateReport(
-    libraryName,
-    libraryVersion,
-    name,
-    published,
-    severity,
-    description
-) {
-return `
-Library: ${libraryName}
-Version: ${libraryVersion}
-Vulnerability Name: ${name}
-Vulnerability Reported: ${published}
-Vulnerability Severity: ${severity}
-Vulnerability Description: ${description}
-----------------------------------------------
-`;
+function generateHtmlReport(template, data) {
+    return template(data)
 }
 
 function sendEmails(emails) {
@@ -126,12 +143,12 @@ function sendEmails(emails) {
 function createEmail(
     recipient,
     subject,
-    text
+    html
 ) {
     return {
         to: recipient,
         from: "vulnalert@taehyunkim.me",
         subject: subject,
-        text: text
+        html: html
     }
 };

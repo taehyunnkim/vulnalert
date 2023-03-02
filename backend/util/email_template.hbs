@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>Vulneralert Vulnerabilities Report</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500;700;900&family=Nunito:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+      <style>
+        /* Default styles */
+        body {
+          font-family: "Nunito", Helvetica, Arial, sans-serif;
+        }
+
+        table {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 0;
+          border-collapse: collapse;
+          border-spacing: 0;
+          font-size: 16px;
+          line-height: 1.4;
+          color: #333;
+        }
+
+        td {
+          padding: 16px;
+          vertical-align: top;
+        }
+
+        h1 {
+          margin-top: 0;
+          margin-bottom: 12px;
+          font-size: 28px;
+          line-height: 1.2;
+          font-weight: bold;
+          color: #333;
+        }
+
+        h2 {
+          margin-top: 0;
+          margin-bottom: 16px;
+          font-size: 20px;
+          line-height: 1.2;
+          font-weight: bold;
+          color: #4429E9;;
+        }
+
+        p {
+          margin-top: 0;
+          margin-bottom: 16px;
+        }
+
+        .brand {
+          color: #715AFC;
+          font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+          font-weight: 800;
+        }
+
+        .vulnerability {
+          border-top: 1px solid #919EAB;
+          padding-top: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <table>
+        <tr>
+          <td>
+            <h1><span class="brand">Vulnalert</span> Vulnerability Report</h1>
+            {{#if vulnerabilities}}
+            {{#each vulnerabilities}}
+              <div class="vulnerability">
+                <h2>{{libraryName}} ({{libraryVersion}})</h2>
+                <p><strong>{{name}}</strong></p>
+                <p><strong>Severity:</strong> {{severity}}</p>
+                <p><strong>Published:</strong> {{published}}</p>
+                <p>{{description}}</p>
+              </div>
+            {{/each}}
+            {{else}}
+              <p>No vulnerabilities found</p>
+            {{/if}}
+          </td>
+        </tr>
+      </table>
+    </body>
+</html>

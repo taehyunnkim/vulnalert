@@ -4,8 +4,8 @@ const LOG_PREFIX = "vulnerability-worker: ";
 
 export function checkUserLibraryVulnerabilities(db) {
     return new Promise(async (resolve, reject) => {
-        console.log(LOG_PREFIX, "Checking user library vulnerabilities...");
         try {
+            let vulnerabilityExists = false;
             const vulnerabilities = await db.Vulnerability.find();
             for (const vulnerability of vulnerabilities) {
                 const { library, affected_versions } = vulnerability;
@@ -32,14 +32,17 @@ export function checkUserLibraryVulnerabilities(db) {
                   
                             userLibrary.vulnerabilities.push(userLibVulnerability);
                             await userLibrary.save();
-                  
+                            vulnerabilityExists = true;
                             break;
                         }
                     }
                 }
             }
 
-            console.log(LOG_PREFIX, "Updated user library vulnerabilities.");
+            if (vulnerabilityExists) {
+                console.log(LOG_PREFIX, "Updated user library vulnerabilities.");
+            }
+
             resolve();
         } catch (error) {
             reject(error);
