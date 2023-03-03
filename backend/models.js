@@ -5,7 +5,7 @@ let models = {};
 async function connectToDatabase(){
     console.log('connecting to mongodb')
     if (process.env.DEPLOY === "true") {
-        await mongoose.connect(`mongodb://vulnalert-full:${encodeURIComponent("M-tsVBvk=NhShQDe#RW78P")}@localhost:23239/?authMechanism=DEFAULT`)
+        await mongoose.connect(`mongodb://vulnalert-full:${encodeURIComponent("M-tsVBvk=NhShQDe#RW78P")}@localhost:23239/vulnalert?authMechanism=DEFAULT`)
         console.log("successfully connected to deployment mongodb")
     } else {
         await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/Vulnalert?retryWrites=true&w=majority')

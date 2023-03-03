@@ -1,7 +1,6 @@
 # Build stage
 FROM node:14 AS build
 ENV PORT=7777
-ENV DEPLOY=true
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
