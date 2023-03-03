@@ -15,7 +15,7 @@ export default function Landing(props) {
                     <h1>Application Security</h1>
                     <h1>Made Simple.</h1>
                     <p>You shouldn't need to be a security expert to secure your projects from vulnerabilities.</p>
-                    <p>We proactively scans your Node.js libraries for vulnerabilities and sends alerts to you.</p>
+                    <p>We proactively scan your Node.js libraries for vulnerabilities and sends alerts to you.</p>
                     <Button
                         text="Get Started"
                         type="primary"
