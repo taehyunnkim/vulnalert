@@ -4,7 +4,12 @@ let models = {};
 
 async function connectToDatabase(){
     console.log('connecting to mongodb')
-    await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/Vulnalert?retryWrites=true&w=majority')
+    if (process.env.DEPLOY) {
+        await mongoose.connect('mongodb://vulnalert-full:M-tsVBvk=NhShQDe#RW78P@localhost:23239/?authMechanism=DEFAULT')
+    } else {
+        await mongoose.connect('mongodb+srv://AaronLiu:QZU.MNwBRx2b73e@cluster0.qduhxvn.mongodb.net/Vulnalert?retryWrites=true&w=majority')
+    }
+
     console.log("successfully connected to mongodb")
 
     //Create schemas and models to connect to the mongodb collections
