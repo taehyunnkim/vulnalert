@@ -4,20 +4,36 @@
     margin-top: $app-margin-top;
 }
 
+.authenticatedHeader {
+    margin-top: 40px;
+}
+
 .nav {
     display: flex;
     padding: $box-padding;
     align-items: center;
-    border-width: 1px;
-    border-style: solid;
-    border: 1px solid $primary-color;
-    border-radius: $radius;
-    box-shadow: $shadow;
-    background-color: white;
+}
+
+.authenticatedNav {
+    padding: $box-padding 0;
+}
+
+.landingNav {
+    border: none;
+    box-shadow: none;
+}
+
+.myAccount {
+    color: darkgray;
+    text-decoration: underline;
+
+    &:hover {
+        color: black;
+    }
 }
 
 .brandlogo {
-    height: 32px;
+    height: 38px;
     margin-right: $content-margin;
 }
 

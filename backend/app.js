@@ -48,6 +48,10 @@ app.get('/vulnerabilities', function (req, res) {
     res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
+app.get('/login', function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
 // Make sure that the client gets the latest version of resource
 app.disable('etag');
 

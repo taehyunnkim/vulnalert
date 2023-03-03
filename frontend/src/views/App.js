@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useMsal, useAccount } from "@azure/msal-react";
 import { InteractionRequiredAuthError, BrowserAuthError } from "@azure/msal-browser";
 
@@ -16,6 +16,7 @@ import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
 import Libraries from "views/Libraries/LibrariesPage";
 
 import dummyData from "assets/dummyData";
+import LoginForm from './Landing/LoginForm';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -26,6 +27,7 @@ function App() {
   const navigate = useNavigate();
   const title = {
     "/": isAuthenticated ? "Dashboard" : "Home",
+    "/login": "Sign In",
     "/vulnerabilities": "My Vulnerabilities",
     "/libraries": "My Libraries"
   }
@@ -46,7 +48,8 @@ function App() {
           email: account.idTokenClaims.email,
           auth_time: account.idTokenClaims.auth_time,
           username: account.idTokenClaims.preferred_username
-        })
+        });
+        handleLogin();
       } else {
         setAuthenticated(false);
       }
@@ -63,12 +66,43 @@ function App() {
     return () => clearInterval(intervalId);
   }, [isAuthenticated]);
 
-  // Based on the what we retrieve here from this callback function,
-  // we set the authentication state.
-  const handleLogin = (loggedIn, loggedinUser) => {
-    setAuthenticated(loggedIn);
-    setUser(loggedinUser);
-    getUserData();
+  const handleLogin = () => {
+    if (process.env.NODE_ENV === "production") {
+      if (account) {
+        instance.acquireTokenSilent({
+            scopes: ["User.Read"],
+            account: account
+        }).then((response) => {
+            const accessToken = response.accessToken;
+            fetch('/api/v1/users/ms-login', {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            }).then((response) => {
+                if (response.ok) {
+                  getUserData();
+                } else {
+                  toast.error("Login failed. Please try again...", 3000);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }).catch((error) => {
+            console.log("No refresh token. Please log in...");
+        });
+      }
+    } else {
+      setAuthenticated(true);
+      setUser({
+        given_name: "Alex",
+        family_name: "Hunt",
+        email: "ahunt@uw.edu",
+        auth_time: 1677151382,
+        username: "itsalexhunt"
+      });
+      getUserData();
+    }
   }
 
   const getUserData = () => {
@@ -133,28 +167,38 @@ function App() {
   return (
     <div className={styles.app}>
         <div className={styles.appContainer}>
-          <div className={`${styles.background}`}>
-            <span className={styles.lineLeft}></span>
-            <span className={styles.lineMiddle}></span>
-            <span className={styles.lineRight}></span>
-          </div>
-          <div className={styles.content}>
+          { isAuthenticated ? 
+            <div className={`${styles.background}`}>
+              <span className={styles.lineLeft}></span>
+              <span className={styles.lineMiddle}></span>
+              <span className={styles.lineRight}></span>
+            </div>
+            : <div className={styles.backgroundGradient}></div>
+          }
+          <div className={`${styles.contentContainer}`}>
             <NavBar 
               handleLogout={handleLogout}
               title={title[location.pathname]} 
               isAuthenticated={isAuthenticated}
               user={user}
             />
-            { isAuthenticated ? 
-              <Routes>
-                <Route path="/" element={ <Dashboard userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
-                <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} getUserLibVulnerabilities={getUserLibVulnerabilities} /> } />
-                <Route path="/vulnerabilities" element={ <Vulnerabilities userLibVulnerabilities={userLibVulnerabilities} /> } />
-              </Routes>
-            :
-              <Landing handleLogin={handleLogin} msal={instance} />}
+            <div className={`${styles.mainContent}`}>
+              { isAuthenticated ? 
+                <Routes>
+                  <Route path="/" element={ <Dashboard userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
+                  <Route path="/login" element={ <Navigate to="/" /> } />
+                  <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} getUserLibVulnerabilities={getUserLibVulnerabilities} /> } />
+                  <Route path="/vulnerabilities" element={ <Vulnerabilities userLibVulnerabilities={userLibVulnerabilities} /> } />
+                </Routes>
+                :
+                <Routes>
+                  <Route path="/" element={ <Landing msal={instance} /> } />
+                  <Route path="/login" element={ <LoginForm handleLogin={handleLogin} /> } />
+                </Routes>
+              }
           </div>
-          <Footer />
+          </div>
+          <Footer className={isAuthenticated ? styles.footerStyle: ""}/>
           <ToastContainer position="bottom-right" />
         </div>
     </div>

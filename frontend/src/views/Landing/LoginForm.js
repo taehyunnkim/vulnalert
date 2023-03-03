@@ -19,38 +19,7 @@ function LoginForm({ handleLogin }) {
     // so that we could access the Graph API for further
     // processing.
     useEffect(() => {
-        if (process.env.NODE_ENV === "production") {
-            if (account) {
-                instance.acquireTokenSilent({
-                    scopes: ["User.Read"],
-                    account: account
-                }).then((response) => {
-                    const accessToken = response.accessToken;
-                    fetch('/api/v1/users/ms-login', {
-                        method: "POST",
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`
-                        }
-                    }).then((response) => {
-                        if (response.ok) {
-                            handleLogin(true, {
-                                given_name: account.idTokenClaims.given_name,
-                                family_name: account.idTokenClaims.family_name,
-                                email: account.idTokenClaims.email,
-                                auth_time: account.idTokenClaims.auth_time,
-                                username: account.idTokenClaims.preferred_username
-                            });
-                        } else {
-                            // Handle Login failed...
-                        }
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-                }).catch((error) => {
-                    console.log("No refresh token. Please log in...");
-                });
-            }
-        }
+        
 
     }, [instance, account, handleLogin]);
 
@@ -64,17 +33,6 @@ function LoginForm({ handleLogin }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        if (process.env.NODE_ENV === "development") {
-            // dummy data
-            handleLogin(true, {
-                given_name: "Alex",
-                family_name: "Hunt",
-                email: "ahunt@uw.edu",
-                auth_time: 1677151382,
-                username: "itsalexhunt"
-            });
-        }
     };
 
     const handleMicrosoftSSO = async (event) => {
@@ -87,27 +45,20 @@ function LoginForm({ handleLogin }) {
             } else {
                 await instance
                     .loginRedirect(loginRequest)
-                    .then(res => console.log(res))
-                    .catch(e => {
-                        handleLogin(false);
-                    });
+                    .then(res => {
+                        if (res.ok) {
+                            handleLogin();
+                        }
+                    })
+                    .catch(e => {});
             }
         } else {
-            // dummy data
-            handleLogin(true, {
-                given_name: "Alex",
-                family_name: "Hunt",
-                email: "ahunt@uw.edu",
-                auth_time: 1677151382,
-                username: "itsalexhunt"
-            });
+            handleLogin();
         }
     }
 
     return (
         <div className={styles.logincontainer}>
-            <h1>Sign in</h1>
-            <h2>to use our service.</h2>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label htmlFor="email">Email</label>
                 <input

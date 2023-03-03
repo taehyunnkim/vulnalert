@@ -1,4 +1,4 @@
-export default {
+const style = {
     control: (provided, state) => ({
         ...provided,
         outline: "none",
@@ -24,3 +24,5 @@ export default {
         color: "#4429E9",
       }),
 };
+
+export default style;

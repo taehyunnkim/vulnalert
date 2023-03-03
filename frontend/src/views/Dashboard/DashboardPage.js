@@ -10,7 +10,6 @@ import LibraryCard from "components/cards/LibraryCard/LibraryCard";
 
 function DashboardPage({ trend, userLibraries, userLibVulnerabilities, handleUserLibraryUpdate }) {
     const navigate = useNavigate()
-
     return (
         <div className={styles.dashboardcontainer}>
             <div className={`${styles.stats}`}>

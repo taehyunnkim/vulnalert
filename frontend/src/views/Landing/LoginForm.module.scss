@@ -6,8 +6,7 @@
         border: 1px solid black;
     }
 
-    margin-top: -16px;
-    width: 100%;
+    width: 380px;
     height: 100%;
 }
 
@@ -21,7 +20,7 @@
 }
 
 .form {
-    margin-top: $content-margin * 3;
+    margin-top: $content-margin*5;
     margin-bottom: $content-margin * 3;
 }
 
@@ -77,8 +76,11 @@
 }
 
 .sso h2 {
-    color: $gray;
+    font-family: $brand-font;
+    color: black;
+    // text-shadow: -1px 0 $secondary-color, 0 1px $secondary-color, 1px 0 $primary-color, 0 -1px $primary-color;  
     margin-bottom: $content-margin;
+    font-size: 1.8rem;
 }
 
 .msbutton {

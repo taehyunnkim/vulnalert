@@ -1,9 +1,9 @@
 import styles from "./Footer.module.scss";
 
 
-export default function Footer() {
+export default function Footer(props) {
     return(
-        <footer className={styles.footer}>
+        <footer className={`${styles.footer} ${props.className}`}>
             <h1 className={"brandname " + styles.brandname}>Vulnalert</h1>
             <span className={"dot " + styles.dot}></span>
             <p className={styles.link}><a href="/">Contact</a></p>

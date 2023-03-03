@@ -9,12 +9,6 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
     const [showInfo, setShowInfo] = useState(false);
     const [info, setInfo] = useState({});
 
-    useEffect(() => {
-        if (userLibVulnerabilities !== undefined && userLibVulnerabilities.length > 0) {
-            handleClick(userLibVulnerabilities[0]);
-        }
-    }, []);
-
     const handleClick = (infoData) => {
         if ((infoData.name === info.name && infoData.version === info.version) || !showInfo) {
             setShowInfo(!showInfo);
@@ -22,6 +16,12 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
 
         setInfo(infoData);
     };
+
+    useEffect(() => {
+        if (userLibVulnerabilities !== undefined && userLibVulnerabilities.length > 0) {
+            handleClick(userLibVulnerabilities[0]);
+        }
+    }, []);
 
     return (
         <div className={styles.vulnerabilitiesContainer}>
@@ -49,7 +49,6 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
             </div>
             { showInfo && 
                 <div className={`${styles.infoContainer} card-bg`}>
-                    <p className="subheader">NAME</p>
                     <h1>{ info && info.libraryName }</h1>
                     <div className={styles.infoBox}>
                         <div>

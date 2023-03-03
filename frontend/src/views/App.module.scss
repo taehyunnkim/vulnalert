@@ -9,20 +9,35 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 900px;
   height: 100vh;
   margin: 0 auto;
 }
 
-.content {
+.contentContainer {
   @if $DEBUG {
     box-sizing: border-box;
     border: 1px solid $gray;
   }
 
-  flex: 1;
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mainContent {
+  @if $DEBUG {
+    box-sizing: border-box;
+    border: 1px solid $gray;
+  }
+
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.flexCenter {
+  align-items: center;
 }
 
 .background {
@@ -35,12 +50,22 @@
   z-index: -1;
 }
 
+.backgroundGradient {
+  position: fixed;
+  height: 45vh;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -10;
+  background: linear-gradient(180deg, #FFFFFF 0%, $secondary-color 100%);
+}
+
 .lineLeft {
   position: absolute;
   top: -50%;
   height: 200%;
   width: $background-bar-width;
-  background-image: $background-side-color;
+  background-image: linear-gradient(270deg, #FFFFFF -0%, $secondary-color 100%);
 }
 
 .lineMiddle {
@@ -60,7 +85,19 @@
   top: -50%;
   height: 200%;
   width: $background-bar-width;
-  background-image: $background-side-color;
+  background-image: linear-gradient(90deg, #FFFFFF 0%, $secondary-color 100%);
+}
+
+.footerStyle {
+  color: $gray;
+
+  h1, p, a {
+    color: $gray!important;
+  }
+
+  span {
+    background-color: $gray;
+  }
 }
 
 @include media(">tablet", "<desktop") {

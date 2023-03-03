@@ -1,0 +1,34 @@
+@import "src/globalstyles.scss";
+
+label {
+    display: block;
+}
+
+.register {
+    display: flex;
+    padding: $box-padding;
+}
+
+.searchContainer {
+    flex: 3;
+    margin-right: $content-margin;
+}
+
+.versionContainer {
+    flex: 2;
+    margin-right: $content-margin;
+}
+
+@include media(">tablet", "<desktop") {
+    .searchInputContainer {
+        width: 250px;
+    }
+
+    .versionContainer {
+        width: 160px;
+    }
+    
+}
+
+@include media(">phone", "<tablet") {
+}

@@ -7,24 +7,26 @@
     
     display: flex;
     align-items: center;
-    padding: $box-padding*2 $box-padding;
+    padding: $box-padding*3 $box-padding;
+    color: $lightgray;
 }
 
 .brandname {
     background: none;
     background-clip: unset;
     -webkit-text-fill-color: unset;
-    color: $gray;
+    color: $lightgray;
+    font-size: 1.8rem;
 }
 
 .dot {
-    margin: 2px $content-margin 0 $content-margin ;
+    margin: 2px $content-margin 0 $content-margin;
 }
 
 .link a {
     font-weight: 700;
     font-size: 1.4rem;
-    color: $gray;
+    color: $lightgray;
 }
 
 .copyright {

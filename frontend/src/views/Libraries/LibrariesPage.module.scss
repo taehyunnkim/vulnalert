@@ -9,6 +9,7 @@ label {
     flex-direction: column;
     flex: 1;
     animation: fade-in 150ms $curve forwards;
+    margin-top: $content-margin*2;
 }
 
 .userlibraries, .register {
