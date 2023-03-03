@@ -22,15 +22,15 @@ const DEFAULT_PORT = '7777';
    * Create HTTP server.
    */
 
-  let host = process.env.DEBUG ? 'localhost' : '0.0.0.0';
+  let host = process.env.DEBUG ? "localhost" : "0.0.0.0";
 
-  var server = http.createServer(app, host);
+  var server = http.createServer(app);
 
   /**
    * Listen on provided port, on all network interfaces.
    */
 
-  server.listen(port);
+  server.listen(port, host);
   server.on('error', onError);
   server.on('listening', onListening);
 

@@ -18,4 +18,4 @@ RUN npm install --production
 COPY backend/ ./
 COPY --from=build /app/frontend/build /app/frontend/build
 EXPOSE $PORT
-CMD ["npm", "start"]
+CMD ["npm", "run", "deploy"]
