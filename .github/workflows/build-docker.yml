@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to Dockerhub
+name: Build and Deploy
 
 on:
   workflow_dispatch:
@@ -26,3 +26,14 @@ jobs:
           context: .
           push: true
           tags: itskimkong/vulnalert:latest
+      - name: Deploy application
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          ssh-commands: |
+            ssh -p 23231 ubuntu@connect.vulnalert.app '
+              docker container stop vulnalert;
+              docker rm vulnalert;
+              docker run --name vulnalert -p 7777:7777 --network host -d itskimkong/vulnalert:latest
+            '
