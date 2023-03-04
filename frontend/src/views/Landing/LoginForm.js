@@ -35,6 +35,10 @@ function LoginForm({ handleLogin }) {
         event.preventDefault();
     };
 
+    const handleRegister = async (event) => {
+        toast.info("Registration is currently disabled. Please log in with your UW Net ID with Microsoft SSO.", 10000);
+    };
+
     const handleMicrosoftSSO = async (event) => {
         if (process.env.NODE_ENV === "production") {
             const interactionIncomplete = Cookies.get('msal.interaction.status');
@@ -81,7 +85,7 @@ function LoginForm({ handleLogin }) {
                 />
 
                 <button type="submit">Sign in</button>
-                <p className={styles.register}>Don't have an account? <a href="/">Sign up</a></p>
+                <p className={styles.register}>Don't have an account? <a onClick={handleRegister}>Sign up</a></p>
             </form>
 
             <div className={styles.sso}>
