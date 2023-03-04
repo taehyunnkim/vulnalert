@@ -27,12 +27,13 @@ jobs:
           push: true
           tags: itskimkong/vulnalert:latest
       - name: Deploy application
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-commands: |
-            ssh -p 23231 ubuntu@connect.vulnalert.app '
-              docker container stop vulnalert;
-              docker rm vulnalert;
-              docker run --name vulnalert -p 7777:7777 --network host -d itskimkong/vulnalert:latest
-            '
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker container stop vulnalert
+            docker rm vulnalert
+            docker run --name vulnalert -p 7777:7777 --network host -d itskimkong/vulnalert:latest
