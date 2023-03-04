@@ -30,7 +30,6 @@ jobs:
         uses: webfactory/ssh-agent@v0.4.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }}
           ssh-commands: |
             ssh -p 23231 ubuntu@connect.vulnalert.app '
               docker container stop vulnalert;
