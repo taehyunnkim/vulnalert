@@ -107,8 +107,8 @@ export async function notifyUsers(db, dirPath) {
         for (const [userEmail, vulnerabilityData] of Object.entries(data)) {
             let recipient = userEmail;
             let subject = vulnerabilityData.length > 1 
-                ? "Multiple vulnerabilities have been detected! - Vulnalert"
-                : "A vulnerability was detected - Vulnalert";
+                ? "Multiple vulnerabilities have been detected!"
+                : "A vulnerability was detected!";
             
             const html = generateHtmlReport(template, { vulnerabilities: vulnerabilityData });
     
@@ -147,7 +147,10 @@ function createEmail(
 ) {
     return {
         to: recipient,
-        from: "vulnalert@taehyunkim.me",
+        from: {
+            name: "Vulnalert",
+            email: "alert@vulnalert.app"
+        },
         subject: subject,
         html: html
     }
