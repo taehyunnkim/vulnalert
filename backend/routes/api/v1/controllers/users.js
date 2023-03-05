@@ -36,7 +36,7 @@ router.post('/ms-login', async function(req, res, next) {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
-                        "error": err.message,
+                        "error": "Error from our side :(",
                         "status": "error"
                     }) 
                 } else if (!user) {
@@ -57,7 +57,7 @@ router.post('/ms-login', async function(req, res, next) {
             res.status(500).json(
                 {
                     status: "error",
-                    error: err
+                    error: "Error from our side :("
                  }
             )
         }

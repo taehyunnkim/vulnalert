@@ -20,7 +20,7 @@ router.get("/", function(req, res) {
                     if (err) {
                         console.log(err);
                         res.status(500).json({
-                            "error": err.message,
+                            "error": "Error from our side :(",
                             "status": "error"
                         }) 
                     } else {
@@ -61,7 +61,7 @@ router.post('/register', async function(req, res) {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
-                        "error": err.message,
+                        "error": "Error from our side :(",
                         "status": "error"
                     }) 
                 } else {
@@ -72,7 +72,7 @@ router.post('/register', async function(req, res) {
                     }, async (err, userLibrary) => {
                         if (err) {
                             res.status(500).json({
-                                "error": err.message,
+                                "error": "Error from our side :(",
                                 "status": "error"
                             }) 
                         } else if (!userLibrary) {
@@ -97,7 +97,7 @@ router.post('/register', async function(req, res) {
             })
         } catch(error) {
             console.log("Error connecting to db", error);
-            res.status(500).json({"status": "error", "error": error});
+            res.status(500).json({"status": "error", "error": "Error from our side :("});
         }
     } else {
         res.status(401).json({
@@ -143,7 +143,7 @@ router.get('/:prefix', verifyPrefixCache, async function(req, res, next) {
                     if (err) {
                         console.log(err);
                         res.status(500).json({
-                            error: err.message,
+                            error: "Error from our side :(",
                             status: "error"
                         }) 
                     } else {
@@ -193,12 +193,12 @@ router.get('/versions/:packageName', async function(req, res, next) {
                 if (err) {
                     console.log(err);
                     res.status(500).json({
-                        "error": err.message,
+                        "error": "Error from our side :(",
                         "status": "error"
                     }) 
                 } else if (!library) {
                     res.status(500).json({
-                        "error": err.message,
+                        "error": "Error from our side :(",
                         "status": "error"
                     }) 
                 } else {

@@ -50,7 +50,7 @@ router.get('/', async (req,res) => {
         }
     } catch(err) {
         console.log("Error changing the alert:", err)
-        res.status(500).json({"status": "error", "error": err})
+        res.status(500).json({"status": "error", "error": "Error from our side :("})
     }
 })
 

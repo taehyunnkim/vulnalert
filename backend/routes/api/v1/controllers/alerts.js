@@ -12,7 +12,7 @@ router.post('/', (req,res) => {
             if (err) {
                 res.status(500).json({
                     "status": "error", 
-                    "error": err
+                    "error": "Error from our side :("
                 })
             } else {
                 req.models.UserLibrary.findOne({
@@ -23,7 +23,7 @@ router.post('/', (req,res) => {
                     if (err) {
                         console.log(err);
                         res.status(500).json({
-                            "error": err.message,
+                            "error": "Error from our side :(",
                             "status": "error"
                         })
                     } else if (userLibrary) {
@@ -44,7 +44,7 @@ router.post('/', (req,res) => {
         })
     } catch(err) {
         console.log("Error changing the alert:", err)
-        res.status(500).json({"status": "error", "error": err})
+        res.status(500).json({"status": "error", "error": "Error from our side :("})
     }
 })
 
