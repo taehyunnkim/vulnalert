@@ -153,7 +153,21 @@
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(1, 1fr);
     }
+
+    .userDataSummaryContainer {
+        flex-direction: column;
+    }
 }
 
 @include media(">phone", "<tablet") {
+    .userDataSummaryContainer {
+        flex-direction: column;
+    }
+}
+
+
+@include media(">smphone", "<phone") {
+    .userDataSummaryContainer {
+        flex-direction: column;
+    }
 }

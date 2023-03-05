@@ -80,3 +80,37 @@
         }
     }
 }
+
+@include media(">tablet", "<desktop") {
+    .vulnerabilitiesContainer {
+        flex-direction: column;
+    }
+    
+    .uservulnerabilities {
+        border-right: none;
+        border-bottom: 1px solid $mdgray;
+    }
+}
+
+@include media(">phone", "<tablet") {
+    .vulnerabilitiesContainer {
+        flex-direction: column;
+    }
+
+    .uservulnerabilities {
+        border-right: none;
+        border-bottom: 1px solid $mdgray;
+    }
+}
+
+
+@include media(">smphone", "<phone") {
+    .vulnerabilitiesContainer {
+        flex-direction: column;
+    }
+
+    .uservulnerabilities {
+        border-right: none;
+        border-bottom: 1px solid $mdgray;
+    }
+}

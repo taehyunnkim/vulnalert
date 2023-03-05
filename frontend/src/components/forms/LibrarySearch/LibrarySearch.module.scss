@@ -24,15 +24,32 @@ label {
 }
 
 @include media(">tablet", "<desktop") {
-    .searchInputContainer {
-        width: 250px;
+    .register {
+        flex-direction: column;
     }
 
-    .versionContainer {
-        width: 160px;
+    .searchContainer {
+        margin-bottom: $content-margin;
     }
-    
 }
 
 @include media(">phone", "<tablet") {
+    .register {
+        flex-direction: column;
+    }
+
+    .searchContainer {
+        margin-bottom: $content-margin;
+    }
+}
+
+
+@include media(">smphone", "<phone") {
+    .register {
+        flex-direction: column;
+    }
+
+    .searchContainer {
+        margin-bottom: $content-margin;
+    }
 }
