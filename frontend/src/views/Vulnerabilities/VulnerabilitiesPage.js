@@ -25,7 +25,8 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
 
     return (
         <div className={styles.vulnerabilitiesContainer}>
-            <div className={`${styles.uservulnerabilities} card-bg`}>
+            <div className={`${styles.uservulnerabilities}`}>
+                <h2 className={styles.header}>Detected Vulnerabilities</h2>
                 {
                     userLibVulnerabilities === undefined || userLibVulnerabilities.length === 0 
                     ? <EmptyCard message="Awesome! No vulnerabilities have been detected for your libraries 😊" />
@@ -48,7 +49,7 @@ function VulnerabilitiesPage({ userLibVulnerabilities }) {
                 }
             </div>
             { showInfo && 
-                <div className={`${styles.infoContainer} card-bg`}>
+                <div className={`${styles.infoContainer}`}>
                     <h1>{ info && info.libraryName }</h1>
                     <div className={styles.infoBox}>
                         <div>

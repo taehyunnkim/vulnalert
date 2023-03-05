@@ -98,7 +98,7 @@ function LibrarySearch(props) {
     };
 
     return (
-        <div className={`${styles.register} card-bg`}>
+        <div className={`${styles.register} ${props.isDemo ? "card-bg" : ""} ${props.isDemo ? styles.padded : ""}`}>
             <div className={styles.searchContainer}>
                 { props.isDemo ? <label htmlFor="search" className="subheader">LIBRARY</label> : <label htmlFor="search" className="subheader">SEARCH LIBRARY</label> }
                 <div className={styles.searchInputContainer}>
@@ -158,10 +158,10 @@ function LibrarySearch(props) {
                 ""
                 : 
                 <div className={styles.submitContainer}>
-                    <label htmlFor="register" className="subheader">REGISTER</label>
+                    <label htmlFor="register" className="subheader">.</label>
                     <Button
                         text="Register Library" 
-                        type="primary"
+                        type="dashboard"
                         onClick={() => props.handleRegister(selectedLibrary, selectedVersion)}
                     />
                 </div>

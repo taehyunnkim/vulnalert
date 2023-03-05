@@ -1,130 +1,92 @@
 @import "src/globalstyles.scss";
 
 .dashboardcontainer {
-    width: 100%;
-    margin-top: $content-margin*2;
-    animation: fade-in 150ms $curve forwards;
-}
-
-.statNumber {
-    font-size: 4.6rem;
-    font-weight: 300;
-    margin-top: -6px;
-    color: black;
-}
-
-.card {
-    box-sizing: border-box;
-    padding: $box-padding*1.4 $box-padding*2;
-    background-color: white;
-    border-radius: $radius;
-    border: 1px solid $mdgray;
-}
-
-.stats {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    gap: $content-margin*2;
-    margin-bottom: $content-margin*2;
 }
 
-.userstat {
+.sideNav {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;   
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 100%;
+    background-color: $lightgray;
 }
 
-.reportstat {
+.button {
+    border: 0!important;
+    border-radius: 0!important;
+    padding: $box-padding $box-padding!important;
+    background-color: transparent!important;
+    border-top: 1px solid $red!important;
+}
+
+.navHeader {
+    display: flex;
+    align-items: center;
+    padding: $box-padding*2 $box-padding*2 $box-padding*2 $box-padding*2;
+
+    img {
+        width: 26px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin-left: $content-margin;
+    }
+}
+
+.brandPlaceholder {
+    width: 26px;
+}
+
+.active div h2 {
+    font-weight: 700;
+}
+
+.navContent {
+    flex: 1;
+
+    h2 {
+        color: black;
+        font-weight: 300;
+        font-family: $app-font;
+        font-size: 1.4rem;
+        border-top: 1px solid $mdgray;
+        padding: $box-padding $box-padding*2;
+    }
+
+    div:last-child a h2 {
+        border-bottom: 1px solid $mdgray;
+    }
+}
+
+.contentContainer {
+    padding: 0 $box-padding 0 $box-padding;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-left: 1px solid $mdgray;
+    border-right: 1px solid $mdgray;
+    background-color: rgb(252, 252, 252);
     flex: 1;
 }
 
-.vulnsummaryContainer, .libsummaryContainer {
-    width: 100%;
-}
-
-.userstatContainer {
-    @if $DEBUG {
-        box-sizing: border-box;
-        border: 1px solid black;
-    }
-
-    display: flex; 
-    margin-bottom: -5px;
-}
-
-.userstatRegistered, .userstatVulnerabilities {
-    @if $DEBUG {
-        box-sizing: border-box;
-        border: 1px solid purple;
-    }
-
-    width: 100px;
-}
-
-.userVulnerabilitiesContainer {
-    margin: $content-margin 0;
-    padding: $box-padding 0;
-}
-
-.chart {
-    height: 80px;
-    width: 100%;
-}
-
-
-.vulnHeaders {
+.content {
     display: flex;
-    align-items: center;
-    padding: 0;
-
-    h3 {
-        display: block;
-
-        &:nth-child(1) {
-            flex: 1;
-            margin-right: $content-margin;
-        }
-
-        &:nth-child(2) {
-            flex: 1;
-            margin-right: $content-margin;
-        }
-
-        &:nth-child(3) {
-            flex: 1;
-            margin-right: $content-margin;
-        }
-
-        &:nth-child(4) {
-            flex: 3;
-        }
-    }
+    background-color: white;
+    height: 100%;
+    border-left: 1px solid $mdgray;
+    border-right: 1px solid $mdgray;
+    padding: $box-padding*2;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-.libsummaryResult {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    overflow: hidden;
-    padding: 2px;
-    row-gap: $box-padding;
-    column-gap: $box-padding;
-    margin: $content-margin 0;
-    justify-content: space-between;
-}
 
-.libsummaryContainer {
-    margin-bottom: $content-margin*2;
-}
 
 @include media(">tablet", "<desktop") {
-    .statNumber {
-        font-size: 5rem;
-        margin-top: -10px;
-    }
-
-    .libsummaryResult {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(1, 1fr);
-    }
 }
 
 @include media(">phone", "<tablet") {

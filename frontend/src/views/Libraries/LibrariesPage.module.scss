@@ -54,10 +54,16 @@ label {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
     row-gap: $box-padding;
     column-gap: $box-padding;
+}
+
+.header {
+    font-size: 2rem;
+    color: $gray;
+    margin-top: $content-margin*2;
 }
 
 .img {

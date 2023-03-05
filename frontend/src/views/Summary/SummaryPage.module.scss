@@ -1,0 +1,159 @@
+@import "src/globalstyles.scss";
+
+.summaryContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    animation: fade-in 150ms $curve forwards;
+}
+
+.statNumber {
+    font-size: 6rem;
+    font-weight: 300;
+    margin-top: -6px;
+    color: black;
+}
+
+.card {
+    box-sizing: border-box;
+    padding: $box-padding*1.4 $box-padding*2;
+    background-color: white;
+    border-radius: $radius;
+    border: 1px solid $mdgray;
+}
+
+.reportstat {
+    padding: $box-padding*1.4 $box-padding*2;
+    margin-bottom: $content-margin*2;
+
+    h2 {
+        font-size: 2rem;
+        color: $gray;
+        margin-bottom: $content-margin;
+    }
+}
+
+.chart {
+    padding: $box-padding;
+    height: 260px;
+}
+
+.header {
+    color: $secondary-color;
+}
+
+
+.stats {
+    display: flex;
+    gap: $content-margin*2;
+    margin-bottom: $content-margin*2;
+}
+
+.userstat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6px $box-padding*2 0 $box-padding*2;
+
+    h2 {
+        font-size: 2rem;
+        color: $gray;
+        margin-bottom: $content-margin*1.2;
+    }
+}
+
+.userDataSummaryContainer {
+    display: flex;
+    gap: $content-margin;
+}
+
+.vulnsummaryContainer, .libsummaryContainer {   
+    box-sizing: border-box;
+    flex: 1;
+    padding: $box-padding*1.4 $box-padding*2;
+}
+
+.vulnsummary {
+
+}
+
+.userstatContainer {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+
+    display: flex; 
+    margin-bottom: -5px;
+}
+
+.userstatRegistered, .userstatVulnerabilities {
+    @if $DEBUG {
+        box-sizing: border-box;
+        border: 1px solid purple;
+    }
+
+    width: 100px;
+}
+
+.userVulnerabilitiesContainer {
+    margin: $content-margin 0;
+    padding: $box-padding 0;
+}
+
+.vulnHeaders {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    h3 {
+        display: block;
+
+        &:nth-child(1) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(2) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(3) {
+            flex: 1;
+            margin-right: $content-margin;
+        }
+
+        &:nth-child(4) {
+            flex: 3;
+        }
+    }
+}
+
+.libsummaryResult {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: hidden;
+    padding: 2px;
+    row-gap: $box-padding;
+    column-gap: $box-padding;
+    margin: $content-margin 0;
+    justify-content: space-between;
+}
+
+@include media(">tablet", "<desktop") {
+    .statNumber {
+        font-size: 5rem;
+        margin-top: -10px;
+    }
+
+    .libsummaryResult {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+    }
+}
+
+@include media(">phone", "<tablet") {
+}

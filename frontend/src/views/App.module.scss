@@ -1,19 +1,5 @@
 @import "src/globalstyles.scss";  
 
-.appContainer {
-  @if $DEBUG {
-    box-sizing: border-box;
-    border: 1px solid $gray;
-  }
-
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 900px;
-  height: 100vh;
-  margin: 0 auto;
-}
-
 .contentContainer {
   @if $DEBUG {
     box-sizing: border-box;

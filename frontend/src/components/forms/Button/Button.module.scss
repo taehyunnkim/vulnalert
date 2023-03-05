@@ -4,10 +4,11 @@
     font-family: $app-font;
     border: none;
     border-radius: $radius;
-    padding: calc($box-padding / 2) $box-padding*2;
+    padding: $box-padding $box-padding*2;
     font-size: 1.4rem;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .primary {
@@ -19,6 +20,17 @@
     border: 1px solid $primary-color;
     background-color: white;
     color: $primary-color;
+}
+
+.dashboard {
+    border: 1px solid $secondary-color;
+    background-color: white;
+    color: $secondary-color;
+
+    &:hover {
+        background-color: $secondary-color;
+        color: white;
+    }
 }
 
 .warning {

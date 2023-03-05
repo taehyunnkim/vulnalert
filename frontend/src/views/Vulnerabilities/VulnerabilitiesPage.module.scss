@@ -1,16 +1,16 @@
 @import "src/globalstyles.scss";
 
 .vulnerabilitiesContainer {
-    margin-top: $content-margin*2;
     flex: 1;
     display: flex;
-    gap: $content-margin*2;
     animation: fade-in 150ms $curve forwards;
+    margin-top: 6px;
 }
 
 .uservulnerabilities {
-    padding: $box-padding*2;
+    padding: 0 $box-padding*2 $box-padding*2 $box-padding*2;
     flex: 1;
+    border-right: 1px solid $mdgray;
 }
 
 .infoContainer {
@@ -18,7 +18,7 @@
     flex: 1;
 
     h1 {
-        font-size: 3.2rem;
+        font-size: 4rem;
         font-weight: 600;
         color: $primary-color;
     }
@@ -33,6 +33,12 @@
     display: flex;
     margin-top: $content-margin;
     gap: $content-margin*3;
+    margin-bottom: $content-margin*2;
+}
+
+.header {
+    font-size: 2rem;
+    color: $gray;
     margin-bottom: $content-margin*2;
 }
 

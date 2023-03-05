@@ -103,6 +103,12 @@ a {
     text-decoration: none;
 }
 
+.active {
+    h2 {
+        font-weight: 700!important;
+    }
+}
+
 .card-bg {
     @if $DEBUG {
         box-sizing: border-box;

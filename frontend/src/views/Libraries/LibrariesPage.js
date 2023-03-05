@@ -75,7 +75,8 @@ function LibrariesPage({ userLibraries, setUserLibraries, handleUserLibraryUpdat
 
     return (
         <div className={styles.librariesContainer}>
-            <LibrarySearch handleRegister={handleRegister} isDemo={false} />
+            <LibrarySearch handleRegister={handleRegister} isDemo={false} type="dashboard" />
+            <h2 className={styles.header}>Registered Libraries</h2>
             <div 
                 className={`
                     ${styles.userlibraries} 

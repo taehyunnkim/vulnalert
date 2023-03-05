@@ -8,29 +8,18 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-
 import { useMsal, useAccount } from "@azure/msal-react";
 import { InteractionRequiredAuthError, BrowserAuthError } from "@azure/msal-browser";
 
-import NavBar from "components/layouts/navigation/NavBar/NavBar";
 import Footer from "components/layouts/navigation/Footer/Footer";
 import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
-import Vulnerabilities from "views/Vulnerabilities/VulnerabilitiesPage";
-import Libraries from "views/Libraries/LibrariesPage";
 
 import dummyData from "assets/dummyData";
-import LoginForm from './Landing/LoginForm';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
   const [userLibraries, setLibraries] = useState([]);
   const [userLibVulnerabilities, setUserLibVulnerabilities] = useState([]);
-  const location = useLocation();
   const navigate = useNavigate();
-  const title = {
-    "/": isAuthenticated ? "Dashboard" : "Home",
-    "/login": "Sign In",
-    "/vulnerabilities": "My Vulnerabilities",
-    "/libraries": "My Libraries"
-  }
 
   // MSAL
   const { instance, accounts }  = useMsal();
@@ -166,41 +155,31 @@ function App() {
 
   return (
     <div className={styles.app}>
-        <div className={styles.appContainer}>
-          { isAuthenticated ? 
-            <div className={`${styles.background}`}>
-              <span className={styles.lineLeft}></span>
-              <span className={styles.lineMiddle}></span>
-              <span className={styles.lineRight}></span>
-            </div>
-            : <div className={styles.backgroundGradient}></div>
-          }
-          <div className={`${styles.contentContainer}`}>
-            <NavBar 
-              handleLogout={handleLogout}
-              title={title[location.pathname]} 
-              isAuthenticated={isAuthenticated}
-              user={user}
-            />
-            <div className={`${styles.mainContent}`}>
-              { isAuthenticated ? 
-                <Routes>
-                  <Route path="/" element={ <Dashboard userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
-                  <Route path="/login" element={ <Navigate to="/" /> } />
-                  <Route path="/libraries" element={ <Libraries userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} getUserLibVulnerabilities={getUserLibVulnerabilities} /> } />
-                  <Route path="/vulnerabilities" element={ <Vulnerabilities userLibVulnerabilities={userLibVulnerabilities} /> } />
-                </Routes>
-                :
-                <Routes>
-                  <Route path="/" element={ <Landing msal={instance} /> } />
-                  <Route path="/login" element={ <LoginForm handleLogin={handleLogin} /> } />
-                </Routes>
-              }
+      <div className={styles.appContainer}>
+        <div className={`${styles.contentContainer}`}>
+          
+          <div className={`${styles.mainContent}`}>
+            { isAuthenticated ? 
+              <Routes>
+                <Route path="*" element={ 
+                  <Dashboard 
+                    userLibVulnerabilities={userLibVulnerabilities} 
+                    userLibraries={userLibraries}
+                    setLibraries={setLibraries}
+                    handleUserLibraryUpdate={handleUserLibraryUpdate}
+                    getUserLibVulnerabilities={getUserLibVulnerabilities}
+                    handleLogout={handleLogout}
+                  /> 
+                }/>
+                <Route path="/login" element={ <Navigate to="/" /> } />
+              </Routes>
+              :
+              <Landing msal={instance} handleLogin={handleLogin} />
+            }
           </div>
-          </div>
-          <Footer className={isAuthenticated ? styles.footerStyle: ""}/>
-          <ToastContainer position="bottom-right" />
         </div>
+        <ToastContainer position="bottom-right" />
+      </div>
     </div>
   );
 }

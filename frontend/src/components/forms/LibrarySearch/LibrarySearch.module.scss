@@ -4,9 +4,12 @@ label {
     display: block;
 }
 
+.padded {
+    padding: $box-padding;
+}
+
 .register {
     display: flex;
-    padding: $box-padding;
 }
 
 .searchContainer {

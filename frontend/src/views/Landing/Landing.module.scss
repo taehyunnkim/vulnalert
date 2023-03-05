@@ -1,5 +1,28 @@
 @import "src/globalstyles.scss";
+.appContainer {
+    @if $DEBUG {
+      box-sizing: border-box;
+      border: 1px solid $gray;
+    }
+  
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    height: 100vh;
+    margin: 0 auto;
+}
 
+.backgroundGradient {
+    position: fixed;
+    height: 45vh;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: -10;
+    background: linear-gradient(180deg, #FFFFFF 0%, $secondary-color 100%);
+}
 
 .landing {
     @if $DEBUG {
@@ -28,7 +51,7 @@
 
 .button {
     margin-top: $content-margin;
-    padding: $box-padding;
+    padding: $box-padding!important;
     width: 240px;
 }
 
