@@ -37,11 +37,11 @@ $background-middle-color: #d8dde2;
 
 $desktop: 1024px;
 $tablet: 768px;
-$phone: 640px;
-$sm-phone: 320px;
+$phone: 480px;
+$smphone: 320px;
 
 // Screen Size
-$breakpoints: (sm-phone: $sm-phone,
+$breakpoints: (smphone: $smphone,
                phone: $phone, 
                tablet: $tablet, 
                desktop: $desktop) !default;
@@ -66,15 +66,9 @@ $curve: cubic-bezier(0.42, 0, 1, 1);
 }
 
 @include media(">tablet", "<desktop") {
-    * {
-        font-size: 54%;
-    }
 }
 
 @include media(">phone", "<tablet") {
-    * {
-        font-size: 40%;
-    }
 }
 
 body, h1, h2, h3, p {

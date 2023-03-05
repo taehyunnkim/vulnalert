@@ -87,3 +87,9 @@
 .msbutton {
     cursor: pointer;
 }
+
+@include media(">smphone", "<phone") {
+    .logincontainer {
+        width: $smphone;
+    }
+}

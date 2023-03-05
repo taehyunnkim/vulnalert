@@ -87,17 +87,7 @@
 }
 
 @include media(">tablet", "<desktop") {
-  .appContainer {
-    width: calc($tablet - 200px);
-  }
-
-  .background {
-    width: 1400px;
-  }
 }
 
 @include media(">phone", "<tablet") {
-  .appContainer {
-    width: $phone;
-  }
 }

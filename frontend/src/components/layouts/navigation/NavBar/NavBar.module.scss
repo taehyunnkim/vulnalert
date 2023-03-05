@@ -64,3 +64,13 @@
     color: black;
     margin-right: $content-margin;
 }
+
+@include media(">smphone", "<phone") {
+    .hidden {
+        display: none;
+    }
+
+    .nav {
+        padding: 0;
+    }
+}

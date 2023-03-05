@@ -10,7 +10,6 @@
     flex-direction: column;
     align-items: center;
     width: 900px;
-    height: 100vh;
     margin: 0 auto;
 }
 
@@ -162,9 +161,68 @@
 }
 
 @include media(">tablet", "<desktop") {
+    .appContainer {
+        width: $tablet;
+    }
 
+    .landing {
+        flex-direction: column;
+    }
 }
 
 @include media(">phone", "<tablet") {
+    .appContainer {
+        width: $phone;
+    }
+
+    .landing {
+        flex-direction: column;
+    }
+}
+
+@include media(">smphone", "<phone") {
+    .appContainer {
+        width: $smphone;
+    }
+
+    .landing {
+        flex-direction: column;
+    }
+
+    .leftpanel {
+        padding-bottom: 0;
+    }
+
+    .explanationContainer {
+        margin-top: $content-margin*2.4;
     
+        & > div {
+            display: flex;
+            gap: $content-margin;
+            flex-direction: column;
+        }
+    
+        img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+    
+    .explanationCard {
+        justify-content: flex-start;
+    }
+
+    .demoVulnerability h3 {
+        font-size: 1.4rem;
+    }
+
+    .intro {
+        h1 {
+            font-size: 3rem;
+        }
+    
+        p {
+            font-size: 1.4rem;
+        }
+    }
 }

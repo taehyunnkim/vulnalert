@@ -7,7 +7,7 @@
     
     display: flex;
     align-items: center;
-    padding: $box-padding*3 $box-padding;
+    padding: $box-padding*8 $box-padding $box-padding $box-padding;
     color: $lightgray;
 }
 
@@ -31,4 +31,14 @@
 
 .copyright {
     margin: 2px $content-margin 0 ($content-margin+6px) ;
+}
+
+@include media(">smphone", "<phone") {
+    .brandname {
+        font-size: 1.2rem;
+    }
+
+    .link a {
+        font-size: 1rem;
+    }
 }

@@ -26,7 +26,7 @@ export default function NavBar(props) {
                 { props.isAuthenticated ? <p className={styles.intro}>{intro()}</p>: "" }
                 { props.isAuthenticated 
                     ? <Button text="Logout" type="warning" onClick={props.handleLogout} /> 
-                    : location.pathname === "/login" ? "" : <Link to="/login"><h2 className={styles.myAccount}>My Account</h2></Link>
+                    : location.pathname === "/login" ? "" : <Link to="/login" className={styles.hidden}><h2 className={styles.myAccount}>My Account</h2></Link>
                 }
             </nav>
         </header>
