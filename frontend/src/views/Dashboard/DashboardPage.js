@@ -20,17 +20,20 @@ function DashboardPage({ setLibraries, userLibraries, userLibVulnerabilities, ha
                 <div className={styles.navContent}>
                     <div className={styles.navItem}>
                         <NavLink to="/">
-                                <h2>Summary</h2>
+                            <img className={styles.navIcon} src="assets/icons/stats.svg" alt="Stats Icon"/>
+                            <h2>Summary</h2>
                         </NavLink>
                     </div>
                     <div className={styles.navItem}>
                         <NavLink to="/libraries">
-                                <h2>Libraries</h2>
+                            <img className={styles.navIcon} src="assets/icons/package.svg" alt="Package Icon"/>
+                            <h2>Libraries</h2>
                         </NavLink>
                     </div>
                     <div className={styles.navItem}>
                         <NavLink to="/vulnerabilities">
-                                <h2>Vulnerabilities</h2>
+                            <img className={styles.navIcon} src="assets/icons/vulnerability.svg" alt="Vulnerability Icon"/>
+                            <h2>Vulnerabilities</h2>
                         </NavLink>
                     </div>
                 </div>

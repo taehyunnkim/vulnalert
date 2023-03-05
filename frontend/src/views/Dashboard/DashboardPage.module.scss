@@ -49,18 +49,31 @@
 .navContent {
     flex: 1;
 
+    a {
+        display: flex;
+        align-items: center;
+    }
+
     h2 {
         color: black;
         font-weight: 300;
         font-family: $app-font;
         font-size: 1.4rem;
-        border-top: 1px solid $mdgray;
-        padding: $box-padding $box-padding*2;
     }
 
-    div:last-child a h2 {
+    div:last-child {
         border-bottom: 1px solid $mdgray;
     }
+}
+
+.navItem {
+    border-top: 1px solid $mdgray;
+    padding: $box-padding $box-padding*2;
+}
+
+.navIcon {
+    width: 20px;
+    margin-right: $content-margin;
 }
 
 .contentContainer {
