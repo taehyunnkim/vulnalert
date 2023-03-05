@@ -8,12 +8,10 @@ import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-
 import { useMsal, useAccount } from "@azure/msal-react";
 import { InteractionRequiredAuthError, BrowserAuthError } from "@azure/msal-browser";
 
-import Footer from "components/layouts/navigation/Footer/Footer";
 import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 
 import dummyData from "assets/dummyData";
-import NotFound from './404/NotFound';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
