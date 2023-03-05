@@ -1,13 +1,13 @@
 import SummaryPage from "views/Summary/SummaryPage";
 import styles from "./DashboardPage.module.scss";
 
-import { Routes, Route, NavLink, Link } from "react-router-dom";
+import { Routes, Route, NavLink, Link, Navigate } from "react-router-dom";
 
 import LibrariesPage from "views/Libraries/LibrariesPage";
 import VulnerabilitiesPage from "views/Vulnerabilities/VulnerabilitiesPage";
 import Button from "components/forms/Button/Button";
 
-function DashboardPage({ setLibraries, userLibraries, userLibVulnerabilities, handleUserLibraryUpdate, getUserLibVulnerabilities, handleLogout }) {
+function DashboardPage({ trend, setLibraries, userLibraries, userLibVulnerabilities, handleUserLibraryUpdate, getUserLibVulnerabilities, handleLogout }) {
     return (
         <div className={styles.dashboardcontainer}>
             <div className={styles.sideNav}>
@@ -43,9 +43,10 @@ function DashboardPage({ setLibraries, userLibraries, userLibVulnerabilities, ha
             <div className={styles.contentContainer}>
                 <div className={styles.content}>
                     <Routes>
-                        <Route path="/" element={ <SummaryPage userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} /> } />
+                        <Route path="/" element={ <SummaryPage userLibVulnerabilities={userLibVulnerabilities} userLibraries={userLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} trend={trend} /> } />
                         <Route path="/libraries" element={ <LibrariesPage userLibraries={userLibraries} setUserLibraries={setLibraries} handleUserLibraryUpdate={handleUserLibraryUpdate} getUserLibVulnerabilities={getUserLibVulnerabilities} /> } />
                         <Route path="/vulnerabilities" element={ <VulnerabilitiesPage userLibVulnerabilities={userLibVulnerabilities} /> } />
+                        <Route path="*" element={ <Navigate to="/" /> } />
                     </Routes>
                 </div>
             </div>

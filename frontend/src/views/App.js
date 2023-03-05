@@ -13,6 +13,7 @@ import Landing from "views/Landing/Landing";
 import Dashboard from "views/Dashboard/DashboardPage";
 
 import dummyData from "assets/dummyData";
+import NotFound from './404/NotFound';
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -120,6 +121,7 @@ function App() {
   // After the user logs out, we make a fetch request
   // to destroy the user session in the backend.
   const handleLogout = () => {
+    navigate("/");
     if (process.env.NODE_ENV === "production") {
       instance.logoutRedirect({
         account: account
@@ -135,7 +137,6 @@ function App() {
           }
       });
     } else {
-      navigate("/");
       setAuthenticated(false);
     }
   }
@@ -171,7 +172,6 @@ function App() {
                     handleLogout={handleLogout}
                   /> 
                 }/>
-                <Route path="/login" element={ <Navigate to="/" /> } />
               </Routes>
               :
               <Landing msal={instance} handleLogin={handleLogin} />

@@ -1,6 +1,6 @@
 import styles from "./Landing.module.scss";
 
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import Button from "components/forms/Button/Button";
 import LibrarySearch from "components/forms/LibrarySearch/LibrarySearch";
@@ -78,6 +78,7 @@ export default function Landing({ handleLogin }) {
                     </div>
                  } />
                 <Route path="/login" element={ <LoginForm handleLogin={handleLogin} /> } />
+                <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
             <Footer />
         </div>
