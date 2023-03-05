@@ -1,8 +1,13 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import moment from "moment";
+import NodeCache from 'node-cache';
 
 var router = express.Router();
+
+const ttlSeconds = 24 * 60 * 60;
+const maxKeys = 500;
+const librariesCache = new NodeCache({ stdTTL: ttlSeconds, maxKeys: maxKeys });
 
 router.get("/", function(req, res) {
     try {
@@ -102,7 +107,31 @@ router.post('/register', async function(req, res) {
     }
 })
 
-router.get('/:prefix', async function(req, res, next) {
+const verifyPrefixCache = (req, res, next) => {
+    try {
+        if (req.session.isAuthenticated) {
+            const prefix = req.params.prefix;
+            if (prefix) {
+                if (librariesCache.has(prefix)) {
+                    return res.status(200).json(librariesCache.get(prefix));
+                }
+
+                return next();
+            }
+        } else {
+            res.status(400).json(
+                {
+                status: "error",
+                error: "User is not logged in"
+                }
+            )
+        }
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+
+router.get('/:prefix', verifyPrefixCache, async function(req, res, next) {
     if (req.session.isAuthenticated) {
         const prefix = req.params.prefix;
         if (prefix) {
@@ -118,13 +147,15 @@ router.get('/:prefix', async function(req, res, next) {
                             status: "error"
                         }) 
                     } else {
-                        res.status(200).json(libraries.map(library => {
+                        const options = libraries.map(library => {
                             return {
                                 value: library.name,
                                 label: library.name,
                                 id: library.name
                             }
-                        }));
+                        });
+                        librariesCache.set(prefix, options);
+                        res.status(200).json(options);
                     }
                 })
             } catch (err) {
@@ -132,7 +163,7 @@ router.get('/:prefix', async function(req, res, next) {
                 res.status(500).json(
                     {
                         status: "error",
-                        error: err
+                        error: "There was an error from our side :("
                     }
                 )
             }    
@@ -187,7 +218,7 @@ router.get('/versions/:packageName', async function(req, res, next) {
             res.status(500).json(
                 {
                     status: "error",
-                    error: err
+                    error: "There was an error from our side :("
                 }
             )
         }    

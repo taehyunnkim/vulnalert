@@ -30,7 +30,7 @@ function DashboardPage({ setLibraries, userLibraries, userLibVulnerabilities, ha
                     </div>
                     <div className={styles.navItem}>
                         <NavLink to="/vulnerabilities">
-                                <h2>Vulnaerabilities</h2>
+                                <h2>Vulnerabilities</h2>
                         </NavLink>
                     </div>
                 </div>

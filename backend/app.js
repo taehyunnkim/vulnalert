@@ -5,6 +5,7 @@ import logger from 'morgan';
 import sessions from 'express-session';
 import cron from 'node-cron';
 
+
 import { checkUserLibraryVulnerabilities } from "./util/vulnalertWorker.js";
 import { notifyUsers } from "./util/alerter.js";
 import { models, connectToDatabase } from './models.js'
@@ -56,7 +57,7 @@ app.get('/login', function (req, res) {
 app.disable('etag');
 
 app.use((req, res, next) => {
-    req.models = models
+    req.models = models;
     next();
 })
 
