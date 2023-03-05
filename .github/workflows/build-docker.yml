@@ -34,6 +34,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            docker pull itskimkong/vulnalert:latest
             docker container stop vulnalert
             docker rm vulnalert
             docker run --name vulnalert -p 7777:7777 --network host -d itskimkong/vulnalert:latest
