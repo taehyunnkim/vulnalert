@@ -21,12 +21,26 @@ We, as developers, want to build this application because we often use dependenc
 </p>
 
 ### User Stories
-| Priority | User       | Description                                                                                                                            | Technical Implementation                                                                                                                                                                                                                                              |
-|----------|------------|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| P0       | Developers | I want to find out which libraries in my dependencies file have potential security risks so I can patch up the library.                | When retrieving security breach data, add a filter for each library.                                                                                                                                                                                                  |
-| P0       | Developers | I want to set up alerts for the libraries I registered in the web app.                                                                 | After a valid user registration, the user can choose which library to alert.   Compare API and database data on new vulnerabilities to the libraries that the developers have registered in their account.   If the libraries match, send them an email notification. |
-| P1       | Developers | I want to learn more about vulnerabilities that come with frameworks.                                                                  | Enter in framework information ( that is listed from the user/developer) and return information about vulnerabilities from APIs.                                                                                                                                      |
-| P2       | Developers | I want to see a summary of the libraries I registered and the vulnerabilities that haven’t been patched in different severity ratings. | Fetch registration information from the database to show statistics on user                                                                                                                                                                                           |
+| Priority | User | Description | Technical Implementation | 
+|----------|------|-------------|--------------------------|
+| P0 | Developers | I want to register a library to set up vulnerability alerts. | Ask the user for library name and version, and save that information to the database. |
+| P0 | Developers | I want to receive an email notification when vulnerabilities are found | Get a list of libraries that the user has registered. The list should only contain libraries with alerts enabled. Compare the list with library vulnerabilities in the database. Aggregate the vulnerability information for matches in the list, and send an email notification to the user. |
+| P1 | Developers | I want to learn more about the vulnerability, its severity level, and mitigation strategies. | Return information about vulnerabilities and mitigation strategies from the database.|
+| P1 | Developers | I want to see a summary of the libraries I registered and the vulnerabilities that haven’t been patched in different severity ratings. | Fetch user information from the database and show summary statistics. |
+| P2 | Developers | I want to get all available libraries based on my search prefix. | Look up the database for all libraries that start with the prefix. If stored in cache, return the cached result. |
+| P2 | Developers | I want to get all available versions for the library I selected. | Look up the version history using NPM registry API. Return the result and store into database. If stored in cache, return the cached result. |
+
+### Currently Available Vulnerabilities
+> :warning: We currently do not have our database automatically populating with new / past vulnerabilities.
+> This would require writing scripts that parse vulnerability information from public APIs, CVE databases, and resources with content moderation.
+> We felt that this was outside the scope of this class, so we manually added some vulnerabilities into the database to make sure that our core features work.
+
+| Library      | Version          |
+|--------------|------------------|
+| jsonwebtoken | <= 8.5.1         |
+| react-admin  | 3.19.12 \| 4.7.6 |
+| next         | 12.2.3           |
+| hydrogen     | 0.1.0            |
 
 ### Endpoints
 | Endpoint                                    | Purpose                                                                                               |
@@ -40,14 +54,39 @@ We, as developers, want to build this application because we often use dependenc
 | POST /api/v1/users/ms-login                 | Given Microsoft Account's access token, create user session and save user information in the database |
 | POST /api/v1/users/logout                   | Destroy user session                                                                                  |
 
+## Things To Do
+### Frontend
+- Unregister a library
+- Add data to chart in Dashboard page
+- Screen size responsiveness
+- Pagination for libraries and vulnerabilities page
+- Email HTML template
+- Add published date for vulnerabilities
+
+### Backend
+- New / Past vulnerability scraper
+- Mark vulnerability as patched or ignored.
+
+### New Features (Potentially)
+- Filters for libraries and vulnerabilities
+- Account / Settings page
+- Different email addresses for alerts
+- Group libraries into collections or projects
+- Collectively enable/disable alert for all libraries in specific project
+- Regular Sign In / Account Registration
+- Vulnerability mitigation information / resources scraper
+- Different notification methods / integrations (Text Message, Discord, Slack, etc.)
+- More identity providers
+
 ## Documentation
 
 ### Full Stack Application
-> When running the full-stack application, the frontend production build is created, so the hot loading feature will be disabled.
+> When running the full-stack application, the frontend production build is served by the web server, so the hot loading feature will be disabled.
+> :warning: The database used in development mode is different from the database used in the production environment.
 
-To run full-stack web application in production mode, run the following command: `npm run prod`
+To run full-stack web application in development mode, run the following command: `npm run prod`
 
-To run full-stack web application in development mode, run the following command: `npm run dev`
+To run full-stack web application in debug mode, run the following command: `npm run dev`
 
 - - - 
 ### Frontend
@@ -55,6 +94,6 @@ To run the frontend application in development mode, run the following command: 
 
 - - - 
 ### Backend
-To run the backend server in production mode, run the following command: `npm run backend`
+To run the backend server in development mode, run the following command: `npm run backend`
 
-To run the backend server in development mode, run the following command: `npm run backend-dev`
+To run the backend server in debug mode, run the following command: `npm run backend-dev`
