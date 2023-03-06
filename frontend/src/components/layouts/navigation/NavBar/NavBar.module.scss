@@ -65,7 +65,24 @@
     margin-right: $content-margin;
 }
 
+@include media(">tablet", "<desktop") {
+    .header {
+        margin-top: calc($app-margin-top/2);
+    }  
+}
+
+@include media(">phone", "<tablet") {
+    .header {
+        margin-top: calc($app-margin-top/2);
+    }    
+}
+
 @include media(">smphone", "<phone") {
+    .header {
+        margin-top: calc($app-margin-top/2);
+    }
+
+    
     .hidden {
         display: none;
     }
