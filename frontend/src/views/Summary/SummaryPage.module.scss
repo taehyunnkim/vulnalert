@@ -70,13 +70,15 @@
 }
 
 .vulnsummaryContainer, .libsummaryContainer {   
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     flex: 1;
     padding: $box-padding*1.4 $box-padding*2;
 }
 
 .vulnsummary {
-
+    flex: 1;
 }
 
 .userstatContainer {
