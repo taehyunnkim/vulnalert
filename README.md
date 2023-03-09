@@ -2,6 +2,8 @@
 
 [![Dockerhub](https://github.com/info441-wi23/final-project-vulnerability-alerter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/info441-wi23/final-project-vulnerability-alerter/actions/workflows/build-docker.yml)
 
+[Project Presentation](https://docs.google.com/presentation/d/1YWWKwPh5UJx-CyZ_ofBTMFqKIdySi3fW_kYA0PjgdJk/edit?usp=sharing)
+
 Group Members: Eric Kim, Aaron Liu, Jinwoo Kim
 
 ## Project Description
