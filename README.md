@@ -68,6 +68,7 @@ We, as developers, want to build this application because we often use dependenc
 ### Backend
 - New / Past vulnerability scraper
 - Mark vulnerability as patched or ignored.
+- Use websocket for continuous update
 
 ### New Features (Potentially)
 - Filters for libraries and vulnerabilities
