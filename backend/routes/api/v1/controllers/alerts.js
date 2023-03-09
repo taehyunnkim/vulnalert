@@ -16,7 +16,7 @@ router.post('/', (req,res) => {
                 })
             } else {
                 req.models.UserLibrary.findOne({
-                    users: req.session.userID,
+                    user: req.session.userID,
                     library: library.id,  
                     version: req.body.version  
                 }, (err, userLibrary) => {
