@@ -60,9 +60,8 @@ We, as developers, want to build this application because we often use dependenc
 ### Frontend
 - Unregister a library
 - Add data to chart in Dashboard page
-- Screen size responsiveness
+- Screen size responsiveness for Dashboard page
 - Pagination for libraries and vulnerabilities page
-- Email HTML template
 - Add published date for vulnerabilities
 
 ### Backend
