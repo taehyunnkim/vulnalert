@@ -24,7 +24,7 @@ export function checkUserLibraryVulnerabilities(db) {
                     }
 
                     for (const affectedVersion of affected_versions) { 
-                        if (semver.satisfies(version, affectedVersion) || semver.eq(version, affectedVersion)) {
+                        if (semver.satisfies(version, affectedVersion) || semver.eq(version, affectedVersion.replace(/<=|>=|>|<|=|\s/g, ""))) {
                             const userLibVulnerability = await db.UserLibVulnerability.create({
                               vulnerability: vulnerability.id,
                               alerted: false
