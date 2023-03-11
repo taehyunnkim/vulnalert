@@ -58,8 +58,8 @@ export default function Landing({ handleLogin }) {
                                 <div className={styles.infoBox}>
                                     <div>
                                         <h2 className="subheader">VERSION</h2>
-                                        <h3>&lt;14.21.1, &lt;16.18.1</h3>
-                                        <h3>&lt;18.12.1, &lt;19.0.1</h3>
+                                        <h3>&lt;14.20.0, &lt;16.20.0</h3>
+                                        <h3>&lt;18.5.0</h3>
                                     </div>
                                     <div>
                                         <h2 className="subheader">SEVERITY</h2>

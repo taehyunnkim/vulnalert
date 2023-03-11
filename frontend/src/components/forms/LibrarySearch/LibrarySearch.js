@@ -104,7 +104,7 @@ function LibrarySearch(props) {
                 <div className={styles.searchInputContainer}>
                     {props.isDemo ?
                         <Select 
-                            inputValue="Node.js"
+                            inputValue="node"
                             styles={customStyles}
                             onInputChange={""}
                             components={{
@@ -132,7 +132,7 @@ function LibrarySearch(props) {
                 <label htmlFor="version" className="subheader">VERSION</label>
                 { props.isDemo ?
                     <Select 
-                        inputValue="14.21.0"
+                        inputValue="14.15.0"
                         styles={customStyles}
                         components={{
                             Menu: () => null,
