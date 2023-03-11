@@ -64,7 +64,7 @@ export async function notifyUsers(db, dirPath) {
 
     if (Object.keys(data).length > 0) {
         console.log(LOG_PREFIX, "Generating emails for " + Object.keys(data).length + " recipients...");
-        const templatePath = path.join(dirPath, "util", "email_template.hbs");
+        const templatePath = path.join(dirPath, "workers", "email_template.hbs");
         const source = fs.readFileSync(templatePath, "utf8");
         const template = handlebars.compile(source);
         
@@ -127,8 +127,8 @@ function createEmail(
 
 
 async function notifyUsersTest(__dirname) {
-    const templatePath = path.join(__dirname, "util", "email_template.hbs");
-    const htmlWritePath = path.join(__dirname, "util", "generated_html.html");
+    const templatePath = path.join(__dirname, "workers", "email_template.hbs");
+    const htmlWritePath = path.join(__dirname, "workers", "generated_html.html");
 
     const data = {
         vulnerabilities: [
