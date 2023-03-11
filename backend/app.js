@@ -18,7 +18,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const CHECK_VULNERABILITY_FREQUENCY_SECONDS = 30;
+const CHECK_VULNERABILITY_FREQUENCY_SECONDS = 5;
 const NOTIFY_USERS_FREQUENCY_SECONDS = 10;
 
 await connectToDatabase();
