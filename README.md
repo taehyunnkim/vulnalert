@@ -1,10 +1,14 @@
+<div align="center" style="text-align: center;">
 <img src="assets/logo.svg" />
+<br><br>
 
 [![Dockerhub](https://github.com/info441-wi23/final-project-vulnerability-alerter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/info441-wi23/final-project-vulnerability-alerter/actions/workflows/build-docker.yml)
 
-[Project Presentation](https://docs.google.com/presentation/d/1YWWKwPh5UJx-CyZ_ofBTMFqKIdySi3fW_kYA0PjgdJk/edit?usp=sharing)
+<strong>Eric Kim, Aaron Liu, Jinwoo Kim</strong>
+  
+[Project Presentation](https://docs.google.com/presentation/d/1YWWKwPh5UJx-CyZ_ofBTMFqKIdySi3fW_kYA0PjgdJk/edit?usp=sharing)  
+</div>
 
-Group Members: Eric Kim, Aaron Liu, Jinwoo Kim
 
 ## Project Description
 For our final project, we will be creating a full-stack web application that notifies the users of any new vulnerabilities in the libraries they use. This web application is primarily targeted toward software developers who may want to keep their applications up to date and reduce application security risks. 
