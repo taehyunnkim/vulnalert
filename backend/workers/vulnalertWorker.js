@@ -2,6 +2,11 @@ import semver from 'semver';
 
 const LOG_PREFIX = "vulnerability-worker: ";
 
+/* 
+    @description: check if vulnerabilities exist for user registered libraries.
+                  If vulnerability found, create a new userLibVulnerability document and 
+                  update the userLibrary vulnerabilities field.
+*/ 
 export function checkUserLibraryVulnerabilities(db) {
     return new Promise(async (resolve, reject) => {
         try {

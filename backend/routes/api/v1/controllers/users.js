@@ -3,6 +3,13 @@ import fetch from 'node-fetch';
 
 var router = express.Router();
 
+/* 
+    @endpoint: /ms-login
+    @method: POST
+    @description: Given the Microsoft Access Token in the Authorization header,
+                  get information about the user using Graph API. Save information
+                  about the user if already exists. Create user session.
+*/ 
 router.post('/ms-login', async function(req, res, next) {
     const authorizationHeader = req.headers.authorization;
     const accessToken = authorizationHeader.split(' ')[1];
@@ -64,6 +71,11 @@ router.post('/ms-login', async function(req, res, next) {
     }
 })
 
+/* 
+    @endpoint: /logout
+    @method: POST
+    @description: destroy user session.
+*/ 
 router.get('/logout', function(req, res, next) {
     if (req.session.isAuthenticated) {
         req.session.destroy();

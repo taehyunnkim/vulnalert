@@ -2,6 +2,11 @@ import express from 'express';
 
 var router = express.Router();
 
+/* 
+    @endpoint: /
+    @method: GET
+    @description: return all vulnerability data for the authenticated user's registered libraries.
+*/ 
 router.get('/', async (req,res) => {
     try {
         if (req.session.isAuthenticated) {

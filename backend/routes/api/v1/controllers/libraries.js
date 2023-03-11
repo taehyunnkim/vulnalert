@@ -9,6 +9,11 @@ const ttlSeconds = 24 * 60 * 60;
 const maxKeys = 500;
 const librariesCache = new NodeCache({ stdTTL: ttlSeconds, maxKeys: maxKeys });
 
+/* 
+    @endpoint: /
+    @method: GET
+    @description: Send back the authenticated user their registered libraries.
+*/ 
 router.get("/", function(req, res) {
     try {
         if (req.session.isAuthenticated) {
@@ -51,6 +56,12 @@ router.get("/", function(req, res) {
     }
 });
 
+/* 
+    @endpoint: /register
+    @method: POST
+    @body: packageName, version
+    @description: register the library for the authenticated user.
+*/ 
 router.post('/register', async function(req, res) {
     const packageName = req.body.packageName;
     if(req.session.isAuthenticated){
@@ -107,6 +118,9 @@ router.post('/register', async function(req, res) {
     }
 })
 
+/* 
+    @description: Middleware that checks node-cache for library names based on prefix.
+*/ 
 const verifyPrefixCache = (req, res, next) => {
     try {
         if (req.session.isAuthenticated) {
@@ -131,6 +145,12 @@ const verifyPrefixCache = (req, res, next) => {
     }
 };
 
+/* 
+    @endpoint: /:prefix
+    @method: GET
+    @params: prefix
+    @description: returns the library names based on the prefix.
+*/ 
 router.get('/:prefix', verifyPrefixCache, async function(req, res, next) {
     if (req.session.isAuthenticated) {
         const prefix = req.params.prefix;
@@ -185,6 +205,12 @@ router.get('/:prefix', verifyPrefixCache, async function(req, res, next) {
     }
 });
 
+/* 
+    @endpoint: /versions/:packageName
+    @method: GET
+    @params: packageName
+    @description: returns the version history for the given package.
+*/ 
 router.get('/versions/:packageName', async function(req, res, next) {
     if (req.session.isAuthenticated) {
         const packageName = req.params.packageName
@@ -198,7 +224,7 @@ router.get('/versions/:packageName', async function(req, res, next) {
                     }) 
                 } else if (!library) {
                     res.status(500).json({
-                        "error": "Error from our side :(",
+                        "error": "The library doesn't exist!",
                         "status": "error"
                     }) 
                 } else {

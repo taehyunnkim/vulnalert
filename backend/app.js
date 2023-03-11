@@ -6,8 +6,8 @@ import sessions from 'express-session';
 import cron from 'node-cron';
 
 
-import { checkUserLibraryVulnerabilities } from "./util/vulnalertWorker.js";
-import { notifyUsers } from "./util/alerter.js";
+import { checkUserLibraryVulnerabilities } from "./workers/vulnalertWorker.js";
+import { notifyUsers } from "./workers/alerter.js";
 import { models, connectToDatabase } from './models.js'
 
 import apiv1Router from './routes/api/v1/apiv1.js';

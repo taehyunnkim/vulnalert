@@ -8,44 +8,9 @@ sgMail.setApiKey("SG.sKQKyyNVTzqUFbGXC1gMvA.cZNEmbaoUwpQsxAFDw_IEtHtBUniF_GBh6Cq
 
 const LOG_PREFIX = "email-worker: ";
 
-export async function notifyUsersTest(__dirname) {
-    const templatePath = path.join(__dirname, "util", "email_template.hbs");
-    const htmlWritePath = path.join(__dirname, "util", "generated_html.html");
-
-    const data = {
-        vulnerabilities: [
-          {
-            libraryName: 'Express',
-            libraryVersion: '4.17.1',
-            name: 'Remote Code Execution',
-            description: 'Allows attackers to execute arbitrary code on the server',
-            severity: 'Critical',
-            published: '2021-02-09'
-          },
-          {
-            libraryName: 'React',
-            libraryVersion: '17.0.2',
-            name: 'Cross-Site Scripting (XSS)',
-            description: 'Allows attackers to inject malicious scripts into web pages',
-            severity: 'Medium',
-            published: '2021-02-10'
-          }
-        ]
-    };
-
-    console.log(LOG_PREFIX, "Testing email template...");
-    const source = fs.readFileSync(templatePath, "utf8");
-    console.log(LOG_PREFIX, "Compiling email template...");
-    const template = handlebars.compile(source);
-    console.log(LOG_PREFIX, "Generating email html...");
-    const html = generateHtmlReport(template, data);
-    console.log(LOG_PREFIX, "Writing email html...");
-    fs.writeFileSync(htmlWritePath, html);
-
-    const email = createEmail("kim2000@uw.edu", "Test Report", html);
-    // sendEmails([email])
-}
-
+/* 
+    @description: send email notifications to users.
+*/ 
 export async function notifyUsers(db, dirPath) {
     const userLibraries = await db.UserLibrary
         .find({ vulnerabilities: { $exists: true, $not: { $size: 0 } } })
@@ -155,3 +120,46 @@ function createEmail(
         html: html
     }
 };
+
+
+
+
+
+
+async function notifyUsersTest(__dirname) {
+    const templatePath = path.join(__dirname, "util", "email_template.hbs");
+    const htmlWritePath = path.join(__dirname, "util", "generated_html.html");
+
+    const data = {
+        vulnerabilities: [
+          {
+            libraryName: 'Express',
+            libraryVersion: '4.17.1',
+            name: 'Remote Code Execution',
+            description: 'Allows attackers to execute arbitrary code on the server',
+            severity: 'Critical',
+            published: '2021-02-09'
+          },
+          {
+            libraryName: 'React',
+            libraryVersion: '17.0.2',
+            name: 'Cross-Site Scripting (XSS)',
+            description: 'Allows attackers to inject malicious scripts into web pages',
+            severity: 'Medium',
+            published: '2021-02-10'
+          }
+        ]
+    };
+
+    console.log(LOG_PREFIX, "Testing email template...");
+    const source = fs.readFileSync(templatePath, "utf8");
+    console.log(LOG_PREFIX, "Compiling email template...");
+    const template = handlebars.compile(source);
+    console.log(LOG_PREFIX, "Generating email html...");
+    const html = generateHtmlReport(template, data);
+    console.log(LOG_PREFIX, "Writing email html...");
+    fs.writeFileSync(htmlWritePath, html);
+
+    const email = createEmail("kim2000@uw.edu", "Test Report", html);
+    // sendEmails([email])
+}

@@ -4,6 +4,10 @@ import fs from 'fs';
 
 var router = express.Router();
 
+/* 
+    @description: populate database with all node package names in 2023.
+                  The database is populated in batch to avoid memory error.
+*/ 
 router.get('/batch-insert', function(req, res, next) {
     const batchSize = 50000;
     let batch = [];

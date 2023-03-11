@@ -86,9 +86,9 @@ We, as developers, want to build this application because we often use dependenc
 > When running the full-stack application, the frontend production build is served by the web server, so the hot loading feature will be disabled.
 > :warning: The database used in development mode is different from the database used in the production environment.
 
-To run full-stack web application in development mode, run the following command: `npm run prod`
+To run full-stack web application in development mode, run the following command: `npm run dev`
 
-To run full-stack web application in debug mode, run the following command: `npm run dev`
+To run full-stack web application in debug mode, run the following command: `npm run debug`
 
 - - - 
 ### Frontend
@@ -98,4 +98,4 @@ To run the frontend application in development mode, run the following command: 
 ### Backend
 To run the backend server in development mode, run the following command: `npm run backend`
 
-To run the backend server in debug mode, run the following command: `npm run backend-dev`
+To run the backend server in debug mode, run the following command: `npm run backend-debug`

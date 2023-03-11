@@ -1,9 +1,12 @@
 import express from 'express';
-import fetch from 'node-fetch';
 var router = express.Router();
 
-//change the alert status for registered library
-
+/* 
+    @endpoint: /
+    @method: POST
+    @body: name (library name), version
+    @description: toggle alert for a registered library for an authenticated user.
+*/ 
 router.post('/', (req,res) => {
     try {
         req.models.Library.findOne({
